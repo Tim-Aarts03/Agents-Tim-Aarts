@@ -1,0 +1,23 @@
+# Secrets
+.env
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+*.egg-info/
+
+# Local runtime data (personal / financial) — keep folders, ignore contents
+logs/*
+!logs/.gitkeep
+# Exception (approved by Tim 2026-11-16): application log must survive cloud sessions
+!logs/applications.csv
+output/*
+!output/.gitkeep
+
+# Private knowledge files (contact details, financial data, source documents)
+knowledge/private_*
+
+# OS
+.DS_Store
