@@ -3,9 +3,23 @@ from datetime import date
 import pytest
 from pydantic import ValidationError
 
-from tools.job_scoring import Domain, Hours, Location, Vacancy, is_expired, rank_vacancies, score_vacancy
+from tools.job_scoring import (
+    EmploymentType,
+    Hours,
+    LearningEvidence,
+    Location,
+    RequirementGap,
+    Vacancy,
+    classify_location,
+    is_excluded,
+    load_preferred_places,
+    rank_vacancies,
+    score_vacancy,
+    vacancy_features,
+)
 
 TODAY = date(2026, 11, 20)
+PLACES = {"amsterdam", "haarlem", "heemstede"}
 
 
 def make(title: str = "Job", **overrides) -> Vacancy:
@@ -13,79 +27,125 @@ def make(title: str = "Job", **overrides) -> Vacancy:
         "title": title,
         "organisation": "Org",
         "url": f"https://example.org/{title.replace(' ', '-')}",
-        "location": Location.PREFERRED_REGION,
+        "city": "Amsterdam",
     }
     data.update(overrides)
     return Vacancy(**data)
 
 
-def test_best_single_domain_vacancy_scores_95():
+def score(v: Vacancy, bonuses: dict[str, float] | None = None):
+    return score_vacancy(v, PLACES, bonuses)
+
+
+def test_best_single_domain_vacancy():
     v = make(
-        domains=[Domain.SPORT_FOR_VULNERABLE_GROUPS],
-        strong_learning_environment=True,
-        hours=Hours.PART_TIME,
+        domains=["sport_for_vulnerable_groups"],
+        employment_type="traineeship",
+        learning_evidence=["named_mentor_or_coach"],
+        hours="part_time",
     )
-    result = score_vacancy(v)
-    assert result.score == 95
+    result = score(v)
     assert result.breakdown == {
         "domain": 40,
-        "learning_environment": 25,
+        "learning_environment": 23,  # traineeship 15 + mentor 8
         "location": 20,
         "hours": 10,
-        "requirements_risk": 0,
+        "requirement_gaps": 0,
+        "learned_from_ratings": 0,
     }
+    assert result.score == 93
 
 
-def test_second_domain_adds_bonus_and_score_is_capped():
+def test_second_domain_bonus_and_cap_at_100():
     v = make(
-        domains=[Domain.SPORT_TECH, Domain.SPORT_FOR_VULNERABLE_GROUPS],
-        strong_learning_environment=True,
-        hours=Hours.PART_TIME,
+        domains=["sport_tech", "sport_for_vulnerable_groups"],
+        learning_evidence=["traineeship_program", "training_budget", "named_mentor_or_coach"],
+        hours="part_time",
     )
-    assert score_vacancy(v).breakdown["domain"] == 45
-    assert score_vacancy(v).score == 100
+    result = score(v, {"org_type:scaleup_tech": 5.0})
+    assert result.breakdown["domain"] == 45
+    assert result.breakdown["learning_environment"] == 25  # capped
+    assert result.score == 100
 
 
-def test_duplicate_domains_do_not_count_twice():
-    v = make(domains=[Domain.SPORT_TECH, Domain.SPORT_TECH])
-    assert score_vacancy(v).breakdown["domain"] == 30
-
-
-def test_no_matching_domain_and_abroad_scores_low():
-    v = make(location=Location.ABROAD, hours=Hours.FULL_TIME)
-    assert score_vacancy(v).score == 5
-
-
-def test_requirements_risk_penalty_never_below_zero():
-    v = make(location=Location.ABROAD, hours=Hours.FULL_TIME, requirements_risk=True)
-    assert score_vacancy(v).score == 0
+def test_traineeship_evidence_is_not_counted_twice():
+    v = make(employment_type="traineeship", learning_evidence=["traineeship_program"])
+    assert score(v).breakdown["learning_environment"] == 15
 
 
 @pytest.mark.parametrize(
-    ("deadline", "expired"),
-    [(None, False), (date(2026, 11, 19), True), (TODAY, False), (date(2026, 11, 21), False)],
+    ("city", "hybrid", "country", "expected"),
+    [
+        ("Heemstede", False, "NL", Location.PREFERRED_REGION),
+        ("  haarlem ", False, "NL", Location.PREFERRED_REGION),
+        ("Utrecht", True, "NL", Location.HYBRID_OR_REMOTE),
+        ("Utrecht", False, "NL", Location.OTHER_NETHERLANDS),
+        (None, False, "NL", Location.UNKNOWN),
+        ("Berlin", False, "DE", Location.ABROAD),
+    ],
 )
-def test_deadline_boundaries(deadline, expired):
-    assert is_expired(make(deadline=deadline), TODAY) is expired
+def test_classify_location(city, hybrid, country, expected):
+    v = make(city=city, hybrid_or_remote=hybrid, country=country)
+    assert classify_location(v, PLACES) is expected
 
 
-def test_rank_drops_expired_and_duplicates_and_limits_to_top_n():
-    vacancies = [make(f"job {i}", domains=[Domain.SPORT_TECH]) for i in range(8)]
-    vacancies.append(make("old", domains=[Domain.SPORT_FOR_VULNERABLE_GROUPS], deadline=date(2026, 1, 1)))
-    vacancies.append(make("job 0", domains=[Domain.SPORT_FOR_VULNERABLE_GROUPS]))  # duplicate URL
-    ranked = rank_vacancies(vacancies, TODAY)
+def test_unknown_hours_score_lower_than_full_time():
+    assert score(make(hours=Hours.UNKNOWN)).score < score(make(hours=Hours.FULL_TIME)).score
+
+
+def test_requirement_gaps_are_graded_and_score_never_below_zero():
+    master = score(make(requirement_gaps=["masters_degree"])).breakdown["requirement_gaps"]
+    junior = score(make(requirement_gaps=["experience_1_2_years"])).breakdown["requirement_gaps"]
+    assert master == -15 and junior == -5
+    v = make(city="Berlin", country="DE", hours="full_time", requirement_gaps=list(RequirementGap))
+    assert score(v).score == 0
+
+
+def test_learned_bonus_is_capped():
+    v = make(domains=["sport_tech"], role_type="research", org_type="scaleup_tech")
+    bonuses = {"domain:sport_tech": 5.0, "role_type:research": 5.0, "org_type:scaleup_tech": 5.0}
+    assert score(v, bonuses).breakdown["learned_from_ratings"] == 10
+    negative = {k: -5.0 for k in bonuses}
+    assert score(v, negative).breakdown["learned_from_ratings"] == -10
+
+
+def test_vacancy_features_skip_unknowns():
+    v = make(domains=["sport_tech", "sport_tech"], org_type="government")
+    assert vacancy_features(v) == ["domain:sport_tech", "org_type:government"]
+
+
+@pytest.mark.parametrize(
+    ("overrides", "excluded"),
+    [
+        ({}, False),
+        ({"deadline": date(2026, 11, 19)}, True),
+        ({"deadline": TODAY}, False),
+        ({"employment_type": EmploymentType.INTERNSHIP}, True),
+        ({"employment_type": EmploymentType.TRAINEESHIP}, False),
+    ],
+)
+def test_exclusions(overrides, excluded):
+    assert is_excluded(make(**overrides), TODAY) is excluded
+
+
+def test_rank_drops_excluded_duplicates_and_known_urls():
+    vacancies = [make(f"job {i}", domains=["sport_tech"]) for i in range(8)]
+    vacancies.append(make("old", domains=["sport_for_vulnerable_groups"], deadline=date(2026, 1, 1)))
+    vacancies.append(make("job 0", domains=["sport_for_vulnerable_groups"]))  # duplicate URL
+    ranked = rank_vacancies(vacancies, TODAY, PLACES, exclude_urls={"https://example.org/job-1"})
     titles = [s.vacancy.title for s in ranked]
     assert len(ranked) == 5
-    assert "old" not in titles
+    assert "old" not in titles and "job 1" not in titles
     assert titles.count("job 0") == 1
 
 
-def test_rank_orders_by_score_then_earliest_deadline():
-    best = make("best", domains=[Domain.SPORT_FOR_VULNERABLE_GROUPS])
-    tie_late = make("tie late", domains=[Domain.SPORT_TECH], deadline=date(2026, 12, 31))
-    tie_early = make("tie early", domains=[Domain.SPORT_TECH], deadline=date(2026, 12, 1))
-    ranked = rank_vacancies([tie_late, tie_early, best], TODAY)
-    assert [s.vacancy.title for s in ranked] == ["best", "tie early", "tie late"]
+def test_rank_tiebreak_verified_then_deadline():
+    best = make("best", domains=["sport_for_vulnerable_groups"])
+    unverified = make("unverified", domains=["sport_tech"], verified=False)
+    tie_late = make("tie late", domains=["sport_tech"], deadline=date(2026, 12, 31))
+    tie_early = make("tie early", domains=["sport_tech"], deadline=date(2026, 12, 1))
+    ranked = rank_vacancies([unverified, tie_late, tie_early, best], TODAY, PLACES)
+    assert [s.vacancy.title for s in ranked] == ["best", "tie early", "tie late", "unverified"]
 
 
 def test_invalid_input_is_rejected():
@@ -93,3 +153,11 @@ def test_invalid_input_is_rejected():
         make(url="not a url")
     with pytest.raises(ValidationError):
         make(domains=["football_betting"])
+    with pytest.raises(ValidationError):
+        make(learning_evidence=["great team vibes"])
+
+
+def test_real_preferred_places_file_is_valid():
+    places = load_preferred_places()
+    assert {"amsterdam", "haarlem", "heemstede"} <= places
+    assert LearningEvidence.TRAINEESHIP_PROGRAM.value == "traineeship_program"

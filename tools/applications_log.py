@@ -1,6 +1,7 @@
 """Application log (logs/applications.csv): read before a run, update after.
 
-Prevents proposing the same vacancy twice and records outcomes so the
+Prevents proposing the same vacancy twice, stores Tim's 1–5 ratings with the
+vacancy's features (for preference learning) and records outcomes so the
 letter style can improve over time.
 """
 
@@ -15,10 +16,11 @@ from pathlib import Path
 from pydantic import BaseModel, Field
 
 DEFAULT_LOG_PATH = Path("logs/applications.csv")
+FEATURE_SEPARATOR = ";"
 
 
 class Status(str, Enum):
-    PROPOSED = "proposed"  # shown in the Friday top 5
+    PROPOSED = "proposed"  # shown in the Friday overview
     SELECTED = "selected"  # Tim chose it; letter in progress
     SENT = "sent"  # Tim sent the application
     INVITED = "invited"
@@ -28,18 +30,25 @@ class Status(str, Enum):
 
 
 class Application(BaseModel):
-    url: str = Field(min_length=1)
+    url: str = Field(min_length=1)  # vacancy URL, or "seed:<slug>" for historical applications
     organisation: str
     title: str
     status: Status
     date_proposed: date
     date_updated: date
     score: int | None = None
+    rating: int | None = Field(default=None, ge=1, le=5)
+    rating_reason: str = ""
+    features: str = ""  # FEATURE_SEPARATOR-joined output of tools.job_scoring.vacancy_features
     letter_file: str = ""
     feedback: str = ""
 
+    def feature_list(self) -> list[str]:
+        return [f for f in self.features.split(FEATURE_SEPARATOR) if f]
+
 
 FIELDS = list(Application.model_fields)
+OPTIONAL_INT_FIELDS = ("score", "rating")
 
 
 def read_log(path: Path = DEFAULT_LOG_PATH) -> list[Application]:
@@ -47,8 +56,12 @@ def read_log(path: Path = DEFAULT_LOG_PATH) -> list[Application]:
         return []
     with path.open(encoding="utf-8", newline="") as f:
         rows = list(csv.DictReader(f))
-    # CSV has no null: an empty score cell means "no score".
-    return [Application.model_validate({**row, "score": row["score"] or None}) for row in rows]
+    apps = []
+    for row in rows:
+        # Drop columns that are missing or empty, so older log files and empty cells fall back to defaults.
+        clean = {k: v for k, v in row.items() if k in FIELDS and v not in (None, "")}
+        apps.append(Application.model_validate(clean))
+    return apps
 
 
 def write_log(applications: list[Application], path: Path = DEFAULT_LOG_PATH) -> None:
@@ -75,36 +88,43 @@ def add_proposed(app: Application, path: Path = DEFAULT_LOG_PATH) -> bool:
     return True
 
 
-def update_status(
-    url: str,
-    status: Status,
-    today: date,
-    path: Path = DEFAULT_LOG_PATH,
-    letter_file: str | None = None,
-    feedback: str | None = None,
-) -> Application:
+def update_application(url: str, today: date, path: Path = DEFAULT_LOG_PATH, **changes) -> Application:
+    """Update fields of one application (e.g. status, rating, rating_reason, letter_file, feedback)."""
     log = read_log(path)
     for i, app in enumerate(log):
         if app.url == url:
-            changes: dict = {"status": status, "date_updated": today}
-            if letter_file is not None:
-                changes["letter_file"] = letter_file
-            if feedback is not None:
-                changes["feedback"] = feedback
-            log[i] = app.model_copy(update=changes)
+            updated = Application.model_validate({**app.model_dump(), **changes, "date_updated": today})
+            log[i] = updated
             write_log(log, path)
-            return log[i]
+            return updated
     raise KeyError(f"No application with url {url!r}")
 
 
+def update_status(url: str, status: Status, today: date, path: Path = DEFAULT_LOG_PATH, **changes) -> Application:
+    return update_application(url, today, path, status=status, **changes)
+
+
+def rate(url: str, rating: int, reason: str, today: date, path: Path = DEFAULT_LOG_PATH) -> Application:
+    return update_application(url, today, path, rating=rating, rating_reason=reason)
+
+
 def main() -> None:
-    """CLI: `python -m tools.applications_log urls` prints all known vacancy URLs."""
-    if len(sys.argv) > 1 and sys.argv[1] == "urls":
+    """CLI:
+    `python -m tools.applications_log`                         list all applications
+    `python -m tools.applications_log urls`                    print known vacancy URLs
+    `python -m tools.applications_log rate <url> <1-5> [reason]`  store Tim's rating
+    """
+    args = sys.argv[1:]
+    if args[:1] == ["urls"]:
         for url in sorted(known_urls()):
             print(url)
+    elif args[:1] == ["rate"]:
+        app = rate(args[1], int(args[2]), " ".join(args[3:]), date.today())
+        print(f"Rated {app.organisation} — {app.title}: {app.rating}")
     else:
         for app in read_log():
-            print(f"{app.date_updated} | {app.status.value:<11} | {app.organisation} — {app.title}")
+            rating = app.rating if app.rating is not None else "-"
+            print(f"{app.date_updated} | {app.status.value:<11} | {rating} | {app.organisation} — {app.title}")
 
 
 if __name__ == "__main__":

@@ -1,0 +1,7 @@
+{
+  "_note": "Places counted as 'preferred_region': Amsterdam, Haarlem and places within roughly 10 km (Tim, 2026-11-17). Approximate list: Tim may add or remove places. Agents must copy the city name from the vacancy; tools/job_scoring.py does the matching.",
+  "places": {
+    "amsterdam": ["Amsterdam", "Amstelveen", "Diemen", "Duivendrecht", "Ouderkerk aan de Amstel", "Zaandam", "Zaanstad", "Oostzaan", "Landsmeer", "Badhoevedorp", "Schiphol", "Halfweg"],
+    "haarlem": ["Haarlem", "Heemstede", "Bloemendaal", "Overveen", "Aerdenhout", "Zandvoort", "Bennebroek", "Hoofddorp", "Cruquius", "Spaarndam", "Santpoort-Noord", "Santpoort-Zuid", "Velserbroek", "Velsen-Zuid"]
+  }
+}

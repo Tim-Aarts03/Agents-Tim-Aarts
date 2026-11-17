@@ -1,1 +1,5 @@
-url,organisation,title,status,date_proposed,date_updated,score,letter_file,feedback
+url,organisation,title,status,date_proposed,date_updated,score,rating,rating_reason,features,letter_file,feedback
+seed:cruyff-foundation,Johan Cruyff Foundation,Sollicitatie (functie onbekend),sent,2026-11-17,2026-11-17,,5,Historical application,domain:sport_for_vulnerable_groups;org_type:foundation_nonprofit;employment_type:job,,Seeded from earlier applications (2026-11-17); original date and outcome unknown
+seed:kenniscentrum-specialist-jeugd,Kenniscentrum Sport & Bewegen,Specialist jeugd,sent,2026-11-17,2026-11-17,,5,Historical application,domain:sport_for_vulnerable_groups;org_type:knowledge_institute;employment_type:job,,Seeded from earlier applications (2026-11-17); original date and outcome unknown
+seed:ajax-internship,Ajax,Afstudeerstage,sent,2026-11-17,2026-11-17,,4,Historical application; Tim no longer looks for internships,org_type:sports_club_federation;employment_type:internship,,Seeded from earlier applications (2026-11-17); original date and outcome unknown
+seed:upfront-accountmanager,Upfront,Accountmanager Defensie & Veiligheid,skipped,2026-11-17,2026-11-17,,2,"Interesting company, but role and defence/security competences do not fit Tim",domain:sports_brand;role_type:commercial_sales;org_type:commercial_brand,,From LinkedIn post shared by Tim
