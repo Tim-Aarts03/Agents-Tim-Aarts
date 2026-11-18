@@ -130,3 +130,9 @@ remember decisions and preferences across sessions.
 - Lesson: Tim often answers without a number; ask for the missing numbers instead of guessing. Infeasibility drives ratings down, so a low rating on a preferred role type can be about requirements, not the role.
 - Action (approved by Tim): `good_cause_role_bonus` (+10) for preferred roles at foundations/government (`knowledge/job_filters.json`); `knowledge/job_sources.md` rewritten with checked career-page URLs, a traineeship-provider list (recruitment months only when a page states them) and a "not working" list.
 - Letters: writer used the recipient's language (English for UEFA). `tools.letter_checks` counts the "Notities voor Tim" below `---`, so every letter fails the 400-word check; Dutch-only typo and age checks do not work on English letters. Proposed fix needs Tim's OK.
+
+### 2026-11-18 — Mail agents for the bootcamp (plan approved)
+- Tim mails a weekly promotion (Wednesday 07:00) to Hof van Jacob (via his mother) and a few Jacob Kliniek addresses, and a standard reminder on Monday ~13:00 to people who signed up. Only the 1–3 sentence pitch changes each week.
+- Goal: automatic creation and sending within ~2 weeks, after training on drafts. Tim fears "weird mails to everyone": QA before every draft.
+- Action: `knowledge/bootcamp.md`, `tools/bootcamp_mail.py` (composition, dates, log), `tools/bootcamp_weather.py` (below 12 °C warm clothing; rain → covered balcony of team 2), agent `mail-promo-writer`. Participant names from examples anonymised in git.
+- Open: Gmail draft route on the Mac (Gmail connector or Apple Mail), whether Form responses land in a Google Sheet, recipient addresses (`knowledge/private_mail_recipients.json`).
