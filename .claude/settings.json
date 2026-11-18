@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "deny": [
+      "Bash(osascript:*)",
+      "Bash(*osascript*)",
+      "Read(~/Library/Mail/**)",
+      "Bash(*Library/Mail*)"
+    ]
+  }
+}
