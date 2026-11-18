@@ -16,6 +16,7 @@ from pathlib import Path
 from pydantic import BaseModel, Field, HttpUrl
 
 PREFERRED_PLACES_FILE = Path("knowledge/preferred_places.json")
+JOB_FILTERS_FILE = Path("knowledge/job_filters.json")
 
 
 class Domain(str, Enum):
@@ -124,6 +125,7 @@ GAP_PENALTIES: dict[RequirementGap, int] = {
     RequirementGap.EXPERIENCE_1_2_YEARS: 5,
     RequirementGap.OTHER_HARD_REQUIREMENT: 5,
 }
+ROLE_FIT_POINTS = 5
 MAX_LEARNED_BONUS = 10
 MAX_SCORE = 100
 
@@ -145,6 +147,16 @@ class Vacancy(BaseModel):
     deadline: date | None = None
     verified: bool = True  # False = only seen in search results, page not opened
     source: str = "web"
+
+
+class JobFilters(BaseModel):
+    excluded_organisations: list[str] = Field(default_factory=list)
+    excluded_role_types: list[RoleType] = Field(default_factory=list)
+    preferred_role_types: list[RoleType] = Field(default_factory=list)
+
+
+def load_job_filters(path: Path = JOB_FILTERS_FILE) -> JobFilters:
+    return JobFilters.model_validate_json(path.read_text(encoding="utf-8"))
 
 
 class ScoredVacancy(BaseModel):
@@ -191,7 +203,9 @@ def score_vacancy(
     vacancy: Vacancy,
     preferred_places: set[str],
     feature_bonuses: dict[str, float] | None = None,
+    filters: JobFilters | None = None,
 ) -> ScoredVacancy:
+    filters = filters or JobFilters()
     # Best domain counts fully; any additional domain adds a small bonus.
     domain_scores = sorted((DOMAIN_POINTS[d] for d in set(vacancy.domains)), reverse=True)
     domain = domain_scores[0] if domain_scores else 0
@@ -209,6 +223,7 @@ def score_vacancy(
         "learning_environment": learning,
         "location": LOCATION_POINTS[location],
         "hours": HOURS_POINTS[vacancy.hours],
+        "role_fit": ROLE_FIT_POINTS if vacancy.role_type in filters.preferred_role_types else 0,
         "requirement_gaps": -sum(GAP_PENALTIES[g] for g in set(vacancy.requirement_gaps)),
         "learned_from_ratings": learned_bonus(vacancy, feature_bonuses or {}),
     }
@@ -216,9 +231,17 @@ def score_vacancy(
     return ScoredVacancy(vacancy=vacancy, score=score, breakdown=breakdown, location=location)
 
 
-def is_excluded(vacancy: Vacancy, today: date) -> bool:
+def is_excluded(vacancy: Vacancy, today: date, filters: JobFilters | None = None) -> bool:
+    filters = filters or JobFilters()
     expired = vacancy.deadline is not None and vacancy.deadline < today
-    return expired or vacancy.employment_type is EmploymentType.INTERNSHIP
+    organisation = vacancy.organisation.lower()
+    excluded_org = any(name.lower() in organisation for name in filters.excluded_organisations)
+    return (
+        expired
+        or excluded_org
+        or vacancy.employment_type is EmploymentType.INTERNSHIP
+        or vacancy.role_type in filters.excluded_role_types
+    )
 
 
 def rank_vacancies(
@@ -227,17 +250,18 @@ def rank_vacancies(
     preferred_places: set[str],
     feature_bonuses: dict[str, float] | None = None,
     exclude_urls: set[str] | None = None,
+    filters: JobFilters | None = None,
     top_n: int = 5,
 ) -> list[ScoredVacancy]:
-    """Drop expired, internship, duplicate and already-proposed vacancies; return the best `top_n`."""
+    """Drop excluded, duplicate and already-proposed vacancies; return the best `top_n`."""
     seen_urls = set(exclude_urls or ())
     scored: list[ScoredVacancy] = []
     for vacancy in vacancies:
         url = str(vacancy.url)
-        if is_excluded(vacancy, today) or url in seen_urls:
+        if is_excluded(vacancy, today, filters) or url in seen_urls:
             continue
         seen_urls.add(url)
-        scored.append(score_vacancy(vacancy, preferred_places, feature_bonuses))
+        scored.append(score_vacancy(vacancy, preferred_places, feature_bonuses, filters))
     # Ties: verified first, then earliest deadline (more urgent), then title for a stable order.
     scored.sort(key=lambda s: (-s.score, not s.vacancy.verified, s.vacancy.deadline or date.max, s.vacancy.title))
     return scored[:top_n]
@@ -261,6 +285,7 @@ def main() -> None:
         load_preferred_places(),
         feature_bonuses=feature_bonuses_from_log(),
         exclude_urls=known_urls(),
+        filters=load_job_filters(),
     )
     print(json.dumps([s.model_dump(mode="json") for s in ranked], indent=2, ensure_ascii=False))
 

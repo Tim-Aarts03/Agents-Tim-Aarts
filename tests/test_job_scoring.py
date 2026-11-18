@@ -10,8 +10,10 @@ from tools.job_scoring import (
     Location,
     RequirementGap,
     Vacancy,
+    JobFilters,
     classify_location,
     is_excluded,
+    load_job_filters,
     load_preferred_places,
     rank_vacancies,
     score_vacancy,
@@ -50,6 +52,7 @@ def test_best_single_domain_vacancy():
         "learning_environment": 23,  # traineeship 15 + mentor 8
         "location": 20,
         "hours": 10,
+        "role_fit": 0,
         "requirement_gaps": 0,
         "learned_from_ratings": 0,
     }
@@ -161,3 +164,39 @@ def test_real_preferred_places_file_is_valid():
     places = load_preferred_places()
     assert {"amsterdam", "haarlem", "heemstede"} <= places
     assert LearningEvidence.TRAINEESHIP_PROGRAM.value == "traineeship_program"
+
+
+FILTERS = JobFilters(
+    excluded_organisations=["FIFA", "Red Bull"],
+    excluded_role_types=["coaching_delivery"],
+    preferred_role_types=["program_coordination", "policy_advice"],
+)
+
+
+@pytest.mark.parametrize(
+    ("overrides", "excluded"),
+    [
+        ({"organisation": "FIFA Foundation"}, True),
+        ({"organisation": "red bull Nederland"}, True),
+        ({"organisation": "UEFA Foundation for Children"}, False),
+        ({"role_type": "coaching_delivery"}, True),
+        ({"role_type": "policy_advice"}, False),
+    ],
+)
+def test_job_filters_exclusions(overrides, excluded):
+    assert is_excluded(make(**overrides), TODAY, FILTERS) is excluded
+
+
+def test_preferred_role_type_gets_role_fit_points():
+    assert score_vacancy(make(role_type="program_coordination"), PLACES, filters=FILTERS).breakdown["role_fit"] == 5
+    assert score_vacancy(make(role_type="research"), PLACES, filters=FILTERS).breakdown["role_fit"] == 0
+
+
+def test_rank_applies_filters():
+    ranked = rank_vacancies([make("a", organisation="Red Bull"), make("b")], TODAY, PLACES, filters=FILTERS)
+    assert [s.vacancy.title for s in ranked] == ["b"]
+
+
+def test_real_job_filters_file_is_valid():
+    filters = load_job_filters()
+    assert "FIFA" in filters.excluded_organisations
