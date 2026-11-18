@@ -150,6 +150,6 @@ remember decisions and preferences across sessions.
 - Action: `tools/letter_docx.py` exports the letter part (above `---`) to `output/career/letter_<org>_<date>.docx` (A4, Calibri 11); step added to the career workflow in CLAUDE.md §6. Give Tim the .docx path and the vacancy link together.
 
 ### 2026-11-18 — First applications sent
-- Tim applied to UEFA Football Planning & Services Coordinator (rated 4: fits the gap year, moving abroad is fine, unsure about the role, very competitive) and one other vacancy (Mulier or Happy2Move, to confirm).
+- Tim applied to UEFA Football Planning & Services Coordinator (rated 4: fits the gap year, moving abroad is fine, unsure about the role, very competitive) and Mulier Instituut onderzoeksassistent (rated 5). Happy2Move planner letter is ready but not sent.
 - Happy2Move planner rated 3 (mainly administrative); letter written and exported to Word on Tim's request.
 - Next: record outcomes (invited/rejected/no response) in `logs/applications.csv` and `knowledge/letter_style.md` when Tim hears back.
