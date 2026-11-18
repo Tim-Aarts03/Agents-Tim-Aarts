@@ -32,6 +32,11 @@ Learning value outweighs salary.
 - Tim rates every proposed vacancy 1–5 (optionally with a reason).
 - `tools/preference_learning.py` learns which domains, role types, organisation types and employment types Tim rates high or low, and adjusts scores by at most ±10 points.
 - Known signals (Tim, 2026-11-17): an attractive company does not compensate for an unsuitable role (Upfront account manager, defence & security: rated 2).
+- Known signals (Tim, 2026-11-18):
+  - Graduate/traineeship programmes at large sports brands (ASICS EMEA) are the most interesting: much to learn and strong on the CV. Company + programme format = 5.
+  - But the role must fit: merchandise = 3, social media / brand media = 1 (does not want it).
+  - Delivering sport lessons (e.g. sports coach at mbo level) = 3: acceptable for a gap year, no long-term future. A nice organisation (Happy2Move) with a different role could be interesting.
+  - Sport and movement support for adults in care (NAH, Ons Tweede Thuis): not for Tim.
 
 ## Sources
 - (a) Public job sites and employer career pages — see `knowledge/job_sources.md`.

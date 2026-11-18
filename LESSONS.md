@@ -74,3 +74,17 @@ remember decisions and preferences across sessions.
 - Situation: Tim wants the scout to learn which vacancies he finds interesting, also from his earlier applications.
 - Lesson: an attractive company does not compensate for an unsuitable role (Upfront, rated 2). Tim wants a job (no internship; traineeship welcome) that looks strong on the CV, builds a network and offers many learning situations.
 - Action: Tim rates every proposed vacancy 1–5; `tools/preference_learning.py` turns average ratings per feature (domain, role type, org type, employment type) into a bonus of max ±10, active after 3 ratings per feature. Log seeded with Cruyff Foundation (5), Kenniscentrum Specialist jeugd (5), Ajax internship (4), Upfront (2). Internships are excluded by the scoring tool.
+
+### 2026-11-18 — First full job-scout run (local, network OK)
+- Situation: 9 candidates, top 5 proposed; ~45 web calls. Indeed single job pages return 401, werkzoeken 403; career-page URLs had to be guessed (404 looked like a network failure). The fetch model invented one Indeed URL (dropped by the scout).
+- Lesson: links from fetch summaries are not proof; unverified vacancies can outrank verified ones; QA caught overstated profile claims (Tim *coordinated* La Matanza sports lessons, he did not teach them).
+- Open proposals: real career-page URLs in `knowledge/job_sources.md`; penalty or separate list for `verified: false`; hours threshold (≥32 = full-time); `--no-log-exclusion` flag for QA re-scoring; remove `domain:sports_brand` from the Upfront seed row.
+
+### 2026-11-18 — Tim's ratings expose role vs. company conflict
+- Situation: Tim rated ASICS graduate roles "company + programme 5, role 3 (merchandise) / 1 (social media)". One rating per vacancy applies to all features, so `org_type:commercial_brand` and `domain:sports_brand` are now active at 2.0 and will push sports brands down, the opposite of what Tim wants. The Upfront seed row (wrongly tagged `domain:sports_brand`) adds to this.
+- Lesson: Tim judges the organisation and the role separately; the learning model must too.
+- Proposal (needs Tim's OK): separate role rating and organisation rating, and fix the Upfront tag.
+
+### 2026-11-18 — GitHub Desktop stashed uncommitted work
+- Situation: pulling in GitHub Desktop put Claude's uncommitted changes in a stash ("!!GitHub_Desktop<main>"); the log looked empty.
+- Action: restored with `git stash apply` (stash kept as backup). Commit finished work promptly, and run `git pull` at session start (CLAUDE.md §3).
