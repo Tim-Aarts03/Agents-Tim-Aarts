@@ -42,12 +42,19 @@ remember decisions and preferences across sessions.
 - Lesson: no VAT is charged and no VAT return is filed; instead monitor the €20,000 turnover threshold.
 - Action: planned `finance-kor-monitor` instead of a VAT-return agent (phase 3).
 
-### Tim's preferences
-- Communication in Dutch, direct, no filler. Code in English.
-- Controls agents by chatting (no fixed commands needed).
-- Friday: top 1–5 vacancies; Tim picks numbers; letters per pick; Tim approves and sends the letters.
-- Agents are archived, never deleted.
-- No specific banned phrases in letters (yet); letters improve through feedback and outcomes.
+### Tim's preferences (updated 2026-11-18, from the CLAUDE.md interview)
+- Answers: 1–2 sentences, then what Tim must do; fixed closing block (Gedaan / Jij moet / Volgende stap).
+- Open questions, not multiple choice. Technical explanation only for decisions Tim must make.
+- Claude may commit and push on its own once tests pass; CLAUDE.md and profile.md changes need a plan + approval.
+- Plan + approval for: new agents/tools, decisions on Tim's behalf, money, contacting other people (sending only with explicit approval per send).
+- Never: spend money, share personal data, act outside the instructions or outside the project folder. No response from Tim = wait.
+- Works only on the Mac from now on. Friday: the top 5 should be ready when Tim opens Claude, followed by an evaluation (max 3 improvements).
+- Max 3 agents in parallel; warn only when a task costs money or uses unusually much.
+- Improvement suggestions only when they really add value.
+- Tim is a beginner with AI: teach him short, practical tips on working with agents.
+- Priority after career: mail agents (weekly use), then bookkeeping, then quotes.
+- Goal in 10 weeks: career, mail and bookkeeping agent groups working under Claude; Tim only talks to Claude.
+- Earlier: controls agents by chatting; agents are archived, never deleted; no banned phrases yet in letters.
 
 ### 2026-11-16 — Application log is tracked in git
 - Situation: Tim works in ephemeral cloud sessions; a gitignored `logs/` folder would be lost each session, breaking the learning loop.
