@@ -92,3 +92,10 @@ def test_old_log_format_without_new_columns_still_reads(tmp_path):
 def test_update_unknown_url_raises(tmp_path):
     with pytest.raises(KeyError):
         update_status("https://nope.org", Status.SENT, DAY, tmp_path / "applications.csv")
+
+
+def test_training_status_roundtrip(tmp_path):
+    path = tmp_path / "applications.csv"
+    app = make_app("https://training.invalid/v01").model_copy(update={"status": Status.TRAINING})
+    add_proposed(app, path)
+    assert read_log(path)[0].status is Status.TRAINING

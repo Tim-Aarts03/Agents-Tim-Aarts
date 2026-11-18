@@ -101,3 +101,7 @@ remember decisions and preferences across sessions.
 ### 2026-11-18 — GitHub Desktop stashed uncommitted work
 - Situation: pulling in GitHub Desktop put Claude's uncommitted changes in a stash ("!!GitHub_Desktop<main>"); the log looked empty.
 - Action: restored with `git stash apply` (stash kept as backup). Commit finished work promptly, and run `git pull` at session start (CLAUDE.md §3).
+
+### 2026-11-18 — Training round with fictional vacancies
+- Situation: Tim wants to train the scout on his taste before real runs.
+- Action: 20 varied fictional vacancies logged with status `training` (URLs `https://training.invalid/vNN`); Tim rates them 1–5 with reasons; ratings feed `tools/preference_learning.py` like real ratings. Scores are not shown to Tim to avoid anchoring.

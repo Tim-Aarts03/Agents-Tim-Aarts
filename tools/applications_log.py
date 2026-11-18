@@ -27,6 +27,7 @@ class Status(str, Enum):
     REJECTED = "rejected"
     NO_RESPONSE = "no_response"
     SKIPPED = "skipped"  # proposed but not chosen
+    TRAINING = "training"  # fictional vacancy, only used to learn Tim's preferences
 
 
 class Application(BaseModel):
