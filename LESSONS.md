@@ -119,3 +119,8 @@ remember decisions and preferences across sessions.
 - Lesson: fixed weights encoded my assumptions (domain and distance), not Tim's taste (scale of impact, network). Validate weights against Tim's ratings before trusting them.
 - Action: new `impact_scale` field (international 20 / national 12 / unknown 5 / local 0); domain, location and hours points lowered; abroad not penalised for international impact; -10 for start-ups that are not Tim's own and -10 for app products; new role type `partnerships_fundraising` (preferred). Leave-one-out Spearman now 0.62; all four top-ranked training vacancies are rated 5.
 - Known gap: one-off role types (e.g. fundraising, rated 5) stay low until rated more often.
+
+### 2026-11-18 — First Friday run with rebalanced scoring
+- Situation: only 5 candidates (all verified), no traineeships, top score 42. ~40 web calls; broad WebSearch mostly returns expired vacancies.
+- Lesson: a good-cause fundraising role (Jeugdfonds, type Tim rated 5 in training) scored 28, below admin roles at UEFA: `domains: []` gives 0 domain points and `partnerships_fundraising` is not yet learned. The scout also wrote a self-computed "deadline in 6 days" (fixed); deadlines must be stated as dates only.
+- Friday evaluation (proposals, need Tim's OK): (1) give fundraising/policy roles at foundations/government a domain or role-fit bonus; (2) fixed source URLs in `job_sources.md`, incl. uefa.com/insideuefa/careers and gehandicaptensport.nl; (3) traineeship providers list with recruiting months + LinkedIn alerts.
