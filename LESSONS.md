@@ -105,3 +105,11 @@ remember decisions and preferences across sessions.
 ### 2026-11-18 — Training round with fictional vacancies
 - Situation: Tim wants to train the scout on his taste before real runs.
 - Action: 20 varied fictional vacancies logged with status `training` (URLs `https://training.invalid/vNN`); Tim rates them 1–5 with reasons; ratings feed `tools/preference_learning.py` like real ratings. Scores are not shown to Tim to avoid anchoring.
+
+### 2026-11-18 — What the 20 training ratings taught us
+- Rated 5: traineeship with rotation (3), community & impact at a big brand (7), international youth foundation abroad (9), fundraising/partnerships at a youth foundation (14), traineeship consultancy for government (17), national sport policy (19).
+- Pattern: big impact and scale + a strong network + learning from experienced people. Fundraising/partnership "sales" for a good cause is great; selling a product (sports nutrition) is not.
+- Low: club management (1), event logistics (2), sports nutrition sales (2), research requiring a master's (2 now, 5 later), apps and start-ups not his own (-1 each by Tim's own rule).
+- Feasibility lowers ratings (master's, years of experience): Tim wants a traineeship first, then policy roles.
+- Hours and distance matter for average roles (Zaandam, 32 h), not for dream roles (40 h and abroad fine).
+- Excluded organisation: De Atleetfabriek (Tim's earlier internship).

@@ -1,6 +1,15 @@
 {
   "_note": "Hard filters used by tools/job_scoring.py (Tim, 2026-11-18). Organisations are matched case-insensitively on their name.",
-  "excluded_organisations": ["FIFA", "Red Bull"],
-  "excluded_role_types": ["coaching_delivery"],
-  "preferred_role_types": ["program_coordination", "policy_advice"]
+  "excluded_organisations": [
+    "FIFA",
+    "Red Bull",
+    "Atleetfabriek"
+  ],
+  "excluded_role_types": [
+    "coaching_delivery"
+  ],
+  "preferred_role_types": [
+    "program_coordination",
+    "policy_advice"
+  ]
 }
