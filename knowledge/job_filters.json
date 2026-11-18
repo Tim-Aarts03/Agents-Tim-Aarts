@@ -16,5 +16,10 @@
   "penalised_org_types": {
     "scaleup_tech": 10
   },
-  "app_product_penalty": 10
+  "app_product_penalty": 10,
+  "good_cause_org_types": [
+    "foundation_nonprofit",
+    "government"
+  ],
+  "good_cause_role_bonus": 10
 }

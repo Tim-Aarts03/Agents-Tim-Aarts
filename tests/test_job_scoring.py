@@ -55,6 +55,7 @@ def test_best_single_domain_vacancy():
         "impact_scale": 20,
         "hours": 5,
         "role_fit": 0,
+        "good_cause_role": 0,
         "requirement_gaps": 0,
         "startup_app_penalty": 0,
         "learned_from_ratings": 0,
@@ -199,6 +200,19 @@ def test_job_filters_exclusions(overrides, excluded):
 def test_preferred_role_type_gets_role_fit_points():
     assert score_vacancy(make(role_type="program_coordination"), PLACES, filters=FILTERS).breakdown["role_fit"] == 5
     assert score_vacancy(make(role_type="research"), PLACES, filters=FILTERS).breakdown["role_fit"] == 0
+
+
+def test_good_cause_bonus_only_for_preferred_role_at_good_cause_org():
+    filters = FILTERS.model_copy(
+        update={"good_cause_org_types": ["foundation_nonprofit", "government"], "good_cause_role_bonus": 10}
+    )
+
+    def bonus(**overrides) -> int:
+        return score_vacancy(make(**overrides), PLACES, filters=filters).breakdown["good_cause_role"]
+
+    assert bonus(role_type="policy_advice", org_type="government") == 10
+    assert bonus(role_type="policy_advice", org_type="commercial_brand") == 0
+    assert bonus(role_type="research", org_type="foundation_nonprofit") == 0
 
 
 def test_rank_applies_filters():

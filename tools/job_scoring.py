@@ -174,6 +174,10 @@ class JobFilters(BaseModel):
     # Tim: start-ups that are not his own and app products each count as -1 in his rating.
     penalised_org_types: dict[OrgType, int] = Field(default_factory=dict)
     app_product_penalty: int = 0
+    # A preferred role at a good-cause organisation often has no sport domain of its own
+    # (e.g. fundraiser at a youth fund), yet Tim rated that combination 5 in training.
+    good_cause_org_types: list[OrgType] = Field(default_factory=list)
+    good_cause_role_bonus: int = 0
 
 
 def load_job_filters(path: Path = JOB_FILTERS_FILE) -> JobFilters:
@@ -244,6 +248,8 @@ def score_vacancy(
     # Tim would move abroad for internationally impactful work, so it is not penalised there.
     if location is Location.ABROAD and vacancy.impact_scale is ImpactScale.INTERNATIONAL:
         location_points = LOCATION_POINTS[Location.PREFERRED_REGION]
+    preferred_role = vacancy.role_type in filters.preferred_role_types
+    good_cause = preferred_role and vacancy.org_type in filters.good_cause_org_types
     penalty = filters.penalised_org_types.get(vacancy.org_type, 0)
     if vacancy.product_is_app:
         penalty += filters.app_product_penalty
@@ -253,7 +259,8 @@ def score_vacancy(
         "location": location_points,
         "impact_scale": IMPACT_POINTS[vacancy.impact_scale],
         "hours": HOURS_POINTS[vacancy.hours],
-        "role_fit": ROLE_FIT_POINTS if vacancy.role_type in filters.preferred_role_types else 0,
+        "role_fit": ROLE_FIT_POINTS if preferred_role else 0,
+        "good_cause_role": filters.good_cause_role_bonus if good_cause else 0,
         "requirement_gaps": -sum(GAP_PENALTIES[g] for g in set(vacancy.requirement_gaps)),
         "startup_app_penalty": -penalty,
         "learned_from_ratings": learned_bonus(vacancy, feature_bonuses or {}),
