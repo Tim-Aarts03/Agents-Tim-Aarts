@@ -144,3 +144,12 @@ remember decisions and preferences across sessions.
 
 ### 2026-11-18 — UEFA letter finalised
 - Tim is willing to relocate to Switzerland or France for UEFA, and would drop the T.A Vitality bootcamp for this job. Added "I am prepared to relocate to the Nyon area." to the letter (stated by Tim in chat; not yet in `profile.md`).
+
+### 2026-11-18 — Approved letters go to Word automatically
+- Tim wants a ready-to-send Word file as soon as he is satisfied with a letter.
+- Action: `tools/letter_docx.py` exports the letter part (above `---`) to `output/career/letter_<org>_<date>.docx` (A4, Calibri 11); step added to the career workflow in CLAUDE.md §6. Give Tim the .docx path and the vacancy link together.
+
+### 2026-11-18 — First applications sent
+- Tim applied to UEFA Football Planning & Services Coordinator (rated 4: fits the gap year, moving abroad is fine, unsure about the role, very competitive) and one other vacancy (Mulier or Happy2Move, to confirm).
+- Happy2Move planner rated 3 (mainly administrative); letter written and exported to Word on Tim's request.
+- Next: record outcomes (invited/rejected/no response) in `logs/applications.csv` and `knowledge/letter_style.md` when Tim hears back.

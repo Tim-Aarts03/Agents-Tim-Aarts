@@ -75,7 +75,7 @@ Wacht. Ga niet zelf verder met iets waarvoor akkoord nodig is.
 ### Career (actief)
 - **Vrijdag-run:** `career-job-scout` zet de top 1–5 vacatures in `output/career/vacancies_<datum>.md`.
 - Tim geeft elke vacature een cijfer 1–5 (+ reden) en kiest nummers → cijfers in `logs/applications.csv` (de scout leert hiervan).
-- Per gekozen vacature schrijft `career-cover-letter-writer` een brief → `qa-fact-checker` controleert → Tim keurt goed → versturen alleen na Tims akkoord → status in het logboek.
+- Per gekozen vacature schrijft `career-cover-letter-writer` een brief → `qa-fact-checker` controleert → Tim geeft feedback tot hij tevreden is → **direct automatisch** een Word-bestand maken met `.venv/bin/python -m tools.letter_docx output/career/letter_<org>_<datum>.md` (alleen de brief, zonder notities) en Tim het pad + de vacaturelink geven → Tim verstuurt zelf → status `sent` in het logboek.
 - **Vrijdag-evaluatie** (direct na de run): maximaal 3 concrete verbeterpunten voor de agents.
 - Heeft Tim een baan: career-agents met lessen en logs naar `/archive/career_<jaar>/`, registry bijwerken, nieuwe agents voorstellen die de baan ondersteunen.
 
