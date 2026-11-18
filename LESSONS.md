@@ -136,3 +136,8 @@ remember decisions and preferences across sessions.
 - Goal: automatic creation and sending within ~2 weeks, after training on drafts. Tim fears "weird mails to everyone": QA before every draft.
 - Action: `knowledge/bootcamp.md`, `tools/bootcamp_mail.py` (composition, dates, log), `tools/bootcamp_weather.py` (below 12 °C warm clothing; rain → covered balcony of team 2), agent `mail-promo-writer`. Participant names from examples anonymised in git.
 - Open: Gmail draft route on the Mac (Gmail connector or Apple Mail), whether Form responses land in a Google Sheet, recipient addresses (`knowledge/private_mail_recipients.json`).
+
+### 2026-11-18 — Bootcamp mail: recipient set, pitch training round
+- Situation: Hof van Jacob mail goes to one contact person who forwards it (Tim has no access to internal Sint Jacob mailing lists); address stored in `knowledge/private_mail_recipients.json`. Before drafting real mails Tim wants to learn his taste first, like the job-scout training round.
+- Action: `mail-promo-writer` wrote 20 pitches spread over length, tone, hook and emoji (`output/mail/pitch_training_2026-11-18.md`); Tim rates them 1–5. Manager fixed two small errors before showing them ("zeker jouw plekje", "🔥!").
+- Open: where the ratings live (the mail log is git-ignored); this week's promotion mail waits until after the ratings.

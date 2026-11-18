@@ -11,7 +11,7 @@ Source of truth for the bootcamp mails (Tim, 2026-11-18). Recipient addresses li
 - **Sign-up:** Google Form with two questions: name and e-mail. Currently a new form each week.
 
 ## Recipient groups
-- `hof_van_jacob`: employees of Hof van Jacob. For now sent to Tim's mother, who forwards it.
+- `hof_van_jacob`: employees of Hof van Jacob. Sent to one contact person, who forwards it to the rest (Tim has no access to the internal Sint Jacob mailing lists). Address in the private recipients file.
 - `jacob_kliniek`: a few individual addresses at Jacob Kliniek (Tim cannot enter there himself).
 
 ## Schedule
