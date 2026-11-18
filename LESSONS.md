@@ -119,3 +119,9 @@ remember decisions and preferences across sessions.
 - Lesson: fixed weights encoded my assumptions (domain and distance), not Tim's taste (scale of impact, network). Validate weights against Tim's ratings before trusting them.
 - Action: new `impact_scale` field (international 20 / national 12 / unknown 5 / local 0); domain, location and hours points lowered; abroad not penalised for international impact; -10 for start-ups that are not Tim's own and -10 for app products; new role type `partnerships_fundraising` (preferred). Leave-one-out Spearman now 0.62; all four top-ranked training vacancies are rated 5.
 - Known gap: one-off role types (e.g. fundraising, rated 5) stay low until rated more often.
+
+### 2026-11-18 — Mail agents for the bootcamp (plan approved)
+- Tim mails a weekly promotion (Wednesday 07:00) to Hof van Jacob (via his mother) and a few Jacob Kliniek addresses, and a standard reminder on Monday ~13:00 to people who signed up. Only the 1–3 sentence pitch changes each week.
+- Goal: automatic creation and sending within ~2 weeks, after training on drafts. Tim fears "weird mails to everyone": QA before every draft.
+- Action: `knowledge/bootcamp.md`, `tools/bootcamp_mail.py` (composition, dates, log), `tools/bootcamp_weather.py` (below 12 °C warm clothing; rain → covered balcony of team 2), agent `mail-promo-writer`. Participant names from examples anonymised in git.
+- Open: Gmail draft route on the Mac (Gmail connector or Apple Mail), whether Form responses land in a Google Sheet, recipient addresses (`knowledge/private_mail_recipients.json`).

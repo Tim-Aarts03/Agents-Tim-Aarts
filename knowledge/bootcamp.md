@@ -1,0 +1,58 @@
+# Bootcamp / beweegsessie — T.A Vitality
+
+Source of truth for the bootcamp mails (Tim, 2026-11-18). Recipient addresses live in `knowledge/private_mail_recipients.json` (not in git).
+
+## Fixed facts
+- **What:** weekly beweegsessie (bootcamp) for employees of Sint Jacob. Free for participants (the organisation pays).
+- **When:** every Tuesday, 16:15–17:00.
+- **Where:** Hof van Jacob (binnenplaats), Haarlem. Bad weather: the covered balcony of team 2.
+- **Max participants:** 12.
+- **Running since:** June 2026.
+- **Sign-up:** Google Form with two questions: name and e-mail. Currently a new form each week.
+
+## Recipient groups
+- `hof_van_jacob`: employees of Hof van Jacob. For now sent to Tim's mother, who forwards it.
+- `jacob_kliniek`: a few individual addresses at Jacob Kliniek (Tim cannot enter there himself).
+
+## Schedule
+| Mail | When | To |
+|---|---|---|
+| Promotion mail | Wednesday 07:00 | both groups |
+| Reminder | Monday ~13:00 | everyone who signed up for Tuesday |
+
+## Promotion mail
+Structure (filled by `tools/bootcamp_mail.py`): greeting per group → **pitch of 1–3 sentences** (the only part that changes; written by `mail-promo-writer`) → date line → sign-up link → closing.
+Signature: "Met vriendelijke groet,\nTim Aarts".
+
+## Reminder (always the same text, plus weather advice)
+```
+!Reminder!
+
+Wat leuk dat jij je hebt aangemeld voor de beweegsessie van morgen.
+Vergeet je sportspullen niet mee te nemen.
+
+Tot morgen!
+
+Met vriendelijke groet,
+
+Tim Aarts
+```
+Weather rules (`tools/bootcamp_weather.py`): below 12 °C → advise warmer clothing. Rain expected → mention the covered balcony of team 2.
+
+## Earlier pitches by Tim (style examples; names of participants replaced by [naam])
+1. "Koppel jezelf los na een lange werkdag en doe gratis en voor niks mee met de wekelijkse beweegsessie op Hof van Jacob."
+2. "Er wordt gelachen, bewogen en gezond gesnackt. De wekelijkse beweegsessie op dinsdagmiddag is sinds juni al een groot succes onder de medewerkers van Sint Jacob. Meld je aan via de onderstaande link en sluit je werkdag op een plezierige manier af."
+3. "Afgelopen week zijn de eerste Sint Jacob sport T-shirts uitgereikt aan de meest trouwe deelnemers van Sint Jacob. Meld je snel aan en krijg jouw T-shirt na de 5e deelname."
+4. "Laat jezelf van je beste kant zien en kom in beweging tijdens de wekelijkse beweegsessie op Hof van Jacob."
+5. "Vandaag wisten [naam] en [naam] al ver boven hun niveau uit te stijgen!" (to team Jacob Kliniek)
+6. "Hof van Jacob wordt elke week een stukje vitaler door de wekelijkse beweegsessie. Dinsdag 13 oktober staat er om 16:15 een nieuwe sessie op de planning en het belooft een groot succes te worden."
+7. "Sinds het begin van de beweegsessies waren er niet meer dan 8 deelnemers per sessie. Dit record wisten jullie met 10 deelnemers vanmiddag met kinderlijk gemak te verbreken! Dat is het vermelden waard; nogmaals dank voor jullie enthousiasme 👏👏👏."
+
+## Style
+- Warm, enthusiastic, short. Social proof (records, T-shirts, "groot succes") works well.
+- "je/jullie". Emoji sparingly.
+- Facts in a pitch (participant numbers, records, T-shirts, names) ONLY if Tim gave them this week or they are in this file. Never invent them.
+
+## Known facts for pitches
+- Running since June 2026; record attendance: 10 participants (earlier max was 8).
+- Sport T-shirts: given to the most loyal participants; you get one after your 5th session.
