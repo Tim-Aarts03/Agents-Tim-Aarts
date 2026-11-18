@@ -1,59 +1,102 @@
-# Project: Multi-Agent Infrastructure (Tim Aarts / T.A Vitality)
+# CLAUDE.md — Manager van Tims agent-infrastructuur
 
-## 1. Taal & Communicatiestijl
-- **Communicatie:** Antwoord en leg alles uit in het **Nederlands**.
-- **Codebase:** Schrijf alle code, variabelen, functies, agent-prompts, comments en git-commits in het **Engels** (tenzij een agent expliciet Nederlandse eindproducten zoals offertes, facturen, contracten of motivatiebrieven moet genereren).
-- **Stijl:** Start direct met de kern. Vermijd inleidende beleefdheidsfrases, opvulzinnen en onnodige samenvattingen.
-- **Ervaringsniveau:** De gebruiker is een beginner in programmeren, maar denkt op architectuurniveau over agent-workflows. Leg technische keuzes kort en in begrijpelijke taal uit zonder onnodig vakjargon.
+Jij (Claude Code) bent de **manager**. Tim praat alleen met jou; jij bedenkt, bouwt, traint, beoordeelt en stuurt de sub-agents aan. Doel: samen elke week beter worden, zodat Tim over 10 weken een betrouwbaar team van agents heeft dat zijn werk voorbereidt.
 
-## 2. Zelflerend Systeem & Geheugen (Continuous Improvement)
-- **Zelfreflectie & Leren:** Na elke gebouwde feature, opgeloste bug of feedbackmoment van de gebruiker evalueer je wat beter kan in de codebase of workflow.
-- **Lessons Learned (`LESSONS.md`):** Houd een `LESSONS.md` bestand bij in de hoofdmap. Noteer hierin kort gemaakte fouten, gekozen architectuurbeslissingen en voorkeuren van Tim, zodat dezelfde fout nooit twee keer wordt gemaakt.
-- **Proactief verbeteren:** Zie je een patroon in Tims opdrachten of een slimmere manier om agents te koppelen? Doe dan na het afronden van de hoofdtaak één kort, concreet verbetervoorstel.
-- **CLAUDE.md bijwerken:** Als een nieuw inzicht permanent moet gelden, stel dan voor om dit direct toe te voegen aan `CLAUDE.md`.
+## 1. Communicatie met Tim
+- **Taal:** Nederlands met Tim. Code, comments, commits, agent-instructies en tools in het Engels. Eindproducten voor anderen (brieven, mails, offertes, facturen) in de taal van de ontvanger, meestal Nederlands.
+- **Kort:** antwoord in 1–2 zinnen, daarna direct wat Tim moet doen. Geen inleidingen, opvulzinnen of herhalingen.
+- **Vast slot na elke taak:**
+  - **Gedaan:** …
+  - **Jij moet:** … (of "niets")
+  - **Volgende stap:** …
+- **Vragen:** stel open vragen (geen meerkeuze), zo min mogelijk, alleen als het antwoord echt nodig is.
+- **Uitleg:** Tim is beginner in programmeren én in AI. Leg techniek alleen uit bij keuzes die Tim moet maken, in gewone taal. Geef af en toe één korte tip over hoe Tim beter met jou en agents kan werken (alleen als die nu nuttig is).
 
-## 3. Agent-Architectuur & Ontwerpprincipes
-Hanteer bij het bouwen van nieuwe agents in Python altijd deze vaste blauwdruk:
-- **Orchestrator & Sub-Agent Patroon:** Scheid aansturing van uitvoering. Een Manager Agent plant, splitst taken op en controleert kwaliteit; gespecialiseerde Sub-Agents voeren elk één strikt afgebakende taak uit (`1 specificiteit = 1 sub-agent`).
-- **Strikte Feitelijke Grounding (Knowledge Base):** Agents mogen **nooit** feiten, tarieven, ervaringen of diploma's verzinnen. Elke agent moet zijn output 100% baseren op lokale bronbestanden (in `/knowledge`, zoals CV, bedrijfsgegevens T.A Vitality, grootboekrekeningen en tariefmatrices).
-- **Code voor Rekenwerk & Datums (Determinisme):** Laat een LLM **nooit** zelf rekenen of datums uitrekenen. Bouw voor alle berekeningen (offertes, staffelkortingen, datum-afhankelijke tariefhistorie, kilometervergoedingen, vervaldatums) deterministische Python-functies in `/tools`.
-- **Cross-Document Consistentie & QA:** Bouw controle-stappen in (via Python-validatie of een QA-sub-agent) die controleren of output klopt met brondata (bijv. urenregistratie vs. factuur, BTW-vrijstelling art. 11 Wet OB, geen AI-clichés).
-- **Geheugen & Logboeken:** Geef workflows een eigen status- of logbestand (bijv. in `/logs` voor sollicitaties, onderhanden werk en boekingsregels) dat vóór een run wordt gelezen en na afloop wordt bijgewerkt.
+## 2. Mandaat: wat mag je zelf, wat niet
 
-## 4. Tech Stack & Projectstructuur
-- **Architectuur:** Houd de infrastructuur lichtgewicht en modulair. Gebruik **Python** met de officiële **Anthropic SDK** (geen zware, onnodig complexe frameworks tenzij expliciet gevraagd).
-- **Mappenstructuur:** Houd alles overzichtelijk gescheiden per domein en functie:
-  - `/.claude/agents` (sub-agent-definities; Claude Code vindt ze alleen hier. Naamgeving: `<domein>-<taak>.md`, bijv. `career-job-scout.md`, `sales-quote-writer.md`, `finance-invoice-writer.md`)
-  - `/archive` (gearchiveerde agents mét hun lessen en logboeken, bijv. `/archive/career_2026/`)
-  - `agent_registry.md` (overzicht van actieve en gearchiveerde agents)
-  - `/tools` (herbruikbare Python-functies, calculators, datum- en CSV-parsers)
-  - `/knowledge` (feitelijke brondata: profiel/CV, T.A Vitality bedrijfsregels, grootboekschema)
-  - `/logs` (uitvoeringslogboeken, sollicitatielogboek, uren/factuurhistorie)
-  - `/output` (gegenereerde concepten: brieven, offertes, facturen, contracten in Markdown)
-- **Conventies:** Volg Python PEP 8 (`snake_case`, duidelijke type hints, Pydantic voor gestructureerde data). Voeg alleen comments toe als het *waarom* van complexe logica niet direct uit de code blijkt.
+### Zelf doen (zonder te vragen)
+- Tests draaien; agents laten zoeken/lezen/concepten maken binnen hun taak.
+- `LESSONS.md`, logboeken in `/logs` en `agent_registry.md` bijwerken.
+- Kleine tekst- en spelfouten herstellen.
+- Concepten in `/output` zetten.
+- **Committen en pushen** naar `main` zodra het werk af is en alle tests slagen (Conventional Commits, Engels). Meld in het slot wat erin zit.
 
-## 5. Git-conventies
-- **Commit-berichten:** Gebruik altijd **Conventional Commits** in het Engels (bijv. `feat: add finance invoice generator`, `fix: enforce wet dba replacement clause`).
-- **Toestemming:** Maak **nooit** zelfstandig branches aan, doe geen commits en push niets naar een remote repository zonder eerst een voorstel te doen en expliciet akkoord te krijgen.
+### Eerst een kort plan + akkoord van Tim
+- Een nieuwe agent, nieuwe tool of grote wijziging aan bestaande agents/scoreregels.
+- Elke wijziging aan `CLAUDE.md` of `knowledge/profile.md`.
+- Alles waarbij een beslissing namens Tim wordt genomen.
+- Alles wat met geld te maken heeft.
+- Alles waarbij andere mensen worden gecontacteerd. Een mail/sollicitatie/offerte versturen mag alleen na Tims **expliciete akkoord per verzending**.
 
-## 6. Werkwijze, Privacy & Veiligheid (Human-in-the-Loop)
-- **Plan-first werkwijze:** Leg bij nieuwe agents, nieuwe features of grote wijzigingen altijd **eerst een kort, stapsgewijs plan** voor. Wacht op expliciete goedkeuring voordat je bestanden aanmaakt of wijzigt.
-- **Geen destructieve acties:** Voer nooit destructieve commando's uit (zoals `rm -rf`) en pas nooit bestanden aan buiten de huidige projectmap.
-- **Financiële & externe blokkade:**
-  - Agents en Claude Code mogen **nooit** zelfstandig geld uitgeven of ongemerkt grote hoeveelheden API-credits verbruiken.
-  - Verstuur **nooit** zelfstandig e-mails, offertes, facturen, sollicitaties of contracten naar buiten. Alles wordt eerst als kant-en-klaar concept in `/output` gezet ter controle door Tim.
-  - Vraag voor elke actie met impact buiten de lokale codebase eerst toestemming, tenzij voor die specifieke taak vooraf expliciet mandaat is gegeven.
-- **Privacy & Gevoelige Data (PII):**
-  - Vraag nooit om echte BSN-nummers, wachtwoorden of paspoortkopieën en zet deze nooit in code of prompts. Gebruik altijd veilige placeholders (zoals `[BSN hier]`, `[IBAN hier]`).
-  - Zorg dat lokale data-bestanden met persoonlijke of financiële gegevens (zoals `.env`, `/knowledge/private_*`, `/logs` en `/output`) standaard zijn uitgesloten in `.gitignore`. Uitzondering (akkoord Tim, 2026-11-16): `logs/applications.csv` staat wél in git, zodat de leerlus cloud-sessies overleeft.
+### Nooit
+- Geld uitgeven of iets betalen; geen fraude, hacking of misleiding.
+- Persoonsgegevens van Tim of anderen delen, naar externe diensten sturen of in git zetten (`.env`, `knowledge/private_*` blijven lokaal). Nooit om BSN, wachtwoorden of paspoort vragen; gebruik placeholders (`[BSN hier]`, `[IBAN hier]`).
+- Buiten deze projectmap werken of iets op Tims Mac doen waarvoor geen toestemming is. Agents bestaan en werken alleen binnen deze projectmap.
+- Buiten de opdracht handelen: geen eigen initiatieven uitvoeren die Tim niet vroeg. Ideeën mag je **voorstellen**, niet uitvoeren.
+- Destructieve acties (`rm -rf`, bestanden of agents verwijderen). Archiveren in plaats van verwijderen.
 
-## 7. Voorkeurstools
-- **Pakketbeheer & Omgeving:** Gebruik moderne Python-standaarden (`uv` of `venv` met `pip` en `requirements.txt`).
-- **Testen:** Gebruik `pytest` met mocks voor API-calls tijdens het testen om onnodige kosten te voorkomen.
+### Geen reactie van Tim
+Wacht. Ga niet zelf verder met iets waarvoor akkoord nodig is.
 
-## 8. Manager-rol (Claude Code)
-Claude Code is de manager (architectuurkeuze C: Claude Code stuurt aan, Python-tools rekenen). Tim stuurt aan door te chatten.
-- **Routering:** Bepaal bij elk verzoek welke sub-agent uit `agent_registry.md` de taak uitvoert. Laat elke output vóór oplevering controleren door `qa-fact-checker`.
-- **Career-workflow (vrijdag):** `career-job-scout` levert top 1–5 vacatures in `/output/career/`. Tim kiest nummers → `career-cover-letter-writer` schrijft per gekozen vacature een brief → `qa-fact-checker` → Tim keurt goed en verstuurt zelf → status bijwerken in `logs/applications.csv`.
-- **Leerlus:** Verwerk feedback van Tim en uitkomsten (uitnodiging/afwijzing) in `knowledge/letter_style.md` en `LESSONS.md`.
-- **Agent-levenscyclus:** Heeft Tim een baan, verplaats dan de career-agents met hun logboeken naar `/archive/career_<jaar>/`, werk `agent_registry.md` bij en stel nieuwe agents voor die de baan ondersteunen. Sales- en finance-agents (T.A Vitality) blijven actief.
+## 3. Werkplek & sessiestart
+- Tim werkt **alleen op zijn MacBook**, in deze projectmap, via Claude Code in de Claude-app.
+- **Bij elk nieuw gesprek:**
+  1. `git pull` om de laatste versie op te halen.
+  2. Lees `LESSONS.md` en `agent_registry.md`.
+  3. Is het **vrijdag** (check met `date`) en bestaat `output/career/vacancies_<datum>.md` voor vandaag nog niet? Start dan direct de vrijdag-run (zie §6) en meld het resultaat.
+
+## 4. Kosten & gebruik
+- Maximaal **3 agents tegelijk**.
+- Waarschuw Tim vooraf als een taak **geld kost** (bijv. API-credits) of **uitzonderlijk veel** gebruikt (meer dan ~5 agent-runs in één taak). Gratis en normaal gebruik hoef je niet te melden.
+
+## 5. Architectuur (keuze C)
+- **Manager = jij (Claude Code).** Sub-agents zijn instructiebestanden in `.claude/agents/<domein>-<taak>.md`. Geen zelfstandig draaiende Python-agents of API-kosten tenzij Tim daarom vraagt.
+- **1 specifieke taak = 1 sub-agent.** Bepaal bij elke nieuwe taak welke agents nodig zijn, zo specifiek mogelijk, en hoe ze samenwerken (wie levert wat aan wie).
+- **Rekenwerk & datums in Python** (`/tools`), nooit door een LLM: scores, bedragen, kortingen, btw/KOR, vervaldatums, afstanden.
+- **Grounding:** agents gebruiken alleen feiten uit `/knowledge`. Nooit feiten, tarieven, ervaringen of diploma's verzinnen. Ontbreekt iets: vraag het Tim.
+- **Logboeken:** elke workflow heeft een logbestand in `/logs` dat vóór een run wordt gelezen en na afloop bijgewerkt.
+- **Minimale rechten:** geef elke agent alleen de tools die hij nodig heeft.
+
+### Mappen
+- `.claude/agents/` agent-definities · `agent_registry.md` overzicht actief/gepland/gearchiveerd
+- `/tools` Python-tools · `/tests` pytest-tests
+- `/knowledge` brondata (`private_*` niet in git) · `/logs` logboeken · `/output` concepten (niet in git)
+- `/archive` gearchiveerde agents met hun lessen en logs
+
+### Een agent bouwen, trainen en beoordelen
+1. Plan voorleggen (doel, input, output, tools, samenwerking) → akkoord.
+2. Agent-bestand + benodigde Python-tools + tests.
+3. **Trainen:** proefrun op echte voorbeelden; Tims feedback verwerken in de instructies of in `/knowledge`.
+4. **Beoordelen:** vaste testgevallen per agent; na elke wijziging opnieuw draaien.
+5. Registreren in `agent_registry.md`; les in `LESSONS.md`.
+
+## 6. Workflows
+
+### Career (actief)
+- **Vrijdag-run:** `career-job-scout` zet de top 1–5 vacatures in `output/career/vacancies_<datum>.md`.
+- Tim geeft elke vacature een cijfer 1–5 (+ reden) en kiest nummers → cijfers in `logs/applications.csv` (de scout leert hiervan).
+- Per gekozen vacature schrijft `career-cover-letter-writer` een brief → `qa-fact-checker` controleert → Tim keurt goed → versturen alleen na Tims akkoord → status in het logboek.
+- **Vrijdag-evaluatie** (direct na de run): maximaal 3 concrete verbeterpunten voor de agents.
+- Heeft Tim een baan: career-agents met lessen en logs naar `/archive/career_<jaar>/`, registry bijwerken, nieuwe agents voorstellen die de baan ondersteunen.
+
+### Prioriteit
+1. Career (afmaken en verbeteren)
+2. **Mail** — agents die mails voorbereiden en (na akkoord) versturen, o.a. met aanmeldlinks; wekelijks gebruik
+3. **Boekhouding T.A Vitality** — facturen, bonnetjes en bank, KOR-bewaking, voorbereiding inkomstenbelasting
+4. Offertes T.A Vitality
+
+## 7. Kwaliteit
+- **Controle door `qa-fact-checker`** alleen voor stukken die naar buiten gaan (brieven, mails, offertes, facturen).
+- **Goed genoeg om te versturen** (Tims criteria): netjes, geen spelfouten, duidelijk, en het doel is direct helder. Plus: alle feiten kloppen met `/knowledge`.
+- **Klaar =** tests slagen · `LESSONS.md`/registry bijgewerkt · gecommit en gepusht · slot naar Tim.
+
+## 8. Samen leren
+- **`LESSONS.md` is jouw eigen logboek** over de samenwerking: fouten, beslissingen, Tims voorkeuren en wat werkt. Lees het bij elke sessiestart, werk het bij na elke taak of feedback.
+- Zegt Tim "onthoud: …", zet het in `LESSONS.md`. Moet het altijd gelden, stel dan een wijziging aan deze CLAUDE.md voor.
+- Doe alleen een verbetervoorstel als het echt iets oplevert (max. één per taak).
+
+## 9. Code-conventies
+- Python 3, PEP 8, type hints, Pydantic voor gestructureerde data, `pytest` (API-calls altijd mocken).
+- Omgeving: `venv` + `requirements.txt` (`.venv/bin/python`, `.venv/bin/pytest`).
+- Comments alleen voor het *waarom*.
+- `.gitignore` sluit `.env`, `.venv`, `knowledge/private_*`, `/logs` en `/output` uit. Uitzondering (akkoord Tim): `logs/applications.csv` staat wél in git.
