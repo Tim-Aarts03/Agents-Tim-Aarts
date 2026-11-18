@@ -1,6 +1,6 @@
-"""Send ONE approved weekly bootcamp promotion mail through Apple Mail.
+"""Send ONE approved weekly bootcamp promotion mail through Apple Mail, or save it as a draft.
 
-Strict by design (Tim, 2026-11-18): this tool can only send. It never reads,
+Strict by design (Tim, 2026-11-18): this tool can only create a draft or send. It never reads,
 searches, moves or deletes mail. It refuses unless
 - every recipient is in the private recipients file,
 - the subject is a weekly bootcamp promotion subject,
@@ -24,7 +24,7 @@ SUBJECT_PATTERN = re.compile(r"^Beweegsessie dinsdag \d{1,2} [a-z]+ – meld je 
 
 # Recipients, subject and body are passed as argv so mail text can never be run as AppleScript.
 # Only "make new outgoing message" and "send" are used: no access to any mailbox.
-APPLESCRIPT = """
+_SCRIPT = """
 on run argv
     set theSubject to item 1 of argv
     set theBody to item 2 of argv
@@ -35,10 +35,12 @@ on run argv
                 make new to recipient at end of to recipients with properties {address:(item i of argv)}
             end repeat
         end tell
-        send msg
+        {final}
     end tell
 end run
 """
+APPLESCRIPT = _SCRIPT.replace("{final}", "send msg")
+DRAFT_APPLESCRIPT = _SCRIPT.replace("{final}", "save msg")
 
 
 class SendRefused(Exception):
@@ -64,23 +66,25 @@ def check_mail(mail: Mail, group: Group, send_date: date, allowed: dict[Group, l
         raise SendRefused(f"a promotion mail for {session} was already sent to {group.value}")
 
 
-def send_via_apple_mail(mail: Mail) -> None:
+def send_via_apple_mail(mail: Mail, draft_only: bool = False) -> None:
+    script = DRAFT_APPLESCRIPT if draft_only else APPLESCRIPT
     subprocess.run(
-        ["osascript", "-e", APPLESCRIPT, mail.subject, mail.body, *mail.to],
+        ["osascript", "-e", script, mail.subject, mail.body, *mail.to],
         check=True, capture_output=True, text=True, timeout=60,
     )
 
 
 def send(
     draft: Path, group: Group, approved_hash: str, send_date: date,
-    recipients_file: Path = RECIPIENTS_FILE, log_path: Path = MAIL_LOG,
+    recipients_file: Path = RECIPIENTS_FILE, log_path: Path = MAIL_LOG, draft_only: bool = False,
 ) -> Mail:
     mail = Mail.model_validate_json(draft.read_text(encoding="utf-8"))
     if mail_hash(mail) != approved_hash:
         raise SendRefused("draft changed after Tim's approval (hash mismatch); show a new preview")
     check_mail(mail, group, send_date, load_recipients(recipients_file), read_mail_log(log_path))
-    send_via_apple_mail(mail)
-    log_mail(send_date, "promo_sent", group.value, _pitch_of(mail), path=log_path)
+    send_via_apple_mail(mail, draft_only=draft_only)
+    kind = "promo_draft" if draft_only else "promo_sent"
+    log_mail(send_date, kind, group.value, _pitch_of(mail), path=log_path)
     return mail
 
 
@@ -92,10 +96,11 @@ def _pitch_of(mail: Mail) -> str:
 def main() -> None:
     """CLI:
     python -m tools.mail_sender preview --draft output/mail/X.json --group hof_van_jacob
+    python -m tools.mail_sender draft --draft output/mail/X.json --group hof_van_jacob --approved-hash HASH
     python -m tools.mail_sender send --draft output/mail/X.json --group hof_van_jacob --approved-hash HASH
     """
     parser = argparse.ArgumentParser()
-    parser.add_argument("action", choices=["preview", "send"])
+    parser.add_argument("action", choices=["preview", "draft", "send"])
     parser.add_argument("--draft", type=Path, required=True)
     parser.add_argument("--group", required=True, choices=[g.value for g in Group])
     parser.add_argument("--approved-hash", default="")
@@ -108,8 +113,9 @@ def main() -> None:
         check_mail(mail, group, args.date, load_recipients(), read_mail_log())
         print(f"Aan: {', '.join(mail.to)}\nOnderwerp: {mail.subject}\n\n{mail.body}\n\nAPPROVAL HASH: {mail_hash(mail)}")
     else:
-        mail = send(args.draft, group, args.approved_hash, args.date)
-        print(f"SENT to {', '.join(mail.to)}: {mail.subject}")
+        draft_only = args.action == "draft"
+        mail = send(args.draft, group, args.approved_hash, args.date, draft_only=draft_only)
+        print(f"{'SAVED AS DRAFT' if draft_only else 'SENT'} to {', '.join(mail.to)}: {mail.subject}")
 
 
 if __name__ == "__main__":

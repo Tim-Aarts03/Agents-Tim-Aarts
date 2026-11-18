@@ -78,7 +78,18 @@ def test_refuses_second_send_for_same_session(setup):
     assert osascript.call_count == 1
 
 
-def test_applescript_only_creates_and_sends():
-    script = mail_sender.APPLESCRIPT
+def test_draft_saves_without_sending_and_does_not_block_send(setup):
+    recipients, log, make_draft = setup
+    draft, h = make_draft()
+    with patch.object(mail_sender.subprocess, "run") as osascript:
+        send(draft, Group.HOF_VAN_JACOB, h, SEND_DATE, recipients_file=recipients, log_path=log, draft_only=True)
+        script = osascript.call_args.args[0][2]
+        assert "save msg" in script and "send msg" not in script
+        run(draft, h, recipients, log)
+    assert [r["kind"] for r in read_mail_log(log)] == ["promo_draft", "promo_sent"]
+
+
+@pytest.mark.parametrize("script", [mail_sender.APPLESCRIPT, mail_sender.DRAFT_APPLESCRIPT])
+def test_applescript_only_creates_and_sends(script):
     for forbidden in ("mailbox", "every message", "delete", "move", "read status", "do shell script"):
         assert forbidden not in script

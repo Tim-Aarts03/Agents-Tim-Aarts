@@ -166,3 +166,4 @@ remember decisions and preferences across sessions.
 - Tim's strict rules: the sender may do nothing else in his mail: no reading, searching or other mails; only the weekly promotion mail to the allowed account.
 - Action: `tools/mail_sender.py` (Apple Mail via AppleScript, send-only). Refuses on: recipient not in `knowledge/private_mail_recipients.json`, non-promotion subject, content changed after Tim's approval (hash from `preview`), second send for the same session. `.claude/settings.json` denies Claude raw `osascript` and reading `~/Library/Mail`. Reminders to sign-ups are NOT covered yet (needs a new plan).
 - Flow: preview → Tim says "verstuur" → send with that preview's hash. Approval per send stays.
+- 2026-11-18: Tim chose "put it in Concepten" instead of sending. Added `draft` mode (AppleScript `save msg`, logged as `promo_draft`, does not block a later send). First draft for 24 Nov saved in Apple Mail.
