@@ -159,3 +159,5 @@ remember decisions and preferences across sessions.
 - Pattern: 2–3 sentences, emotion + call to action + 1–3 fitting emoji. One-liners feel bare. Topical hooks (Black Friday) are a plus. Never mention who pays or the weather.
 - Tim rated by voice and sometimes without a number (11 inferred as 5 from "topper"; 13 and 16 missing).
 - Action: style rules in `knowledge/bootcamp.md` (read by `mail-promo-writer`); ratings in `logs/pitch_ratings.csv` (local, git-ignored).
+- Follow-up 2026-11-18: Tim corrected 11 to 4 (not the inferred 5), 13 = 3, 16 = 2. Inferring a number from words was wrong once: always ask.
+- First real promotion mail (24 Nov) drafted with pitch 18, QA PASS; Tim sends it himself (no Gmail connector yet).
