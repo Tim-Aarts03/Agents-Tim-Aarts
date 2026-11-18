@@ -49,10 +49,18 @@ Weather rules (`tools/bootcamp_weather.py`): below 12 °C → advise warmer clot
 7. "Sinds het begin van de beweegsessies waren er niet meer dan 8 deelnemers per sessie. Dit record wisten jullie met 10 deelnemers vanmiddag met kinderlijk gemak te verbreken! Dat is het vermelden waard; nogmaals dank voor jullie enthousiasme 👏👏👏."
 
 ## Style
-- Warm, enthusiastic, short. Social proof (records, T-shirts, "groot succes") works well.
-- "je/jullie". Emoji sparingly.
+- Warm, energetic, positive. "je/jullie".
 - Facts in a pitch (participant numbers, records, T-shirts, names) ONLY if Tim gave them this week or they are in this file. Never invent them.
 
+### Learned from Tim's ratings (training round 2026-11-18, 20 pitches)
+- **Length:** 2–3 sentences. A single sentence feels too short and bare (rated 3), even when it is powerful.
+- **Always:** emotion + a clear call to action ("meld je aan", "neem een collega mee", "doe mee"). Energy over calm.
+- **Emoji:** 1–3 fitting emoji earn extra points (🌿 💪 🤝😊 ⚡🔥). No "cool" emoji like 😎.
+- **Hooks rated 5:** clearing your head / leaving the busy day behind; T-shirt after the 5th session (triggers people who came once); bring a colleague / do it as a duo; energy boost for the rest of the week; turning dark November afternoons into something fun (question + exclamation + emoji).
+- **Topical hooks are welcome:** a current event (e.g. Black Friday for a "deal" line) lifts a pitch from 4 to 5.
+- **Avoid:** the attendance record of 10 (not impressive), limited places / "max 12", who pays ("de organisatie betaalt"), rain and weather (standard; the balcony is not a selling point), sweat or anything that sounds unpleasant, framing that sounds gloomy ("donkerder") without turning it into energy.
+- "Je hoeft alleen je sportspullen mee te nemen" works well.
+
 ## Known facts for pitches
-- Running since June 2026; record attendance: 10 participants (earlier max was 8).
+- Running since June 2026; record attendance: 10 participants (earlier max was 8). Do not use the record in pitches (Tim, 2026-11-18).
 - Sport T-shirts: given to the most loyal participants; you get one after your 5th session.

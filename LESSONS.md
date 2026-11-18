@@ -153,3 +153,9 @@ remember decisions and preferences across sessions.
 - Tim applied to UEFA Football Planning & Services Coordinator (rated 4: fits the gap year, moving abroad is fine, unsure about the role, very competitive) and Mulier Instituut onderzoeksassistent (rated 5). Happy2Move planner letter is ready but not sent.
 - Happy2Move planner rated 3 (mainly administrative); letter written and exported to Word on Tim's request.
 - Next: record outcomes (invited/rejected/no response) in `logs/applications.csv` and `knowledge/letter_style.md` when Tim hears back.
+
+### 2026-11-18 — What the 20 pitch ratings taught us
+- Rated 5: clearing your head after work (2), T-shirt progress (3), bring a colleague (11, 12), energy boost (14), dark November turned into fun (18). Rated 1–2: record of 10, limited places, sweat.
+- Pattern: 2–3 sentences, emotion + call to action + 1–3 fitting emoji. One-liners feel bare. Topical hooks (Black Friday) are a plus. Never mention who pays or the weather.
+- Tim rated by voice and sometimes without a number (11 inferred as 5 from "topper"; 13 and 16 missing).
+- Action: style rules in `knowledge/bootcamp.md` (read by `mail-promo-writer`); ratings in `logs/pitch_ratings.csv` (local, git-ignored).
