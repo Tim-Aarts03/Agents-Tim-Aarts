@@ -75,6 +75,19 @@ remember decisions and preferences across sessions.
 - Lesson: an attractive company does not compensate for an unsuitable role (Upfront, rated 2). Tim wants a job (no internship; traineeship welcome) that looks strong on the CV, builds a network and offers many learning situations.
 - Action: Tim rates every proposed vacancy 1–5; `tools/preference_learning.py` turns average ratings per feature (domain, role type, org type, employment type) into a bonus of max ±10, active after 3 ratings per feature. Log seeded with Cruyff Foundation (5), Kenniscentrum Specialist jeugd (5), Ajax internship (4), Upfront (2). Internships are excluded by the scoring tool.
 
+### 2026-11-18 — Profile rebuilt from interview
+- Situation: CV facts were outdated or inflated (Spanish "intermediate" is really A1–A2; "eerste divisie" at HFC is wrong; football ended through travel, then a cruciate ligament injury).
+- Lesson: Tim's own CV overstates some things; letters must use `profile.md` only, never the CV PDFs.
+- Action: `knowledge/profile.md` rewritten; references in `knowledge/private_references.md` (not in git).
+
+### 2026-11-18 — Job preferences sharpened
+- Tim wants to lead, set up projects and make policy; never buurtsportcoach or teaching sports lessons. Dream employers: Upfront, Adidas, UEFA Foundation. Organisations must do good for the world (not FIFA, not Red Bull).
+- Action: `knowledge/job_filters.json` (excluded organisations and role types, preferred role types +5); scoring tool and scout updated.
+
+### 2026-11-18 — Standing mandate for CLAUDE.md and profile.md
+- Tim: "If I ask you to change CLAUDE.md or profile.md, just do it right in one go; I won't approve drafts."
+- Action: CLAUDE.md §2 updated. Only changes Claude proposes itself still need approval.
+
 ### 2026-11-18 — First full job-scout run (local, network OK)
 - Situation: 9 candidates, top 5 proposed; ~45 web calls. Indeed single job pages return 401, werkzoeken 403; career-page URLs had to be guessed (404 looked like a network failure). The fetch model invented one Indeed URL (dropped by the scout).
 - Lesson: links from fetch summaries are not proof; unverified vacancies can outrank verified ones; QA caught overstated profile claims (Tim *coordinated* La Matanza sports lessons, he did not teach them).

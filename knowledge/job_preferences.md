@@ -9,6 +9,15 @@ A job (not an internship; a traineeship is welcome) that:
 3. **puts Tim in many learning situations** (variety, responsibility, exposure to leadership).
 Learning value outweighs salary.
 
+## Role (Tim, 2026-11-18)
+- **Wants:** to lead and steer, set up projects, create and implement policy and make it work (`program_coordination`, `policy_advice`: bonus points).
+- **Does not want:** buurtsportcoach or giving sports lessons in front of a group (`coaching_delivery`: excluded) — too superficial, not challenging enough.
+- **From an employer:** freedom, a learning environment, challenge and honest feedback.
+
+## Organisations
+- **Dream employers:** Upfront, Adidas, UEFA Foundation.
+- Must do good for the world. **Excluded:** FIFA, Red Bull (list in `knowledge/job_filters.json`).
+
 ## Domains (in order of fit)
 1. Sport/movement for vulnerable groups (children in disadvantaged neighbourhoods, low-income children, minorities) — `sport_for_vulnerable_groups`
 2. Sport + technology — `sport_tech`
@@ -26,6 +35,8 @@ Learning value outweighs salary.
 ## Hard filters
 - Deadline passed → exclude.
 - Internship (stage) → exclude. Traineeships are welcome.
+- Buurtsportcoach / giving sports lessons (`coaching_delivery`) → exclude.
+- Organisations in `knowledge/job_filters.json` → exclude.
 - Requirements Tim does not meet (master's degree, years of experience) → lower score, not excluded.
 
 ## Learning from ratings

@@ -1,6 +1,6 @@
 # Job sources
 
-Search only public pages. Never log in or scrape LinkedIn.
+Search only public pages. Never log in or scrape LinkedIn. Never propose organisations in `knowledge/job_filters.json` (FIFA, Red Bull).
 
 ## Employers to check directly (career pages)
 - Johan Cruyff Foundation
@@ -8,8 +8,9 @@ Search only public pages. Never log in or scrape LinkedIn.
 - Jeugdfonds Sport & Cultuur
 - Kenniscentrum Sport & Bewegen
 - Mulier Instituut
-- Gemeente Amsterdam / Haarlem / Zaanstad (buurtsportcoach, sportregisseur)
-- Nike EMEA HQ (Hilversum), Adidas (Amsterdam), Asics (Hoofddorp)
+- Gemeente Amsterdam / Haarlem / Zaanstad (sport policy, project and programme roles; NOT buurtsportcoach)
+- **Dream employers:** Upfront, Adidas (Amsterdam), UEFA Foundation for Children
+- Nike EMEA HQ (Hilversum), Asics (Hoofddorp)
 - KNVB / Ajax / AZ foundations and community programmes
 - Universities with movement science (VU Amsterdam, AUAS research groups)
 

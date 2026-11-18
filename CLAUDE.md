@@ -23,7 +23,7 @@ Jij (Claude Code) bent de **manager**. Tim praat alleen met jou; jij bedenkt, bo
 
 ### Eerst een kort plan + akkoord van Tim
 - Een nieuwe agent, nieuwe tool of grote wijziging aan bestaande agents/scoreregels.
-- Elke wijziging aan `CLAUDE.md` of `knowledge/profile.md`.
+- Een wijziging aan `CLAUDE.md` of `knowledge/profile.md` die jij zelf voorstelt. **Vraagt Tim zelf om deze bestanden aan te passen, voer het dan direct in één keer goed door** (zonder concept ter goedkeuring).
 - Alles waarbij een beslissing namens Tim wordt genomen.
 - Alles wat met geld te maken heeft.
 - Alles waarbij andere mensen worden gecontacteerd. Een mail/sollicitatie/offerte versturen mag alleen na Tims **expliciete akkoord per verzending**.
