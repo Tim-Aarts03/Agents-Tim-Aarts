@@ -113,3 +113,9 @@ remember decisions and preferences across sessions.
 - Feasibility lowers ratings (master's, years of experience): Tim wants a traineeship first, then policy roles.
 - Hours and distance matter for average roles (Zaandam, 32 h), not for dream roles (40 h and abroad fine).
 - Excluded organisation: De Atleetfabriek (Tim's earlier internship).
+
+### 2026-11-18 — Scoring rebalanced after training round
+- Situation: with the old weights, local roles near home (rated 3) ranked above Tim's 5s; learned bonuses alone could not fix it (leave-one-out Spearman ~0.33 for every learning weight tried).
+- Lesson: fixed weights encoded my assumptions (domain and distance), not Tim's taste (scale of impact, network). Validate weights against Tim's ratings before trusting them.
+- Action: new `impact_scale` field (international 20 / national 12 / unknown 5 / local 0); domain, location and hours points lowered; abroad not penalised for international impact; -10 for start-ups that are not Tim's own and -10 for app products; new role type `partnerships_fundraising` (preferred). Leave-one-out Spearman now 0.62; all four top-ranked training vacancies are rated 5.
+- Known gap: one-off role types (e.g. fundraising, rated 5) stay low until rated more often.

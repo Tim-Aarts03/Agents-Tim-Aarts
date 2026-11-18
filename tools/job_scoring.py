@@ -53,7 +53,8 @@ class RoleType(str, Enum):
     RESEARCH = "research"
     POLICY_ADVICE = "policy_advice"
     MARKETING_COMMUNICATION = "marketing_communication"
-    COMMERCIAL_SALES = "commercial_sales"
+    PARTNERSHIPS_FUNDRAISING = "partnerships_fundraising"  # sponsors, funds, partners for a cause
+    COMMERCIAL_SALES = "commercial_sales"  # selling a product or service
     OPERATIONS_LOGISTICS = "operations_logistics"
     COACHING_DELIVERY = "coaching_delivery"
     FINANCE_ADMIN = "finance_admin"
@@ -70,6 +71,13 @@ class OrgType(str, Enum):
     SCALEUP_TECH = "scaleup_tech"
     CARE_HEALTH = "care_health"
     OTHER = "other"
+    UNKNOWN = "unknown"
+
+
+class ImpactScale(str, Enum):
+    LOCAL = "local"  # one city / neighbourhood / single organisation
+    NATIONAL = "national"
+    INTERNATIONAL = "international"
     UNKNOWN = "unknown"
 
 
@@ -92,11 +100,19 @@ class RequirementGap(str, Enum):
     OTHER_HARD_REQUIREMENT = "other_hard_requirement"  # e.g. license, specific language
 
 
+# Weights rebalanced on 2026-11-18 after Tim rated 20 training vacancies: scale of impact
+# matters more to him than distance or domain alone (see LESSONS.md).
 DOMAIN_POINTS: dict[Domain, int] = {
-    Domain.SPORT_FOR_VULNERABLE_GROUPS: 40,
-    Domain.SPORT_TECH: 30,
-    Domain.MOVEMENT_SCIENCE: 30,
-    Domain.SPORTS_BRAND: 25,
+    Domain.SPORT_FOR_VULNERABLE_GROUPS: 25,
+    Domain.SPORT_TECH: 15,
+    Domain.MOVEMENT_SCIENCE: 20,
+    Domain.SPORTS_BRAND: 15,
+}
+IMPACT_POINTS: dict[ImpactScale, int] = {
+    ImpactScale.INTERNATIONAL: 20,
+    ImpactScale.NATIONAL: 12,
+    ImpactScale.UNKNOWN: 5,
+    ImpactScale.LOCAL: 0,
 }
 SECOND_DOMAIN_BONUS = 5
 LEARNING_POINTS: dict[LearningEvidence, int] = {
@@ -108,14 +124,14 @@ LEARNING_POINTS: dict[LearningEvidence, int] = {
 }
 MAX_LEARNING_POINTS = 25
 LOCATION_POINTS: dict[Location, int] = {
-    Location.PREFERRED_REGION: 20,
-    Location.HYBRID_OR_REMOTE: 15,
-    Location.UNKNOWN: 8,
+    Location.PREFERRED_REGION: 10,
+    Location.HYBRID_OR_REMOTE: 8,
+    Location.UNKNOWN: 5,
     Location.OTHER_NETHERLANDS: 5,
     Location.ABROAD: 0,
 }
 HOURS_POINTS: dict[Hours, int] = {
-    Hours.PART_TIME: 10,
+    Hours.PART_TIME: 5,
     Hours.FULL_TIME: 5,
     Hours.UNKNOWN: 3,
 }
@@ -142,6 +158,8 @@ class Vacancy(BaseModel):
     org_type: OrgType = OrgType.UNKNOWN
     employment_type: EmploymentType = EmploymentType.UNKNOWN
     hours: Hours = Hours.UNKNOWN
+    impact_scale: ImpactScale = ImpactScale.UNKNOWN
+    product_is_app: bool = False
     learning_evidence: list[LearningEvidence] = Field(default_factory=list)
     requirement_gaps: list[RequirementGap] = Field(default_factory=list)
     deadline: date | None = None
@@ -153,6 +171,9 @@ class JobFilters(BaseModel):
     excluded_organisations: list[str] = Field(default_factory=list)
     excluded_role_types: list[RoleType] = Field(default_factory=list)
     preferred_role_types: list[RoleType] = Field(default_factory=list)
+    # Tim: start-ups that are not his own and app products each count as -1 in his rating.
+    penalised_org_types: dict[OrgType, int] = Field(default_factory=dict)
+    app_product_penalty: int = 0
 
 
 def load_job_filters(path: Path = JOB_FILTERS_FILE) -> JobFilters:
@@ -185,6 +206,7 @@ def vacancy_features(vacancy: Vacancy) -> list[str]:
     """Features Tim's ratings are learned on. Unknown values carry no signal, so they are skipped."""
     features = [f"domain:{d.value}" for d in sorted(set(vacancy.domains), key=lambda d: d.value)]
     for name, value in (
+        ("impact_scale", vacancy.impact_scale),
         ("role_type", vacancy.role_type),
         ("org_type", vacancy.org_type),
         ("employment_type", vacancy.employment_type),
@@ -218,13 +240,22 @@ def score_vacancy(
     learning = min(MAX_LEARNING_POINTS, sum(LEARNING_POINTS[e] for e in evidence))
 
     location = classify_location(vacancy, preferred_places)
+    location_points = LOCATION_POINTS[location]
+    # Tim would move abroad for internationally impactful work, so it is not penalised there.
+    if location is Location.ABROAD and vacancy.impact_scale is ImpactScale.INTERNATIONAL:
+        location_points = LOCATION_POINTS[Location.PREFERRED_REGION]
+    penalty = filters.penalised_org_types.get(vacancy.org_type, 0)
+    if vacancy.product_is_app:
+        penalty += filters.app_product_penalty
     breakdown = {
         "domain": domain,
         "learning_environment": learning,
-        "location": LOCATION_POINTS[location],
+        "location": location_points,
+        "impact_scale": IMPACT_POINTS[vacancy.impact_scale],
         "hours": HOURS_POINTS[vacancy.hours],
         "role_fit": ROLE_FIT_POINTS if vacancy.role_type in filters.preferred_role_types else 0,
         "requirement_gaps": -sum(GAP_PENALTIES[g] for g in set(vacancy.requirement_gaps)),
+        "startup_app_penalty": -penalty,
         "learned_from_ratings": learned_bonus(vacancy, feature_bonuses or {}),
     }
     score = max(0, min(MAX_SCORE, sum(breakdown.values())))

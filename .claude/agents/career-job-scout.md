@@ -24,6 +24,9 @@ Use the `Vacancy` fields from `tools/job_scoring.py`:
 - `city`: copy the city name exactly as written in the vacancy; `null` if not stated. Never judge distance yourself; the tool does that.
 - `domains`: based on **the role itself**, not the organisation. A financial controller at a youth sports fund is NOT `sport_for_vulnerable_groups`.
 - `role_type`, `org_type`, `employment_type`: pick the closest value; `unknown` if unclear. Buurtsportcoach and roles mainly about giving sports lessons = `coaching_delivery` (excluded by the tool). Leading, project and programme roles = `program_coordination`; policy roles = `policy_advice`.
+- `impact_scale`: `local` (one city/neighbourhood/single organisation), `national`, `international`; `unknown` if unclear.
+- `product_is_app`: `true` if the organisation's main product is an app.
+- Fundraising, sponsor and partnership roles for a cause = `partnerships_fundraising`; selling a product or service = `commercial_sales`.
 - `learning_evidence`: ONLY if the text explicitly mentions it (traineeship programme, named mentor/coach, training budget, rotation across teams, working directly with leadership). Phrases like "ervaren team" or "groeimogelijkheden" do NOT count.
 - `requirement_gaps`: requirements Tim does not meet according to `profile.md` (no master's degree yet; ~1 year of post-graduation work experience at most).
 - `deadline`: only if stated.

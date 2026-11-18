@@ -45,18 +45,21 @@ def test_best_single_domain_vacancy():
         employment_type="traineeship",
         learning_evidence=["named_mentor_or_coach"],
         hours="part_time",
+        impact_scale="international",
     )
     result = score(v)
     assert result.breakdown == {
-        "domain": 40,
+        "domain": 25,
         "learning_environment": 23,  # traineeship 15 + mentor 8
-        "location": 20,
-        "hours": 10,
+        "location": 10,
+        "impact_scale": 20,
+        "hours": 5,
         "role_fit": 0,
         "requirement_gaps": 0,
+        "startup_app_penalty": 0,
         "learned_from_ratings": 0,
     }
-    assert result.score == 93
+    assert result.score == 83
 
 
 def test_second_domain_bonus_and_cap_at_100():
@@ -64,9 +67,11 @@ def test_second_domain_bonus_and_cap_at_100():
         domains=["sport_tech", "sport_for_vulnerable_groups"],
         learning_evidence=["traineeship_program", "training_budget", "named_mentor_or_coach"],
         hours="part_time",
+        impact_scale="international",
+        role_type="research",
     )
-    result = score(v, {"org_type:scaleup_tech": 5.0})
-    assert result.breakdown["domain"] == 45
+    result = score(v, {"role_type:research": 5.0, "impact_scale:international": 5.0, "domain:sport_tech": 5.0})
+    assert result.breakdown["domain"] == 30
     assert result.breakdown["learning_environment"] == 25  # capped
     assert result.score == 100
 
@@ -115,6 +120,8 @@ def test_learned_bonus_is_capped():
 def test_vacancy_features_skip_unknowns():
     v = make(domains=["sport_tech", "sport_tech"], org_type="government")
     assert vacancy_features(v) == ["domain:sport_tech", "org_type:government"]
+    v = make(impact_scale="national")
+    assert vacancy_features(v) == ["impact_scale:national"]
 
 
 @pytest.mark.parametrize(
@@ -170,6 +177,8 @@ FILTERS = JobFilters(
     excluded_organisations=["FIFA", "Red Bull"],
     excluded_role_types=["coaching_delivery"],
     preferred_role_types=["program_coordination", "policy_advice"],
+    penalised_org_types={"scaleup_tech": 10},
+    app_product_penalty=10,
 )
 
 
@@ -200,3 +209,21 @@ def test_rank_applies_filters():
 def test_real_job_filters_file_is_valid():
     filters = load_job_filters()
     assert "FIFA" in filters.excluded_organisations
+
+
+def test_startup_and_app_penalties_add_up():
+    both = score_vacancy(make(org_type="scaleup_tech", product_is_app=True), PLACES, filters=FILTERS)
+    assert both.breakdown["startup_app_penalty"] == -20
+    assert score_vacancy(make(org_type="foundation_nonprofit"), PLACES, filters=FILTERS).breakdown["startup_app_penalty"] == 0
+
+
+def test_abroad_not_penalised_for_international_impact():
+    intl = make(city="Nyon", country="CH", impact_scale="international")
+    local = make(city="Nyon", country="CH", impact_scale="local")
+    assert score(intl).breakdown["location"] == 10
+    assert score(local).breakdown["location"] == 0
+
+
+def test_impact_scale_points():
+    points = {s: score(make(impact_scale=s)).breakdown["impact_scale"] for s in ("international", "national", "unknown", "local")}
+    assert points == {"international": 20, "national": 12, "unknown": 5, "local": 0}

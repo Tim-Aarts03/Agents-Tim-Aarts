@@ -14,6 +14,11 @@ Learning value outweighs salary.
 - **Does not want:** buurtsportcoach or giving sports lessons in front of a group (`coaching_delivery`: excluded) — too superficial, not challenging enough.
 - **From an employer:** freedom, a learning environment, challenge and honest feedback.
 
+## What drives Tim's ratings (from 20 training ratings, 2026-11-18)
+- **Highest:** big impact and scale (national/international), a strong network, learning from experienced people, traineeships with rotation, partnerships/fundraising for a good cause, policy work.
+- **Lowest:** club management, event logistics, selling a product (sports nutrition), apps and start-ups that are not Tim's own (-10 points each), research that requires a master's.
+- Hours and distance only matter for average roles; for dream roles 40 h and moving abroad are fine.
+
 ## Organisations
 - **Dream employers:** Upfront, Adidas, UEFA Foundation.
 - Must do good for the world. **Excluded:** FIFA, Red Bull (list in `knowledge/job_filters.json`).
