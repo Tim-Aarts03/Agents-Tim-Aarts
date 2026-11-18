@@ -167,3 +167,8 @@ remember decisions and preferences across sessions.
 - Action: `tools/mail_sender.py` (Apple Mail via AppleScript, send-only). Refuses on: recipient not in `knowledge/private_mail_recipients.json`, non-promotion subject, content changed after Tim's approval (hash from `preview`), second send for the same session. `.claude/settings.json` denies Claude raw `osascript` and reading `~/Library/Mail`. Reminders to sign-ups are NOT covered yet (needs a new plan).
 - Flow: preview → Tim says "verstuur" → send with that preview's hash. Approval per send stays.
 - 2026-11-18: Tim chose "put it in Concepten" instead of sending. Added `draft` mode (AppleScript `save msg`, logged as `promo_draft`, does not block a later send). First draft for 24 Nov saved in Apple Mail.
+
+### 2026-11-18 — Weekly promotion mail automated (phase 1, approved)
+- Tim sent the first draft himself; goal is fully automatic weekly mails.
+- Action: `tools/bootcamp_weekly.py` (check: link valid for the coming Tuesday, recipient present, no mail yet this session; compose: draft JSON + hash) and scheduled task `bootcamp-promo-wednesday` (Wed 06:30, runs in Auto mode, drafts only). Sign-up link lives in `knowledge/bootcamp_form.json` (`session` = Tuesday ISO date or `fixed`).
+- Open: Tim to decide on one fixed form; phase 2 (auto-send) after two error-free weeks needs a CLAUDE.md change.

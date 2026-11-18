@@ -16,6 +16,7 @@ Definitions live in `.claude/agents/`; archived agents live in `archive/`.
 ## Mail workflow (bootcamp, training phase until ~2 Dec 2026)
 - **Wednesday 07:00 promotion mail:** `mail-promo-writer` → Tim picks a pitch (+ gives the new form link) → `tools/bootcamp_mail.py promo` per group → `qa-fact-checker` → `tools/mail_sender.py preview` → Tim approves this exact mail → `tools/mail_sender.py send --approved-hash` (logs automatically).
 - **Monday ~13:00 reminder:** `tools/bootcamp_mail.py reminder` (weather via `tools/bootcamp_weather.py`) to the people who signed up → `qa-fact-checker` → draft → Tim sends → `log_mail`.
+- **Automatic (phase 1, from 25 Nov 2026):** scheduled task `bootcamp-promo-wednesday` (Wed ~06:40, Mac app must be open) runs `tools/bootcamp_weekly.py check` → `mail-promo-writer` → `compose` → `qa-fact-checker` → `mail_sender draft`. Never sends. Stops if the sign-up link in `knowledge/bootcamp_form.json` is not for the coming Tuesday.
 - After two error-free weeks: propose automatic sending (needs a CLAUDE.md change approved by Tim).
 
 ## Planned
