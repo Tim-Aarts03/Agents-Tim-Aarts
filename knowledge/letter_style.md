@@ -16,6 +16,7 @@ Derived from Tim's own letters (`knowledge/letter_examples.md`). Updated after e
 - Only facts from `knowledge/profile.md`. Never invent achievements, numbers or experience.
 - Age is always taken from `profile.md`.
 - No exaggerated claims like "de perfecte fit" without supporting evidence (keep it confident but grounded).
+- Skills (Excel, Word, Mathematics B) only when the vacancy asks for them, stated briefly as a skill ("I am strong in Mathematics B"). Never as self-study effort ("I worked through the whole maths textbook"): that does not sound convincing (Tim, 2026-11-18).
 - Spell-check: "hart" (not "hard"), "geld ophalen" (not "geld ophouden"), "op zoek" (two words), "doordat/door middel van".
 
 ## Banned phrases
@@ -23,3 +24,16 @@ _None yet — Tim adds these based on feedback. Format: one phrase per line belo
 
 ## Feedback & outcomes log
 _Per letter: date, organisation, Tim's feedback, outcome (invited/rejected/no response), lesson._
+
+### 2026-11-18 — Mulier Instituut, onderzoeksassistent (bijbaan)
+- Tim: "top letter". Strong: the Buenos Aires research opening, the clear structure, the focus on learning, the closing, and the length (not too long).
+- Removed by Tim: "Het hele boek wiskunde B heb ik doorgewerkt" (does not feel genuine) and "net als werken in Excel en Word" (not strong enough for a letter; can come up in the interview).
+- Lesson: do not list preparation homework (maths textbook) as a selling point. Keep the letter to experiences that show impact, research and initiative.
+- Later the same day Tim asked to add Excel, Word and Mathematics B back, as skills (same as the UEFA letter): "Daarnaast werk ik goed met Excel en Word en ben ik sterk in wiskunde B."
+- Outcome: pending.
+
+### 2026-11-18 — UEFA, Football Planning & Services Coordinator (English)
+- Tim: good letter, satisfied. Strong again: the Buenos Aires part. The "Notities voor Tim" (gaps and strengths) are useful: keep adding them.
+- Changed by Tim: "in my gap year I worked through the entire Mathematics B textbook" → name Mathematics B as a skill, like Excel and Word ("I am strong in Mathematics B and logical thinking").
+- Lesson: for a role that asks for logical thinking and tools, naming skills is fine; phrase them as abilities, not as homework done.
+- Outcome: pending.

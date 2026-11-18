@@ -141,3 +141,6 @@ remember decisions and preferences across sessions.
 - Situation: Hof van Jacob mail goes to one contact person who forwards it (Tim has no access to internal Sint Jacob mailing lists); address stored in `knowledge/private_mail_recipients.json`. Before drafting real mails Tim wants to learn his taste first, like the job-scout training round.
 - Action: `mail-promo-writer` wrote 20 pitches spread over length, tone, hook and emoji (`output/mail/pitch_training_2026-11-18.md`); Tim rates them 1–5. Manager fixed two small errors before showing them ("zeker jouw plekje", "🔥!").
 - Open: where the ratings live (the mail log is git-ignored); this week's promotion mail waits until after the ratings.
+
+### 2026-11-18 — UEFA letter finalised
+- Tim is willing to relocate to Switzerland or France for UEFA, and would drop the T.A Vitality bootcamp for this job. Added "I am prepared to relocate to the Nyon area." to the letter (stated by Tim in chat; not yet in `profile.md`).
