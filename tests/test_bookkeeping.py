@@ -170,3 +170,14 @@ def test_cli_build_runs_as_module(cfg, nov, tmp_path):
                          env={"PYTHONPATH": str(repo)}, capture_output=True, text=True)
     assert run.returncode == 0, run.stderr
     assert (tmp_path / "Boekhouding" / "Maandelijkse administratie" / "Administratie_Test_Owner_2026-11.xlsx").exists()
+
+
+def test_session_without_participant_count_counts_as_given(cfg, nov):
+    add_entry(nov, "session", {"date": "2026-11-03"}, cfg)
+    assert summarize(nov, cfg, TODAY).sessions_given == 1
+
+
+def test_follow_up_replaces_reminder_suggestion(cfg, nov):
+    nov.opening.open_invoices[0].follow_up = "Tim regelt de betaling zelf."
+    att = summarize(nov, cfg, TODAY).attention
+    assert any("regelt" in a for a in att) and not any("herinnering" in a for a in att)

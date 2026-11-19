@@ -80,7 +80,7 @@ class Expense(BaseModel):
 
 class Session(BaseModel):
     date: date
-    participants: int = Field(ge=0)  # 0 = cancelled
+    participants: int | None = Field(default=None, ge=0)  # 0 = cancelled, None = given, number unknown
     location: str | None = None
 
 
@@ -92,6 +92,7 @@ class Invoice(BaseModel):
     amount: float = Field(gt=0)
     sessions: list[date] = []  # work-in-progress sessions this invoice settles
     due_date: date | None = None
+    follow_up: str = ""  # Tim handles payment himself: no reminder suggestions
 
 
 class Payment(BaseModel):
@@ -195,7 +196,7 @@ def due_date(inv: Invoice, cfg: Config) -> date:
 
 
 def given(ledger: Ledger) -> list[Session]:
-    return sorted((s for s in ledger.sessions if s.participants > 0), key=lambda s: s.date)
+    return sorted((s for s in ledger.sessions if s.participants != 0), key=lambda s: s.date)
 
 
 def init_month(month: str, cfg: Config, data_dir: Path = DATA_DIR) -> Ledger:
@@ -326,7 +327,9 @@ def summarize(ledger: Ledger, cfg: Config, today: date | None = None) -> Summary
     attention: list[str] = []
     for inv in open_end:
         due = due_date(inv, cfg)
-        if due < today:
+        if inv.follow_up:
+            attention.append(f"Factuur {inv.number} ({eur(inv.amount)}) staat nog open: {inv.follow_up}")
+        elif due < today:
             attention.append(f"Factuur {inv.number} ({eur(inv.amount)}, {inv.client}) is vervallen op "
                              f"{due:%d-%m-%Y} en nog niet ontvangen: betalingsherinnering overwegen.")
     for e in ledger.expenses:

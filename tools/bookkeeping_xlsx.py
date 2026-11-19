@@ -156,8 +156,9 @@ def _sessions(wb: Workbook, ledger: Ledger, cfg: Config, label: str) -> int:
     first = 4
     for i, s in enumerate(sorted(ledger.sessions, key=lambda x: x.date)):
         r = first + i
-        status = "Gegeven" if s.participants > 0 else "Geannuleerd"
-        for col, v in zip(range(2, 7), [s.date, s.location or cfg.location, s.participants, status,
+        status = "Geannuleerd" if s.participants == 0 else "Gegeven"
+        for col, v in zip(range(2, 7), [s.date, s.location or cfg.location,
+                                        "onbekend" if s.participants is None else s.participants, status,
                                         invoiced.get(s.date, "")]):
             _put(ws, r, col, v)
         _put(ws, r, 7, rate_on(s.date, cfg) if status == "Gegeven" else 0, EUR)

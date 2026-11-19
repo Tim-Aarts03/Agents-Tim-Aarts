@@ -17,7 +17,7 @@ Run one command per entry: `.venv/bin/python -m tools.bookkeeping add <month> <k
 
 | What Tim says | kind | JSON fields |
 |---|---|---|
-| Session given / cancelled | `session` | `date`, `participants` (0 = cancelled) |
+| Session given / cancelled | `session` | `date`, optional `participants` (0 = cancelled; leave out when Tim gives no number — do not ask for it) |
 | Bought something | `expense` | `date`, `description`, `shop`, `amount`, `payment_method` (`Pin`, `Contant`, `Overschrijving`, `iDEAL`), optional `vat_on_receipt`, `bank_amount`, `bank_note` |
 | Sent an invoice | `invoice` | `number`, `date`, `client`, `description`, `amount`, `sessions` (dates it settles) |
 | Invoice paid | `payment` | `invoice`, `date`, `amount` |

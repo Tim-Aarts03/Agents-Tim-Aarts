@@ -200,3 +200,9 @@ remember decisions and preferences across sessions.
 - Tim wants the Monday reminder sent automatically to everyone who signed up.
 - Decision: the reminder runs as Apps Script in Tim's own form (`tools/google_apps_script/bootcamp_reminder.gs`, Monday ~12:45), so participant addresses never reach Claude or git. Same text and weather rules as `tools/bootcamp_mail.py`; `tests/test_apps_script_reminder.py` (Node) keeps both identical. Participants in BCC; at most one per Monday; nothing if nobody signed up.
 - Phase 1: Gmail draft + a note to Tim; Tim sends. Phase 2 (`REMINDER_SEND_AUTOMATICALLY = true`) only after two error-free weeks and a CLAUDE.md change approved by Tim.
+
+### 2026-11-19 — First bookkeeping update
+- Tim: invoice 001 is unpaid but being handled; no reminders or questions about it. Sessions of 3, 10 and 17 Nov given; he did not give participant numbers.
+- Lesson: Tim assumed sessions were already in the books; the agent only knows what Tim tells it. Participant numbers are optional, don't ask for them.
+- Action: `participants` optional; invoice `follow_up` replaces the reminder suggestion. The agent still re-asked the invoice-001 date question from the setup log; that log line is now closed.
+
