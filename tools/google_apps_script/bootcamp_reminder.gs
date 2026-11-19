@@ -61,7 +61,7 @@ function createReminder() {
   var session = nextSession_(new Date());
   var forecast = fetchForecast_(session.iso);
   var mail = buildReminder_(session, forecast);
-  var me = Session.getEffectiveUser().getEmail();
+  var me = myAddress_();
   var raw = rawMessage_(me, recipients, mail.subject, mail.body);
 
   if (REMINDER_SEND_AUTOMATICALLY) {
@@ -72,6 +72,11 @@ function createReminder() {
   props.setProperty(REMINDER_LAST_RUN_KEY, today);
   var note = rawMessage_(me, [], noteSubject_(recipients.length), noteBody_(recipients.length, forecast));
   Gmail.Users.Messages.send({ raw: note }, 'me');
+}
+
+/** Tim's own address, via the Gmail permission the script already has (no extra e-mail scope). */
+function myAddress_() {
+  return Gmail.Users.getProfile('me').emailAddress;
 }
 
 /** RFC 2822 message, base64url-encoded for the Gmail API. Participants only in Bcc. */

@@ -3,24 +3,23 @@
  * be sent again next week. Runs inside Tim's own Google Form (bound script);
  * Claude has no access to the form.
  *
- * Before deleting, every response is copied to the Google Sheet
- * "Bootcamp aanmeldingen archief" in Tim's Drive, because deleting form
- * responses cannot be undone.
+ * Before deleting, all responses are mailed to Tim himself as an archive,
+ * because deleting form responses cannot be undone. Mailing reuses the
+ * compose-only Gmail permission (rawMessage_ and myAddress_ live in
+ * bootcamp_reminder.gs), so no access to Tim's spreadsheets or Drive is needed.
  *
  * Functions Tim runs by hand (once):
  *   installTrigger()  - schedule clearResponses() every Tuesday ~20:00 (Amsterdam)
- *   dryRun()          - only logs how many responses would be archived and deleted
+ *   dryRun()          - only logs what would be archived and deleted
  */
 
-var ARCHIVE_NAME = 'Bootcamp aanmeldingen archief';
-var ARCHIVE_ID_KEY = 'archiveSpreadsheetId';
-var TIMEZONE = 'Europe/Amsterdam';
-var RUN_HOUR = 20;
-var TUESDAY = 2; // ISO day number (Monday = 1)
+var CLEAR_TIMEZONE = 'Europe/Amsterdam';
+var CLEAR_HOUR = 20;
+var CLEAR_TUESDAY = 2; // ISO day number (Monday = 1)
 
 function clearResponses() {
   // Guard against an accidental manual run or a wrongly configured trigger.
-  if (!isTuesdayInAmsterdam_()) {
+  if (Number(Utilities.formatDate(new Date(), CLEAR_TIMEZONE, 'u')) !== CLEAR_TUESDAY) {
     Logger.log('Not Tuesday in Amsterdam: nothing deleted.');
     return;
   }
@@ -30,15 +29,19 @@ function clearResponses() {
     Logger.log('No responses: nothing to do.');
     return;
   }
-  archive_(form, responses);
+  var me = myAddress_();
+  var today = Utilities.formatDate(new Date(), CLEAR_TIMEZONE, 'yyyy-MM-dd');
+  // Archive first; if sending fails, the exception stops the run before anything is deleted.
+  Gmail.Users.Messages.send({ raw: rawMessage_(me, [], archiveSubject_(today, responses.length),
+    archiveBody_(responseRows_(responses))) }, 'me');
   form.deleteAllResponses();
   form.setAcceptingResponses(true);
-  Logger.log('Archived and deleted ' + responses.length + ' response(s).');
+  Logger.log('Archived (mail to ' + me + ') and deleted ' + responses.length + ' response(s).');
 }
 
 function dryRun() {
-  var count = FormApp.getActiveForm().getResponses().length;
-  Logger.log(count + ' response(s) would be archived and deleted. Today is Tuesday: ' + isTuesdayInAmsterdam_());
+  var responses = FormApp.getActiveForm().getResponses();
+  Logger.log(responses.length + ' response(s) would be archived and deleted.\n\n' + archiveBody_(responseRows_(responses)));
 }
 
 function installTrigger() {
@@ -50,41 +53,31 @@ function installTrigger() {
   ScriptApp.newTrigger('clearResponses')
     .timeBased()
     .onWeekDay(ScriptApp.WeekDay.TUESDAY)
-    .atHour(RUN_HOUR)
-    .inTimezone(TIMEZONE)
+    .atHour(CLEAR_HOUR)
+    .inTimezone(CLEAR_TIMEZONE)
     .create();
-  Logger.log('Trigger installed: every Tuesday around ' + RUN_HOUR + ':00 (' + TIMEZONE + ').');
+  Logger.log('Trigger installed: every Tuesday around ' + CLEAR_HOUR + ':00 (' + CLEAR_TIMEZONE + ').');
 }
 
-function archive_(form, responses) {
-  var sheet = archiveSheet_(form);
-  var session = Utilities.formatDate(new Date(), TIMEZONE, 'yyyy-MM-dd');
-  var rows = responses.map(function (response) {
-    var row = [session, Utilities.formatDate(response.getTimestamp(), TIMEZONE, 'yyyy-MM-dd HH:mm')];
+/** One row per response: sign-up time followed by every answer. */
+function responseRows_(responses) {
+  return responses.map(function (response) {
+    var row = [Utilities.formatDate(response.getTimestamp(), CLEAR_TIMEZONE, 'dd-MM-yyyy HH:mm')];
     response.getItemResponses().forEach(function (itemResponse) {
       row.push(String(itemResponse.getResponse()));
     });
     return row;
   });
-  var width = Math.max.apply(null, rows.map(function (r) { return r.length; }));
-  rows = rows.map(function (r) { while (r.length < width) { r.push(''); } return r; });
-  sheet.getRange(sheet.getLastRow() + 1, 1, rows.length, width).setValues(rows);
 }
 
-function archiveSheet_(form) {
-  var props = PropertiesService.getScriptProperties();
-  var id = props.getProperty(ARCHIVE_ID_KEY);
-  if (id) {
-    return SpreadsheetApp.openById(id).getSheets()[0];
-  }
-  var spreadsheet = SpreadsheetApp.create(ARCHIVE_NAME);
-  var header = ['Bootcampdatum', 'Aangemeld op'];
-  form.getItems().forEach(function (item) { header.push(item.getTitle()); });
-  spreadsheet.getSheets()[0].appendRow(header);
-  props.setProperty(ARCHIVE_ID_KEY, spreadsheet.getId());
-  return spreadsheet.getSheets()[0];
+function archiveSubject_(isoDay, count) {
+  return 'Archief bootcamp ' + isoDay + ' (' + count + ' aanmeldingen)';
 }
 
-function isTuesdayInAmsterdam_() {
-  return Number(Utilities.formatDate(new Date(), TIMEZONE, 'u')) === TUESDAY;
+function archiveBody_(rows) {
+  var lines = ['Aanmeldingen voor de bootcamp van vandaag. Het formulier is daarna leeggemaakt.', ''];
+  rows.forEach(function (row, i) {
+    lines.push((i + 1) + '. ' + row.join(' | '));
+  });
+  return lines.join('\n');
 }

@@ -228,3 +228,8 @@ remember decisions and preferences across sessions.
 - Lesson: never adopt a new business name (or other identity fact) from a document; confirm with Tim first.
 - Action: config, November note and Excel files back to T.A Vitality.
 
+
+### 2026-11-19 — Google permissions cut to the minimum (Tim: "remove all unnecessary permissions")
+- Situation: the consent screen still asked for all spreadsheets (archive Sheet) and e-mail address access.
+- Action: archive is now a mail to Tim himself (reuses `gmail.compose`; nothing is deleted if that mail fails); Tim's address comes from the Gmail profile. `appsscript.json` has exactly 4 scopes: `forms.currentonly`, `gmail.compose`, `script.external_request`, `script.scriptapp`. A test fails if a scope is added or a broad service (SpreadsheetApp, DriveApp, Session, GmailApp) is used.
+- Lesson: for every scope ask "can an existing permission do this?" before adding a new one; extras like an archive Sheet cost Tim permissions he never asked for.

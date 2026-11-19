@@ -63,10 +63,16 @@ def test_script_never_uses_full_gmail_access():
     for gs in Path("tools/google_apps_script").glob("*.gs"):
         # Google's scope detection also reads comments, so the names may not appear anywhere.
         code = gs.read_text()
-        assert "GmailApp" not in code and "MailApp" not in code
+        for broad_service in ("GmailApp", "MailApp", "SpreadsheetApp", "DriveApp", "DocumentApp", "Session."):
+            assert broad_service not in code, f"{broad_service} in {gs.name}"
     scopes = json.loads(Path("tools/google_apps_script/appsscript.json").read_text())["oauthScopes"]
-    assert "https://mail.google.com/" not in scopes
-    assert "https://www.googleapis.com/auth/gmail.compose" in scopes
+    # Least privilege (Tim, 2026-11-19): only this form, drafts/send, the weather API and triggers.
+    assert sorted(scopes) == sorted([
+        "https://www.googleapis.com/auth/forms.currentonly",
+        "https://www.googleapis.com/auth/gmail.compose",
+        "https://www.googleapis.com/auth/script.external_request",
+        "https://www.googleapis.com/auth/script.scriptapp",
+    ])
 
 
 SESSION_RUNNER = """
@@ -95,3 +101,21 @@ def test_session_is_next_tuesday_not_tomorrow():
     result = subprocess.run(["node", "-e", SESSION_RUNNER, str(SCRIPT), json.dumps(runs)],
                             capture_output=True, text=True, check=True)
     assert json.loads(result.stdout) == ["2026-11-24", "2026-11-24", "2026-12-01", "2027-03-30"]
+
+
+ARCHIVE_RUNNER = """
+const fs = require('fs'), vm = require('vm'); const ctx = {}; vm.createContext(ctx);
+vm.runInContext(fs.readFileSync(process.argv[1], 'utf8'), ctx);
+console.log(JSON.stringify([ctx.archiveSubject_('2026-11-24', 2),
+  ctx.archiveBody_([['23-11-2026 09:12', 'Anna', 'anna@example.org'], ['23-11-2026 10:30', 'Bram', 'bram@example.org']])]));
+"""
+
+
+@pytest.mark.skipif(shutil.which("node") is None, reason="node not installed")
+def test_archive_mail_lists_every_response():
+    script = Path("tools/google_apps_script/clear_bootcamp_responses.gs")
+    result = subprocess.run(["node", "-e", ARCHIVE_RUNNER, str(script)], capture_output=True, text=True, check=True)
+    subject, body = json.loads(result.stdout)
+    assert subject == "Archief bootcamp 2026-11-24 (2 aanmeldingen)"
+    assert "1. 23-11-2026 09:12 | Anna | anna@example.org" in body
+    assert "2. 23-11-2026 10:30 | Bram | bram@example.org" in body
