@@ -66,3 +66,31 @@ def test_script_never_uses_full_gmail_access():
     scopes = json.loads(Path("tools/google_apps_script/appsscript.json").read_text())["oauthScopes"]
     assert "https://mail.google.com/" not in scopes
     assert "https://www.googleapis.com/auth/gmail.compose" in scopes
+
+
+SESSION_RUNNER = """
+const fs = require('fs'), vm = require('vm');
+const fmt = (d, tz, f) => {
+  const parts = Object.fromEntries(new Intl.DateTimeFormat('en-CA', {timeZone: tz, year: 'numeric', month: 'numeric',
+    day: 'numeric', weekday: 'short'}).formatToParts(d).map(p => [p.type, p.value]));
+  const iso = {Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6, Sun: 7}[parts.weekday];
+  if (f === 'u') return String(iso);
+  if (f === 'd') return parts.day;
+  if (f === 'M') return parts.month;
+  return `${parts.year}-${parts.month.padStart(2, '0')}-${parts.day.padStart(2, '0')}`;
+};
+const ctx = {Utilities: {formatDate: fmt}}; vm.createContext(ctx);
+vm.runInContext(fs.readFileSync(process.argv[1], 'utf8'), ctx);
+console.log(JSON.stringify(JSON.parse(process.argv[2]).map(t => ctx.nextSession_(new Date(t)).iso)));
+"""
+
+
+@pytest.mark.skipif(shutil.which("node") is None, reason="node not installed")
+def test_session_is_next_tuesday_not_tomorrow():
+    runs = ["2026-11-23T12:45:00+01:00",  # Monday -> tomorrow
+            "2026-11-19T15:56:00+01:00",  # Thursday dry run -> next Tuesday, not Friday
+            "2026-11-24T20:00:00+01:00",  # Tuesday -> next week's session
+            "2027-03-29T12:45:00+02:00"]  # Monday after the switch to summer time
+    result = subprocess.run(["node", "-e", SESSION_RUNNER, str(SCRIPT), json.dumps(runs)],
+                            capture_output=True, text=True, check=True)
+    assert json.loads(result.stdout) == ["2026-11-24", "2026-11-24", "2026-12-01", "2027-03-30"]

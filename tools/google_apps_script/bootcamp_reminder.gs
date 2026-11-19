@@ -24,6 +24,7 @@ var REMINDER_TIMEZONE = 'Europe/Amsterdam';
 var REMINDER_HOUR = 12;
 var REMINDER_MINUTE = 45;
 var REMINDER_MONDAY = 1; // ISO day number
+var REMINDER_SESSION_WEEKDAY = 2; // Tuesday, ISO day number
 var REMINDER_SESSION_TIME = '16:15';
 var REMINDER_MAX_PARTICIPANTS = 12;
 var REMINDER_LAST_RUN_KEY = 'reminderLastRunDate';
@@ -56,7 +57,7 @@ function createReminder() {
     Logger.log('Nobody signed up: no reminder.');
     return;
   }
-  var session = tomorrow_();
+  var session = nextSession_(new Date());
   var forecast = fetchForecast_(session.iso);
   var mail = buildReminder_(session, forecast);
   var me = Session.getEffectiveUser().getEmail();
@@ -93,7 +94,7 @@ function rawMessage_(to, bcc, subject, body) {
 
 function reminderDryRun() {
   var recipients = signedUpEmails_();
-  var session = tomorrow_();
+  var session = nextSession_(new Date());
   var mail = buildReminder_(session, fetchForecast_(session.iso));
   Logger.log(recipients.length + ' participant(s).\nSubject: ' + mail.subject + '\n\n' + mail.body);
 }
@@ -135,8 +136,15 @@ function signedUpEmails_() {
   return emails;
 }
 
-function tomorrow_() {
-  var date = new Date(Date.now() + 24 * 60 * 60 * 1000);
+/**
+ * The first Tuesday strictly after `now` (Amsterdam), like next_tuesday in
+ * tools/bootcamp_mail.py. On the Monday run that is tomorrow; a dry run on
+ * another day still shows the coming session instead of "tomorrow".
+ */
+function nextSession_(now) {
+  var isoWeekday = Number(Utilities.formatDate(now, REMINDER_TIMEZONE, 'u'));
+  var days = ((REMINDER_SESSION_WEEKDAY - isoWeekday + 7) % 7) || 7;
+  var date = new Date(now.getTime() + days * 24 * 60 * 60 * 1000);
   return {
     iso: Utilities.formatDate(date, REMINDER_TIMEZONE, 'yyyy-MM-dd'),
     day: Number(Utilities.formatDate(date, REMINDER_TIMEZONE, 'd')),

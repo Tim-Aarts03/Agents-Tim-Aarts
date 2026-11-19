@@ -211,3 +211,8 @@ remember decisions and preferences across sessions.
 - Situation: during install Google asked Tim for "everything you can do in Gmail" (read, delete, labels), because `GmailApp` always requires the full `mail.google.com` scope. Tim noticed and asked before accepting.
 - Lesson: check which permissions a Google API call needs before handing Tim a script; least privilege also applies outside the project folder.
 - Action: explicit `appsscript.json` with only `gmail.compose` (drafts + send), `forms.currentonly` and the other needed scopes; reminder uses the Gmail advanced service instead of `GmailApp`. Test fails if `GmailApp`/`MailApp` or the full Gmail scope ever returns. README tells Tim which text to expect on the consent screen.
+
+### 2026-11-19 — Reminder dry run showed the wrong session date
+- Situation: Tim's dry run on Thursday said "morgen (20 november)"; the script used "tomorrow" as the session date. Only correct on Mondays.
+- Lesson: never derive a session date from "tomorrow"; always from the fixed weekday (Tuesday), like `next_tuesday` in Python. Test dry runs on other weekdays too.
+- Action: `nextSession_()` = first Tuesday strictly after today (Amsterdam); Node test covers Monday, Thursday, Tuesday and summer time.
