@@ -241,3 +241,9 @@ remember decisions and preferences across sessions.
 ### 2026-11-19 — Manager persona "Max"
 - Tim wants the manager to feel like a real person: name, tone, personality, hobbies.
 - Action: persona Max at the top of `IDENTITY.md` (calm, direct, honest, coaching; sports images max once per conversation; motto "Eerst de feiten, dan de actie."). Clearly marked as a role played by Claude; CLAUDE.md always wins. CLAUDE.md §1 and §3 updated (Tim's own request, so done directly): read IDENTITY.md at session start and keep it current.
+
+### 2026-11-19 — Bookkeeping folder must be a real folder in the project
+- Situation: `Boekhouding` in the project became a Finder alias to a copy outside the project (`.../Tim Aarts/Claude/Boekhouding`), so the agent read and wrote outside the project without noticing.
+- Lesson: an alias or symlink looks like a folder to Tim but sends work elsewhere; check with `file` before trusting a folder.
+- Action: real copy in `Boekhouding/` (alias archived in `archive/`, git-ignored); `tools.bookkeeping` refuses to run when `Boekhouding` is not a real folder inside the project; `.claude/settings.json` denies Claude access to `/Applications/School/**`.
+

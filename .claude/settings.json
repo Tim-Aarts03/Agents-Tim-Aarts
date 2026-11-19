@@ -4,7 +4,11 @@
       "Bash(osascript:*)",
       "Bash(*osascript*)",
       "Read(~/Library/Mail/**)",
-      "Bash(*Library/Mail*)"
+      "Bash(*Library/Mail*)",
+      "Read(/Applications/School/**)",
+      "Edit(/Applications/School/**)",
+      "Write(/Applications/School/**)",
+      "Bash(*/Applications/School*)"
     ]
   }
 }

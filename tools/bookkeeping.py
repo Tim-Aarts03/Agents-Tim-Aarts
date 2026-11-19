@@ -152,6 +152,19 @@ class InvalidEntry(Exception):
     pass
 
 
+def ensure_book_dir(book_dir: Path = BOOK_DIR, project: Path | None = None) -> None:
+    """Refuse to work unless the bookkeeping folder is a real folder inside the project.
+
+    A Finder alias or symlink would silently send reads and writes to a folder
+    outside the project, which Tim does not allow.
+    """
+    project = (project or Path.cwd()).resolve()
+    if book_dir.is_symlink() or not book_dir.is_dir():
+        raise InvalidEntry(f"{book_dir} is not a real folder (alias or symlink?); copy the folder into the project")
+    if not book_dir.resolve().is_relative_to(project):
+        raise InvalidEntry(f"{book_dir} points outside the project folder")
+
+
 # ---------- storage ----------
 
 def load_config(path: Path = CONFIG_FILE) -> Config:
@@ -468,6 +481,7 @@ def main(argv: list[str] | None = None) -> int:
     args = p.parse_args(argv)
 
     try:
+        ensure_book_dir()
         if args.cmd == "init":
             print(f"created {ledger_path(args.month)}: {init_month(args.month, load_config()).opening.model_dump_json()}")
         elif args.cmd == "add":

@@ -196,3 +196,19 @@ def test_layout_follows_tims_sheet(cfg, nov, tmp_path):
     assert sess["E3"].value == "Cijfer" and sess["E4"].value == 8
     assert "(voorlopig)" in wb["Overzicht"]["B1"].value
     assert wb["Inkomsten en uitgaven"]["F6"].value == "=SUM(F4:F5)"  # spare row inside the range
+
+
+def test_book_dir_must_be_real_folder_inside_project(tmp_path):
+    from tools.bookkeeping import ensure_book_dir
+    project, outside = tmp_path / "project", tmp_path / "outside"
+    project.mkdir()
+    outside.mkdir()
+    ensure_book_dir(outside, outside)  # real folder: fine
+    alias = project / "Boekhouding"
+    alias.write_bytes(b"book mark")  # Finder alias is a plain file
+    with pytest.raises(InvalidEntry, match="not a real folder"):
+        ensure_book_dir(alias, project)
+    alias.unlink()
+    alias.symlink_to(outside)
+    with pytest.raises(InvalidEntry):
+        ensure_book_dir(alias, project)
