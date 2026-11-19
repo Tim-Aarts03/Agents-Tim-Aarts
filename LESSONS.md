@@ -233,3 +233,7 @@ remember decisions and preferences across sessions.
 - Situation: the consent screen still asked for all spreadsheets (archive Sheet) and e-mail address access.
 - Action: archive is now a mail to Tim himself (reuses `gmail.compose`; nothing is deleted if that mail fails); Tim's address comes from the Gmail profile. `appsscript.json` has exactly 4 scopes: `forms.currentonly`, `gmail.compose`, `script.external_request`, `script.scriptapp`. A test fails if a scope is added or a broad service (SpreadsheetApp, DriveApp, Session, GmailApp) is used.
 - Lesson: for every scope ask "can an existing permission do this?" before adding a new one; extras like an archive Sheet cost Tim permissions he never asked for.
+
+### 2026-11-19 — Identity file
+- Tim: "we've worked for days but I don't know you yet."
+- Action: `IDENTITY.md` (Dutch, for Tim): who the manager is, no memory between sessions (files are the memory), team overview, principles, this week's mistakes, what Claude knows about Tim, tips. Keep the team table and mistakes section current.
