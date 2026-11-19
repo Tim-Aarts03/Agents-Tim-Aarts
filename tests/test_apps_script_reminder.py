@@ -61,7 +61,8 @@ def test_participants_only_in_bcc_and_text_survives_encoding():
 
 def test_script_never_uses_full_gmail_access():
     for gs in Path("tools/google_apps_script").glob("*.gs"):
-        code = "\n".join(line for line in gs.read_text().splitlines() if not line.lstrip().startswith("*"))
+        # Google's scope detection also reads comments, so the names may not appear anywhere.
+        code = gs.read_text()
         assert "GmailApp" not in code and "MailApp" not in code
     scopes = json.loads(Path("tools/google_apps_script/appsscript.json").read_text())["oauthScopes"]
     assert "https://mail.google.com/" not in scopes

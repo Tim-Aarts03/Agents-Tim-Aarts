@@ -8,7 +8,8 @@
  *
  * Gmail access goes through the Gmail API with only the gmail.compose scope
  * (see appsscript.json): create drafts and send, but not read, delete or label
- * Tim's mail. GmailApp is deliberately not used: it demands full mailbox access.
+ * Tim's mail. The built-in Gmail service is deliberately not used: it demands
+ * full mailbox access (and Google even detects its name in comments).
  *
  * Phase 1: REMINDER_SEND_AUTOMATICALLY = false -> Gmail draft (participants in BCC)
  * plus a note to Tim. Only switch to true after Tim approves automatic sending
