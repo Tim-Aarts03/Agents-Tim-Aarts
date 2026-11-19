@@ -4,6 +4,10 @@ For every feature (e.g. `org_type:foundation_nonprofit`) the average rating is
 turned into a bonus: a 3 is neutral, a 5 adds points, a 1 subtracts points.
 A feature only counts after MIN_RATINGS ratings, so one rating cannot swing
 the ranking on its own.
+
+Organisation features learn from Tim's organisation rating when he gave one;
+all other features learn from his role rating. Otherwise a great company with
+an unsuitable role (ASICS: company 5, role 1) would teach "sports brands are bad".
 """
 
 from __future__ import annotations
@@ -16,15 +20,26 @@ from tools.applications_log import DEFAULT_LOG_PATH, Application, read_log
 MIN_RATINGS = 3
 NEUTRAL_RATING = 3.0
 POINTS_PER_RATING_STEP = 2.5  # avg 5 -> +5, avg 1 -> -5 per feature
+ORG_FEATURE_PREFIXES = ("org_type:", "impact_scale:")
+
+
+def is_org_feature(feature: str) -> bool:
+    return feature.startswith(ORG_FEATURE_PREFIXES)
+
+
+def rating_for(app: Application, feature: str) -> int | None:
+    if is_org_feature(feature) and app.org_rating is not None:
+        return app.org_rating
+    return app.rating
 
 
 def feature_stats(applications: list[Application]) -> dict[str, list[int]]:
     ratings: dict[str, list[int]] = defaultdict(list)
     for app in applications:
-        if app.rating is None:
-            continue
         for feature in app.feature_list():
-            ratings[feature].append(app.rating)
+            rating = rating_for(app, feature)
+            if rating is not None:
+                ratings[feature].append(rating)
     return dict(ratings)
 
 

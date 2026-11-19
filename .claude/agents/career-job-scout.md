@@ -43,6 +43,7 @@ Write `output/career/vacancies_<YYYY-MM-DD>.md` in Dutch:
 - Per vacancy 2–3 sentences "Waarom dit past", in terms of Tim's goals: CV value, network, learning situations. Cite concrete facts from the vacancy and from `profile.md`.
 - Per vacancy one line "Risico" if relevant (e.g. master's required).
 - Section "Wat ik tot nu toe geleerd heb": the output of `tools.preference_learning`, rewritten as 2–4 short Dutch sentences.
-- End with: "Geef elke vacature een cijfer van 1–5 (en kort waarom, als je wilt), en zeg welke nummers je wilt. Dan schrijf ik de motivatiebrieven."
+- End with: "Geef elke vacature een cijfer van 1–5 voor de functie (en kort waarom, als je wilt). Vind je de organisatie duidelijk beter of slechter dan de functie, geef dan ook een organisatiecijfer. Zeg welke nummers je wilt; dan schrijf ik de motivatiebrieven."
+- Ratings are stored with `python -m tools.applications_log rate <url> <role 1-5> [--org <1-5>] <reason>`. Organisation features (`org_type`, `impact_scale`) learn from the organisation rating when given; everything else learns from the role rating.
 
 Return to the manager: the file path, the numbered list, and the mode (normal/search-only).

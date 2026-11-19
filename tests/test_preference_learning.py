@@ -51,3 +51,26 @@ def test_summary_lists_strongest_signal_first():
     lines = summary(apps)
     assert lines[0].startswith("domain:sport_tech: gemiddeld 1.0")
     assert "nog 2 beoordeling(en) nodig" in lines[0]
+
+
+def test_org_features_learn_from_org_rating():
+    apps = [rated("org_type:commercial_brand;impact_scale:international;role_type:marketing_communication", 1, i)
+            for i in range(3)]
+    for app in apps:
+        app.org_rating = 5
+    bonuses = feature_bonuses(apps)
+    assert bonuses["org_type:commercial_brand"] == pytest.approx(5.0)
+    assert bonuses["impact_scale:international"] == pytest.approx(5.0)
+    assert bonuses["role_type:marketing_communication"] == pytest.approx(-5.0)
+
+
+def test_org_features_fall_back_to_role_rating():
+    apps = [rated("org_type:government", 4, i) for i in range(3)]
+    assert feature_bonuses(apps) == {"org_type:government": pytest.approx(2.5)}
+
+
+def test_org_rating_alone_only_teaches_org_features():
+    apps = [rated("org_type:government;role_type:policy", None, i) for i in range(3)]
+    for app in apps:
+        app.org_rating = 5
+    assert feature_bonuses(apps) == {"org_type:government": pytest.approx(5.0)}

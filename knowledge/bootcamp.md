@@ -8,7 +8,7 @@ Source of truth for the bootcamp mails (Tim, 2026-11-18). Recipient addresses li
 - **Where:** Hof van Jacob (binnenplaats), Haarlem. Bad weather: the covered balcony of team 2.
 - **Max participants:** 12.
 - **Running since:** June 2026.
-- **Sign-up:** Google Form with two questions: name and e-mail. Currently a new form each week.
+- **Sign-up:** one fixed Google Form (name and e-mail), reused every week. Responses must be cleared after each Tuesday session so the same link works again.
 
 ## Recipient groups
 - `hof_van_jacob`: employees of Hof van Jacob. Sent to one contact person, who forwards it to the rest (Tim has no access to the internal Sint Jacob mailing lists). Address in the private recipients file.

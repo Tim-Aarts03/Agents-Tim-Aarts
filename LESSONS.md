@@ -177,3 +177,15 @@ remember decisions and preferences across sessions.
 - Tim wants the top 5 vacancies every Friday by 09:00 without doing anything himself; he only picks which ones to apply for.
 - Action: local scheduled task `career-friday-run` (Claude app, Fridays 08:15 + a few minutes jitter, Auto mode). It pulls, runs `career-job-scout`, logs the vacancies, appends a Friday evaluation here, commits, tries to push and reports the top 5 in Dutch. It skips if today's vacancies file already exists (also avoids a double run via CLAUDE.md §3).
 - Limits: runs only while the Claude app is open on Tim's Mac (otherwise on next launch); push fails without GitHub credentials in the terminal.
+
+### 2026-11-19 — Evaluation week 1: role and organisation rated separately
+- Situation: one rating per vacancy taught "sports brands are bad" from ASICS (company 5, roles 3 and 1); `org_type:commercial_brand` was at ~2.
+- Action (approved by Tim): optional `org_rating` in `logs/applications.csv`; `org_type` and `impact_scale` learn from it when given, all other features from the role rating. ASICS org_rating 5 (Tim's own words); `domain:sports_brand` removed from the Upfront seed. `commercial_brand` is now 3.8. CLI: `rate <url> <role> --org <n> <reason>`.
+
+### 2026-11-19 — Letter checks fixed
+- Situation: notes below `---` were counted, so every letter failed the 400-word check; age and typo checks were Dutch-only.
+- Action: `tools.letter_checks` checks only the part above `---`, detects nl/en, checks "23 years old"/"23-year-old" in English and skips Dutch typos there. All three existing letters now pass.
+
+### 2026-11-19 — One fixed bootcamp sign-up form
+- Tim now uses one fixed Google Form; `knowledge/bootcamp_form.json` set to `fixed`, so the Wednesday check no longer stops on an old link.
+- Open: Tim wants responses cleared every Tuesday. Claude has no access to Google Forms; proposed a Google Apps Script with a weekly trigger in Tim's own account (needs Tim's approval: new tool + deletes data).

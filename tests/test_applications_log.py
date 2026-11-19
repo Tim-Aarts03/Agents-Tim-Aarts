@@ -99,3 +99,21 @@ def test_training_status_roundtrip(tmp_path):
     app = make_app("https://training.invalid/v01").model_copy(update={"status": Status.TRAINING})
     add_proposed(app, path)
     assert read_log(path)[0].status is Status.TRAINING
+
+
+def test_rate_stores_separate_org_rating(tmp_path):
+    path = tmp_path / "applications.csv"
+    add_proposed(make_app(), path)
+    rate(URL, 1, "Bedrijf top, functie niet", DAY, path, org_rating=5)
+    app = read_log(path)[0]
+    assert (app.rating, app.org_rating) == (1, 5)
+
+
+def test_old_log_without_org_rating_column_still_reads(tmp_path):
+    path = tmp_path / "applications.csv"
+    add_proposed(make_app(), path)
+    lines = path.read_text().splitlines()
+    header = lines[0].split(",")
+    idx = header.index("org_rating")
+    path.write_text("\n".join(",".join(c for i, c in enumerate(l.split(",")) if i != idx) for l in lines) + "\n")
+    assert read_log(path)[0].org_rating is None

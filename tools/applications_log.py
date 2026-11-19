@@ -38,7 +38,9 @@ class Application(BaseModel):
     date_proposed: date
     date_updated: date
     score: int | None = None
-    rating: int | None = Field(default=None, ge=1, le=5)
+    rating: int | None = Field(default=None, ge=1, le=5)  # the role itself (or the vacancy as a whole)
+    # Tim judges the organisation separately from the role (e.g. ASICS: company 5, merchandise role 3).
+    org_rating: int | None = Field(default=None, ge=1, le=5)
     rating_reason: str = ""
     features: str = ""  # FEATURE_SEPARATOR-joined output of tools.job_scoring.vacancy_features
     letter_file: str = ""
@@ -49,7 +51,7 @@ class Application(BaseModel):
 
 
 FIELDS = list(Application.model_fields)
-OPTIONAL_INT_FIELDS = ("score", "rating")
+OPTIONAL_INT_FIELDS = ("score", "rating", "org_rating")
 
 
 def read_log(path: Path = DEFAULT_LOG_PATH) -> list[Application]:
@@ -105,27 +107,41 @@ def update_status(url: str, status: Status, today: date, path: Path = DEFAULT_LO
     return update_application(url, today, path, status=status, **changes)
 
 
-def rate(url: str, rating: int, reason: str, today: date, path: Path = DEFAULT_LOG_PATH) -> Application:
-    return update_application(url, today, path, rating=rating, rating_reason=reason)
+def rate(url: str, rating: int, reason: str, today: date, path: Path = DEFAULT_LOG_PATH,
+         org_rating: int | None = None) -> Application:
+    """Store Tim's role rating and, if he gave one, a separate organisation rating."""
+    changes: dict = {"rating": rating, "rating_reason": reason}
+    if org_rating is not None:
+        changes["org_rating"] = org_rating
+    return update_application(url, today, path, **changes)
 
 
 def main() -> None:
     """CLI:
     `python -m tools.applications_log`                         list all applications
     `python -m tools.applications_log urls`                    print known vacancy URLs
-    `python -m tools.applications_log rate <url> <1-5> [reason]`  store Tim's rating
+    `python -m tools.applications_log rate <url> <1-5> [--org <1-5>] [reason]`
+        store Tim's role rating and optionally a separate organisation rating
     """
     args = sys.argv[1:]
     if args[:1] == ["urls"]:
         for url in sorted(known_urls()):
             print(url)
     elif args[:1] == ["rate"]:
-        app = rate(args[1], int(args[2]), " ".join(args[3:]), date.today())
-        print(f"Rated {app.organisation} — {app.title}: {app.rating}")
+        rest = args[3:]
+        org_rating = None
+        if "--org" in rest:
+            i = rest.index("--org")
+            org_rating = int(rest[i + 1])
+            rest = rest[:i] + rest[i + 2:]
+        app = rate(args[1], int(args[2]), " ".join(rest), date.today(), org_rating=org_rating)
+        org = f", organisatie {app.org_rating}" if app.org_rating is not None else ""
+        print(f"Rated {app.organisation} — {app.title}: functie {app.rating}{org}")
     else:
         for app in read_log():
             rating = app.rating if app.rating is not None else "-"
-            print(f"{app.date_updated} | {app.status.value:<11} | {rating} | {app.organisation} — {app.title}")
+            org = app.org_rating if app.org_rating is not None else "-"
+            print(f"{app.date_updated} | {app.status.value:<11} | role {rating} org {org} | {app.organisation} — {app.title}")
 
 
 if __name__ == "__main__":
