@@ -172,3 +172,8 @@ remember decisions and preferences across sessions.
 - Tim sent the first draft himself; goal is fully automatic weekly mails.
 - Action: `tools/bootcamp_weekly.py` (check: link valid for the coming Tuesday, recipient present, no mail yet this session; compose: draft JSON + hash) and scheduled task `bootcamp-promo-wednesday` (Wed 06:30, runs in Auto mode, drafts only). Sign-up link lives in `knowledge/bootcamp_form.json` (`session` = Tuesday ISO date or `fixed`).
 - Open: Tim to decide on one fixed form; phase 2 (auto-send) after two error-free weeks needs a CLAUDE.md change.
+
+### 2026-11-19 — Friday run automated
+- Tim wants the top 5 vacancies every Friday by 09:00 without doing anything himself; he only picks which ones to apply for.
+- Action: local scheduled task `career-friday-run` (Claude app, Fridays 08:15 + a few minutes jitter, Auto mode). It pulls, runs `career-job-scout`, logs the vacancies, appends a Friday evaluation here, commits, tries to push and reports the top 5 in Dutch. It skips if today's vacancies file already exists (also avoids a double run via CLAUDE.md §3).
+- Limits: runs only while the Claude app is open on Tim's Mac (otherwise on next launch); push fails without GitHub credentials in the terminal.
