@@ -17,13 +17,18 @@ Run one command per entry: `.venv/bin/python -m tools.bookkeeping add <month> <k
 
 | What Tim says | kind | JSON fields |
 |---|---|---|
-| Session given / cancelled | `session` | `date`, optional `participants` (0 = cancelled; leave out when Tim gives no number — do not ask for it) |
-| Bought something | `expense` | `date`, `description`, `shop`, `amount`, `payment_method` (`Pin`, `Contant`, `Overschrijving`, `iDEAL`), optional `vat_on_receipt`, `bank_amount`, `bank_note` |
+| Session given / cancelled | `session` | `date`, optional `participants` (0 = cancelled; leave out when Tim gives no number — do not ask for it), optional `rating` (Cijfer) |
+| Bought something | `expense` | `date`, `description` (what + " – " + shop, as shown in the books), `shop` (Bonnen tab), `amount`, `category`, `payment_method` (free text: `Pin`, `Pin (Apple Pay)`, `Contant`, `Privé (Revolut-kaart)`, …), `status` (`Betaald`, `Betaald (bank bevestigd)`, `Betaald (geen bon)`, `Te betalen`), optional `vat_on_receipt`, `bank_amount`, `bank_note` |
 | Sent an invoice | `invoice` | `number`, `date`, `client`, `description`, `amount`, `sessions` (dates it settles) |
 | Invoice paid | `payment` | `invoice`, `date`, `amount` |
 | Anything Tim should remember | `note` | plain Dutch text |
 
+Categories: `UIT-01 Inkoopgoederen` (snacks, ingredients, sports materials), `UIT-04 Kantoorkosten & Software` (e.g. Claude Pro), `UIT-06 Algemene / Overige bedrijfskosten` (e.g. small gifts to participants).
+
 Rules:
+- Expense without receipt or bank proof (e.g. cash on Marktplaats): book it only if Tim says so, and add a `note` that the tax office may reject costs without proof.
+- Reverse-charge VAT on foreign services (e.g. Claude Pro from Anthropic Ireland): book the 21% as a separate `expense` with status `Te betalen`, plus a `note` to check with an accountant.
+- Paid privately (e.g. Revolut) for a business cost: book normally, mention "privébetaling van een zakelijke kost" in a note.
 - Dates: Tim says "dinsdag" → resolve with `date` / Python, never by guessing. Bootcamp sessions are on Tuesdays.
 - Business purpose: protein snacks and ingredients for protein bars are business (handed out at the bootcamp, included in the contract rate). Write the purpose in `description`, e.g. "Eiwitsnack (Activia) – uitgedeeld bij bootcamp".
 - Not clearly business, amount unclear, shop unknown, or date unclear → do NOT book it. Put it under "Vragen voor Tim".

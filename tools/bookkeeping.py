@@ -17,7 +17,6 @@ import argparse
 import json
 import sys
 from datetime import date, timedelta
-from enum import Enum
 from pathlib import Path
 from typing import Literal
 
@@ -44,26 +43,36 @@ class Ride(BaseModel):
     rate_per_km: float
 
 
+class Contract(BaseModel):
+    start: date
+    end: date
+    sessions: int
+    rate: float
+
+
 class Config(BaseModel):
     owner: str
     business: str
     client: str
+    client_short: str = ""  # used in hours and work-in-progress tables, like Tim's own files
     location: str
     rates: list[Rate]
     session_time: str  # e.g. "16:15–17:00"
+    session_start: float = 16.25  # decimal hours, as in Tim's sheets (16,25 = 16:15)
     session_hours: float
     travel_hours_one_way: float
     ride: Ride
     payment_term_days: int = 14
     kor_threshold: float = 20000.0
     kor_warn_fraction: float = 0.75
+    contract: Contract | None = None
+
+    @property
+    def short(self) -> str:
+        return self.client_short or self.client
 
 
-class PaymentMethod(str, Enum):
-    PIN = "Pin"
-    CASH = "Contant"
-    TRANSFER = "Overschrijving"
-    IDEAL = "iDEAL"
+CASH = "Contant"
 
 
 class Expense(BaseModel):
@@ -71,7 +80,8 @@ class Expense(BaseModel):
     description: str
     shop: str
     amount: float = Field(gt=0)
-    payment_method: PaymentMethod = PaymentMethod.PIN
+    payment_method: str = "Pin"  # free text, e.g. "Pin (Apple Pay)", "Privé (Revolut-kaart)", "Contant"
+    status: str = "Betaald"
     category: str = "UIT-01 Inkoopgoederen"
     vat_on_receipt: float | None = None  # info only: KOR, so VAT is part of the cost
     bank_amount: float | None = None
@@ -82,6 +92,7 @@ class Session(BaseModel):
     date: date
     participants: int | None = Field(default=None, ge=0)  # 0 = cancelled, None = given, number unknown
     location: str | None = None
+    rating: float | None = None  # "Cijfer" column in Tim's sheet
 
 
 class Invoice(BaseModel):
@@ -120,6 +131,7 @@ class Ledger(BaseModel):
     invoices: list[Invoice] = []
     payments: list[Payment] = []
     notes: list[str] = []
+    closed: bool = False  # month closed by Tim; until then titles say "(voorlopig)"
 
 
 class YearRow(BaseModel):
@@ -193,6 +205,10 @@ def rate_on(d: date, cfg: Config) -> float:
 
 def due_date(inv: Invoice, cfg: Config) -> date:
     return inv.due_date or inv.date + timedelta(days=cfg.payment_term_days)
+
+
+def is_cash(e: Expense) -> bool:
+    return e.payment_method.lower().startswith(CASH.lower())
 
 
 def given(ledger: Ledger) -> list[Session]:
@@ -288,6 +304,10 @@ def eur(x: float) -> str:
     return "€ " + f"{x:,.2f}".replace(",", "_").replace(".", ",").replace("_", ".")
 
 
+def nl(x: float, decimals: int = 2) -> str:
+    return f"{x:.{decimals}f}".replace(".", ",")
+
+
 def _r(x: float) -> float:
     return round(x + 0.0, 2)
 
@@ -328,12 +348,29 @@ def summarize(ledger: Ledger, cfg: Config, today: date | None = None) -> Summary
     for inv in open_end:
         due = due_date(inv, cfg)
         if inv.follow_up:
-            attention.append(f"Factuur {inv.number} ({eur(inv.amount)}) staat nog open: {inv.follow_up}")
+            attention.append(f"Factuur {inv.number} ({eur(inv.amount)}, factuurdatum {inv.date:%d-%m-%Y}) "
+                             f"staat nog open: {inv.follow_up}")
         elif due < today:
             attention.append(f"Factuur {inv.number} ({eur(inv.amount)}, {inv.client}) is vervallen op "
                              f"{due:%d-%m-%Y} en nog niet ontvangen: betalingsherinnering overwegen.")
+    if cfg.contract:
+        c = cfg.contract
+        done = [w for w in wip_end if c.start <= w.date <= c.end]
+        if done:
+            attention.append(
+                f"Contract {c.start:%d-%m} t/m {c.end:%d-%m}: met de les van {done[-1].date:%d-%m} zijn "
+                f"{len(done)} van de {c.sessions} lessen gegeven ({eur(sum(w.amount for w in done))}). "
+                f"De factuur van {eur(c.sessions * c.rate)} volgt achteraf na {c.end:%d-%m} "
+                f"(betaaltermijn {cfg.payment_term_days} dagen).")
+    if sessions:
+        parts = [f"{s.date:%d-%m}" + (f" ({s.participants} deelnemers)" if s.participants else "")
+                 for s in sessions]
+        listed = parts[0] if len(parts) == 1 else ", ".join(parts[:-1]) + " en " + parts[-1]
+        hrs = lambda x: f"{x:.2f}".rstrip("0").rstrip(".").replace(".", ",")
+        attention.append(f"Sessies {listed} gegeven. Alle sessies: {hrs(cfg.session_hours)} uur facturabel + "
+                         f"{hrs(cfg.travel_hours_one_way)} uur reistijd per enkele reis (niet facturabel).")
     for e in ledger.expenses:
-        if e.payment_method != PaymentMethod.CASH and e.bank_amount is None:
+        if not is_cash(e) and e.bank_amount is None:
             attention.append(f"Bon {e.date:%d-%m} {e.shop} ({eur(e.amount)}): nog niet bevestigd met bankafschrift.")
 
     return Summary(
@@ -358,6 +395,10 @@ def summarize(ledger: Ledger, cfg: Config, today: date | None = None) -> Summary
     )
 
 
+def ledger_closed(path: Path) -> bool:
+    return Ledger.model_validate_json(path.read_text()).closed
+
+
 def year_rows(year: int, cfg: Config, data_dir: Path = DATA_DIR) -> list[YearRow]:
     """Old months from history, newer months computed from their ledgers."""
     rows = {r.month: r for r in load_history(year, data_dir)}
@@ -368,7 +409,7 @@ def year_rows(year: int, cfg: Config, data_dir: Path = DATA_DIR) -> list[YearRow
             income=s.income, expenses=s.expenses, sessions=s.sessions_given,
             billable_hours=s.billable_hours, travel_allowance=s.travel_allowance,
             open_invoices_end=_r(sum(i.amount for i in s.open_invoices_end)),
-            wip_end=_r(sum(w.amount for w in s.wip_end)), status="Via agent")
+            wip_end=_r(sum(w.amount for w in s.wip_end)), status="Afgesloten" if ledger_closed(path) else "Lopend (voorlopig)")
     return [rows[m] for m in sorted(rows)]
 
 
@@ -395,8 +436,8 @@ def report(ledger: Ledger, cfg: Config, today: date | None = None, data_dir: Pat
         f"| Uitgaven | {eur(s.expenses)} |",
         f"| Netto resultaat | {eur(s.net)} |",
         f"| Gegeven sessies | {s.sessions_given} (geannuleerd: {s.sessions_cancelled}) |",
-        f"| Facturabele uren | {s.billable_hours:.2f} |",
-        f"| Fietskilometers (memo) | {s.travel_km:.1f} km = {eur(s.travel_allowance)} |",
+        f"| Facturabele uren | {nl(s.billable_hours)} |",
+        f"| Fietskilometers (memo) | {nl(s.travel_km, 1)} km = {eur(s.travel_allowance)} |",
         f"| Openstaande facturen | {eur(sum(i.amount for i in s.open_invoices_end))} |",
         f"| Onderhanden werk (nog niet gefactureerd) | {eur(sum(w.amount for w in s.wip_end))} "
         f"({len(s.wip_end)} sessies) |",

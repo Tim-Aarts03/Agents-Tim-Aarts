@@ -181,3 +181,18 @@ def test_follow_up_replaces_reminder_suggestion(cfg, nov):
     nov.opening.open_invoices[0].follow_up = "Tim regelt de betaling zelf."
     att = summarize(nov, cfg, TODAY).attention
     assert any("regelt" in a for a in att) and not any("herinnering" in a for a in att)
+
+
+def test_layout_follows_tims_sheet(cfg, nov, tmp_path):
+    add_entry(nov, "session", {"date": "2026-11-03", "participants": 3, "rating": 8}, cfg)
+    add_entry(nov, "expense", {"date": "2026-11-04", "description": "Yoga matten – Marktplaats", "shop": "Marktplaats",
+                               "amount": 50, "payment_method": "Contant", "status": "Betaald (geen bon)"}, cfg)
+    wb = load_workbook(build_month(nov, cfg, tmp_path, TODAY, data_dir=tmp_path))
+    ie, uren, sess = wb["Inkomsten en uitgaven"], wb["Urenregistratie"], wb["Sessies"]
+    assert [ie["B1"].value, ie["C1"].value, ie["D1"].value] == ["Test Owner", 2026, "November"]
+    assert ie["D4"].value == "Yoga matten – Marktplaats" and ie["K4"].value == "Betaald (geen bon)"
+    assert (uren["F4"].value, uren["G4"].value, uren["I4"].value) == (16.1, 16.25, "=G4-F4-H4")
+    assert uren["F5"].value == 16.25 and uren["G5"].value == 17
+    assert sess["E3"].value == "Cijfer" and sess["E4"].value == 8
+    assert "(voorlopig)" in wb["Overzicht"]["B1"].value
+    assert wb["Inkomsten en uitgaven"]["F6"].value == "=SUM(F4:F5)"  # spare row inside the range
