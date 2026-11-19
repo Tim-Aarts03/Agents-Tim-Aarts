@@ -64,6 +64,7 @@ Over 10 weken (vanaf 16 november 2026) heb jij een betrouwbaar team van agents d
 | `mail_sender` (Python) | zet de promotiemail in Concepten (of verstuurt na jouw akkoord) | actief |
 | Apps Script reminder + leegmaken | maandagreminder als concept, dinsdag archief + formulier leeg | net geïnstalleerd |
 | `finance-weekly-bookkeeper` | verwerkt jouw woensdag-update in de boekhouding en de KOR-bewaking | in training |
+| `finance-invoice-writer` | maakt een factuur (PDF) van de nog niet gefactureerde lessen; jij keurt goed en verstuurt zelf | in training |
 
 Rekenwerk en datums doe ik nooit "uit mijn hoofd", maar altijd met Python-tools die getest zijn.
 

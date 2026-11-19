@@ -14,6 +14,7 @@ Definitions live in `.claude/agents/`; archived agents live in `archive/`.
 | `bootcamp-form-cleaner` (Google Apps Script, no LLM) | Mail | Tuesday 20:00: mails the sign-ups to Tim as archive, then clears the fixed form | `tools/google_apps_script/clear_bootcamp_responses.gs` (runs in Tim's Google account) | waiting for Tim to install |
 | `bootcamp-reminder` (Google Apps Script, no LLM) | Mail | Monday ~12:45: reminder with weather advice to all sign-ups (BCC); phase 1 Gmail draft for Tim | `tools/google_apps_script/bootcamp_reminder.gs` (runs in Tim's Google account) | waiting for Tim to install |
 | `finance-weekly-bookkeeper` | Finance | Books Tim's Wednesday update (sessions, expenses, invoices, payments) into the monthly ledger; builds the monthly Excel in Tim's layout + year overview; flags overdue invoices and KOR status | `tools/bookkeeping.py`, `tools/bookkeeping_xlsx.py` | training |
+| `finance-invoice-writer` | Finance | Drafts a sales invoice (Markdown + PDF in Tim's 001 layout) from unbilled sessions; manager finalizes after Tim's approval (PDF to `01 Verkoop Facturen/`, invoice booked) | `tools/invoice.py` | training |
 | `qa-fact-checker` | QA | Checks every output against `/knowledge` | `tools/letter_checks.py` | active |
 
 ## Mail workflow (bootcamp, training phase until ~2 Dec 2026)
@@ -26,13 +27,16 @@ Definitions live in `.claude/agents/`; archived agents live in `archive/`.
 - **Wednesday, on Tim's message** (no scheduled run): Tim says what happened and what he spent → `finance-weekly-bookkeeper` → `tools.bookkeeping add` per entry → `build` (Excel in `Boekhouding/Maandelijkse administratie/`) → `report` (`output/finance/week_<date>.md`) → manager reports in Dutch, with questions for anything not booked.
 - Source of truth: `Boekhouding/data/<YYYY-MM>.json` (git-ignored); config in `knowledge/private_bookkeeping.json`. KOR monitoring is part of the tool (no separate agent).
 
+## Invoice workflow (from 19 Nov 2026)
+- Tim asks for an invoice → `finance-invoice-writer` runs `tools.invoice draft` → `qa-fact-checker` on the Markdown → Tim approves the PDF → manager runs `tools.invoice finalize <nr> --approved` → Tim sends it himself; payment is booked later via the bookkeeper.
+- Contract Sint Jacob: invoice afterwards, after 15 Dec 2026 (the tool warns when invoicing earlier).
+
 ## Planned
 
 | Agent | Domain | Phase |
 |---|---|---|
 | `sales-quote-writer` | Sales | 2 |
 | Bootcamp sign-up website (one fixed link, max 12, attendance) | Mail | 2b |
-| `finance-invoice-writer` | Finance | 3 |
 | `finance-income-tax-preparer` | Finance | 3 |
 
 ## Archived
