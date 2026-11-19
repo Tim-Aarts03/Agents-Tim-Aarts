@@ -11,6 +11,7 @@ Definitions live in `.claude/agents/`; archived agents live in `archive/`.
 | `career-cover-letter-writer` | Career | Cover letters (recipient's language) for vacancies Tim selects; manager exports approved letters to Word | `tools/letter_checks.py`, `tools/applications_log.py`, `tools/letter_docx.py` | active |
 | `mail-promo-writer` | Mail | Weekly 1–3 sentence pitch for the bootcamp promotion mail | `tools/bootcamp_mail.py` (log) | training |
 | `mail-sender` (Python tool, no LLM) | Mail | Sends ONE approved weekly promotion mail via Apple Mail; send-only, allowlist, approval hash, max 1 per group per session | `tools/mail_sender.py` | active |
+| `bootcamp-form-cleaner` (Google Apps Script, no LLM) | Mail | Tuesday 20:00: archives sign-ups to a Sheet, then clears the fixed form | `tools/google_apps_script/clear_bootcamp_responses.gs` (runs in Tim's Google account) | waiting for Tim to install |
 | `qa-fact-checker` | QA | Checks every output against `/knowledge` | `tools/letter_checks.py` | active |
 
 ## Mail workflow (bootcamp, training phase until ~2 Dec 2026)

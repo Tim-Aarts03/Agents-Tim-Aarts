@@ -188,4 +188,4 @@ remember decisions and preferences across sessions.
 
 ### 2026-11-19 — One fixed bootcamp sign-up form
 - Tim now uses one fixed Google Form; `knowledge/bootcamp_form.json` set to `fixed`, so the Wednesday check no longer stops on an old link.
-- Open: Tim wants responses cleared every Tuesday. Claude has no access to Google Forms; proposed a Google Apps Script with a weekly trigger in Tim's own account (needs Tim's approval: new tool + deletes data).
+- Tim wants responses cleared every Tuesday. Claude has no access to Google Forms (and should not): approved a bound Google Apps Script in Tim's own form (`tools/google_apps_script/`), trigger Tuesday 20:00 Amsterdam. It archives responses to the Sheet "Bootcamp aanmeldingen archief" before `deleteAllResponses()`, and does nothing on other days. Tim installs it himself (Dutch step-by-step in the README).
