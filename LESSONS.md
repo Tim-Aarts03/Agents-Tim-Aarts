@@ -51,6 +51,7 @@ remember decisions and preferences across sessions.
 - Works only on the Mac from now on. Friday: the top 5 should be ready when Tim opens Claude, followed by an evaluation (max 3 improvements).
 - Max 3 agents in parallel; warn only when a task costs money or uses unusually much.
 - Improvement suggestions only when they really add value.
+- Tim values honest feedback (2026-11-19): say plainly when something is not needed yet or when a different approach is better, even if he asked for something else.
 - Tim is a beginner with AI: teach him short, practical tips on working with agents.
 - Priority after career: mail agents (weekly use), then bookkeeping, then quotes.
 - Goal in 10 weeks: career, mail and bookkeeping agent groups working under Claude; Tim only talks to Claude.
