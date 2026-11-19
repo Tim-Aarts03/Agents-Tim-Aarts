@@ -237,3 +237,7 @@ remember decisions and preferences across sessions.
 ### 2026-11-19 — Identity file
 - Tim: "we've worked for days but I don't know you yet."
 - Action: `IDENTITY.md` (Dutch, for Tim): who the manager is, no memory between sessions (files are the memory), team overview, principles, this week's mistakes, what Claude knows about Tim, tips. Keep the team table and mistakes section current.
+
+### 2026-11-19 — Manager persona "Max"
+- Tim wants the manager to feel like a real person: name, tone, personality, hobbies.
+- Action: persona Max at the top of `IDENTITY.md` (calm, direct, honest, coaching; sports images max once per conversation; motto "Eerst de feiten, dan de actie."). Clearly marked as a role played by Claude; CLAUDE.md always wins. CLAUDE.md §1 and §3 updated (Tim's own request, so done directly): read IDENTITY.md at session start and keep it current.
