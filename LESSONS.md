@@ -206,3 +206,8 @@ remember decisions and preferences across sessions.
 - Lesson: Tim assumed sessions were already in the books; the agent only knows what Tim tells it. Participant numbers are optional, don't ask for them.
 - Action: `participants` optional; invoice `follow_up` replaces the reminder suggestion. The agent still re-asked the invoice-001 date question from the setup log; that log line is now closed.
 
+
+### 2026-11-19 — Apps Script asked for full Gmail access
+- Situation: during install Google asked Tim for "everything you can do in Gmail" (read, delete, labels), because `GmailApp` always requires the full `mail.google.com` scope. Tim noticed and asked before accepting.
+- Lesson: check which permissions a Google API call needs before handing Tim a script; least privilege also applies outside the project folder.
+- Action: explicit `appsscript.json` with only `gmail.compose` (drafts + send), `forms.currentonly` and the other needed scopes; reminder uses the Gmail advanced service instead of `GmailApp`. Test fails if `GmailApp`/`MailApp` or the full Gmail scope ever returns. README tells Tim which text to expect on the consent screen.

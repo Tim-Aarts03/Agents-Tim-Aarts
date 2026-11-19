@@ -14,15 +14,19 @@ Beide doen niets op een andere dag, ook niet als je ze per ongeluk start. De rem
 2. Klik rechtsboven op de **drie puntjes ⋮ → Apps Script**. Er opent een nieuw tabblad.
 3. Verwijder de voorbeeldcode in `Code.gs` en plak de **volledige** inhoud van `clear_bootcamp_responses.gs`.
 4. Klik links naast "Bestanden" op **+ → Script** en noem het `bootcamp_reminder`. Plak daarin de **volledige** inhoud van `bootcamp_reminder.gs`.
-5. Klik op **Opslaan** (💾). Geef het project een naam, bijv. "Bootcamp".
-6. Kies bovenin in de keuzelijst **`reminderDryRun`** en klik **Uitvoeren**.
-   - Google vraagt toestemming (formulier, Gmail, Sheets, internet voor het weer): kies je account → **Geavanceerd** → **Ga naar Bootcamp (onveilig)** → **Toestaan**. Dit is normaal voor een script dat je zelf hebt toegevoegd.
+5. **Rechten beperken:** klik links op **⚙ Projectinstellingen** en vink **"Manifestbestand appsscript.json weergeven in editor"** aan. Ga terug naar de editor (`< >`), open `appsscript.json` en vervang de inhoud door de **volledige** inhoud van `appsscript.json` uit deze map.
+6. Klik op **Opslaan** (💾). Geef het project een naam, bijv. "Bootcamp".
+7. Kies bovenin in de keuzelijst **`reminderDryRun`** en klik **Uitvoeren**.
+   - Google vraagt toestemming: kies je account → **Geavanceerd** → **Ga naar Bootcamp (onveilig)**. Dit is normaal voor een script dat je zelf hebt toegevoegd.
+   - **Controleer de lijst vóór je op Toestaan klikt.** Bij Gmail moet staan: *"Concepten beheren en e-mails verzenden"*. Staat er *"Alle Gmail-berichten lezen, opstellen, verzenden en definitief verwijderen"* of *"alles wat je in je Gmail kunt doen"*, klik dan **niet** op Toestaan: dan is stap 5 niet goed gegaan.
+   - De overige rechten: dit formulier bekijken en beheren, spreadsheets (voor het archief), verbinding met een externe dienst (het weer), triggers beheren en je e-mailadres zien.
    - Onderin zie je het aantal deelnemers en de mail die gemaakt zou worden. Er wordt niets verstuurd.
-7. Kies **`dryRun`** en klik **Uitvoeren**: je ziet hoeveel aanmeldingen gewist zouden worden. Er wordt niets gewist.
-8. Kies **`installReminderTrigger`** → **Uitvoeren**. Kies daarna **`installTrigger`** → **Uitvoeren**.
-9. Controle: klik links op het **wekker-icoon (Triggers)**. Je ziet twee triggers: `createReminder` (maandag) en `clearResponses` (dinsdag).
+8. Kies **`dryRun`** en klik **Uitvoeren**: je ziet hoeveel aanmeldingen gewist zouden worden. Er wordt niets gewist.
+9. Kies **`installReminderTrigger`** → **Uitvoeren**. Kies daarna **`installTrigger`** → **Uitvoeren**.
+10. Controle: klik links op het **wekker-icoon (Triggers)**. Je ziet twee triggers: `createReminder` (maandag) en `clearResponses` (dinsdag).
 
 ## Goed om te weten
+- Heb je eerder al toestemming gegeven voor *alles in je Gmail*? Trek die in via myaccount.google.com → **Beveiliging** → **Apps van derden met accounttoegang** → het project → **Toegang verwijderen**. Doe daarna stap 5–10 opnieuw.
 - Het e-mailadres wordt gelezen uit de vraag met "mail" in de titel (of uit "e-mailadressen verzamelen" als dat aanstaat).
 - Wissen kan niet ongedaan worden gemaakt; het archief is je back-up. De Sheet verschijnt na de eerste dinsdag met aanmeldingen.
 - Is het weer niet op te halen, dan gaat de reminder zonder weeradvies en staat dat in het mailtje aan jezelf.

@@ -6,6 +6,10 @@
  * Text and weather rules mirror tools/bootcamp_mail.py (reminder_mail) and
  * tools/bootcamp_weather.py: keep them in sync when either changes.
  *
+ * Gmail access goes through the Gmail API with only the gmail.compose scope
+ * (see appsscript.json): create drafts and send, but not read, delete or label
+ * Tim's mail. GmailApp is deliberately not used: it demands full mailbox access.
+ *
  * Phase 1: REMINDER_SEND_AUTOMATICALLY = false -> Gmail draft (participants in BCC)
  * plus a note to Tim. Only switch to true after Tim approves automatic sending
  * (needs a CLAUDE.md change).
@@ -56,15 +60,35 @@ function createReminder() {
   var forecast = fetchForecast_(session.iso);
   var mail = buildReminder_(session, forecast);
   var me = Session.getEffectiveUser().getEmail();
-  var options = { bcc: recipients.join(','), name: 'Tim Aarts' };
+  var raw = rawMessage_(me, recipients, mail.subject, mail.body);
 
   if (REMINDER_SEND_AUTOMATICALLY) {
-    GmailApp.sendEmail(me, mail.subject, mail.body, options);
+    Gmail.Users.Messages.send({ raw: raw }, 'me');
   } else {
-    GmailApp.createDraft(me, mail.subject, mail.body, options);
+    Gmail.Users.Drafts.create({ message: { raw: raw } }, 'me');
   }
   props.setProperty(REMINDER_LAST_RUN_KEY, today);
-  GmailApp.sendEmail(me, noteSubject_(recipients.length), noteBody_(recipients.length, forecast));
+  var note = rawMessage_(me, [], noteSubject_(recipients.length), noteBody_(recipients.length, forecast));
+  Gmail.Users.Messages.send({ raw: note }, 'me');
+}
+
+/** RFC 2822 message, base64url-encoded for the Gmail API. Participants only in Bcc. */
+function rawMessage_(to, bcc, subject, body) {
+  var headers = [
+    'From: Tim Aarts <' + to + '>',
+    'To: ' + to
+  ];
+  if (bcc.length > 0) {
+    headers.push('Bcc: ' + bcc.join(', '));
+  }
+  headers.push(
+    'Subject: =?UTF-8?B?' + Utilities.base64Encode(subject, Utilities.Charset.UTF_8) + '?=',
+    'MIME-Version: 1.0',
+    'Content-Type: text/plain; charset=UTF-8',
+    'Content-Transfer-Encoding: base64'
+  );
+  var mime = headers.join('\r\n') + '\r\n\r\n' + Utilities.base64Encode(body, Utilities.Charset.UTF_8).replace(/(.{76})/g, '$1\r\n');
+  return Utilities.base64EncodeWebSafe(mime, Utilities.Charset.UTF_8);
 }
 
 function reminderDryRun() {
