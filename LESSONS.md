@@ -256,3 +256,6 @@ remember decisions and preferences across sessions.
 - Decisions: all numbers, numbering (ledgers + PDFs in `01 Verkoop Facturen/`), due date (payment term from config, 14 days) and booking in `tools/invoice.py`; PDF via reportlab in the layout of invoice 001. Fixed invoice details (KVK, BTW-id, IBAN, client address) taken from invoice 001 into `knowledge/private_bookkeeping.json` (not in git). Drafts never use up a number; `finalize` needs `--approved` and refuses overwrites, reused numbers and outdated drafts.
 - Fixed from 001: "factuur bedrag" → "factuurbedrag", month names lowercase, term 25 → 14 days per config. Added lesson dates under the description so the client can check.
 - Open: invoice 001 PDF says 16 Sep 2026, the ledger says 7 Oct 2026; Tim said not to ask about 001, so left as is. Sender address on 001 has no postcode/town.
+
+### 2026-11-19 — Invoice layout approved
+- Tim approved the layout of draft 002. Client on invoices: "Stichting Sint Jacob" (full legal name). Sender address gets postcode + town; postcode asked from Tim, never looked up online (would send his address to an outside service).
