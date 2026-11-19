@@ -12,6 +12,7 @@ Definitions live in `.claude/agents/`; archived agents live in `archive/`.
 | `mail-promo-writer` | Mail | Weekly 1–3 sentence pitch for the bootcamp promotion mail | `tools/bootcamp_mail.py` (log) | training |
 | `mail-sender` (Python tool, no LLM) | Mail | Sends ONE approved weekly promotion mail via Apple Mail; send-only, allowlist, approval hash, max 1 per group per session | `tools/mail_sender.py` | active |
 | `bootcamp-form-cleaner` (Google Apps Script, no LLM) | Mail | Tuesday 20:00: archives sign-ups to a Sheet, then clears the fixed form | `tools/google_apps_script/clear_bootcamp_responses.gs` (runs in Tim's Google account) | waiting for Tim to install |
+| `finance-weekly-bookkeeper` | Finance | Books Tim's Wednesday update (sessions, expenses, invoices, payments) into the monthly ledger; builds the monthly Excel in Tim's layout + year overview; flags overdue invoices and KOR status | `tools/bookkeeping.py`, `tools/bookkeeping_xlsx.py` | training |
 | `qa-fact-checker` | QA | Checks every output against `/knowledge` | `tools/letter_checks.py` | active |
 
 ## Mail workflow (bootcamp, training phase until ~2 Dec 2026)
@@ -20,6 +21,10 @@ Definitions live in `.claude/agents/`; archived agents live in `archive/`.
 - **Automatic (phase 1, from 25 Nov 2026):** scheduled task `bootcamp-promo-wednesday` (Wed ~06:40, Mac app must be open) runs `tools/bootcamp_weekly.py check` → `mail-promo-writer` → `compose` → `qa-fact-checker` → `mail_sender draft`. Never sends. One fixed sign-up form since 19 Nov 2026 (`session: fixed`); responses must be cleared after each Tuesday session.
 - After two error-free weeks: propose automatic sending (needs a CLAUDE.md change approved by Tim).
 
+## Bookkeeping workflow (from 19 Nov 2026)
+- **Wednesday, on Tim's message** (no scheduled run): Tim says what happened and what he spent → `finance-weekly-bookkeeper` → `tools.bookkeeping add` per entry → `build` (Excel in `Boekhouding/Maandelijkse administratie/`) → `report` (`output/finance/week_<date>.md`) → manager reports in Dutch, with questions for anything not booked.
+- Source of truth: `Boekhouding/data/<YYYY-MM>.json` (git-ignored); config in `knowledge/private_bookkeeping.json`. KOR monitoring is part of the tool (no separate agent).
+
 ## Planned
 
 | Agent | Domain | Phase |
@@ -27,8 +32,6 @@ Definitions live in `.claude/agents/`; archived agents live in `archive/`.
 | `sales-quote-writer` | Sales | 2 |
 | Bootcamp sign-up website (one fixed link, max 12, attendance) | Mail | 2b |
 | `finance-invoice-writer` | Finance | 3 |
-| `finance-transaction-processor` | Finance | 3 |
-| `finance-kor-monitor` | Finance | 3 |
 | `finance-income-tax-preparer` | Finance | 3 |
 
 ## Archived

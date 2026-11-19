@@ -21,3 +21,7 @@ knowledge/private_*
 
 # OS
 .DS_Store
+
+# Bookkeeping working copy (financial data, approved plan 2026-11-19)
+/Boekhouding/
+/Boekhouding kopie
