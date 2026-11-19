@@ -220,6 +220,11 @@ remember decisions and preferences across sessions.
 ### 2026-11-19 — Tim's own November sheet is the layout standard
 - Situation: Tim sent his own version of the November file (likely prepared in a chat elsewhere) with participants, five expenses (Claude Pro + reverse-charge VAT, cash yoga mats without receipt, Plus, Lidl gift) and his preferred layout.
 - Lesson: Tim wants his familiar layout exactly: title row "owner | year | month", start/end times in hours, Cijfer column, assumptions directly under the table, colour code, "(voorlopig)" until the month is closed, short client name "Sint Jacob".
-- Action: `tools/bookkeeping_xlsx.py` rewritten to his layout; free-text payment method and status, session rating, contract progress and session summary generated; data booked in the November ledger. Business name in the bookkeeping config is now "Verpleeg Verpleging" (trade name per 03-11-2026, from Tim's sheet).
+- Action: `tools/bookkeeping_xlsx.py` rewritten to his layout; free-text payment method and status, session rating, contract progress and session summary generated; data booked in the November ledger.
 - Open: reverse-charge VAT means a VAT return although the KOR applies (earlier lesson said "no VAT return"); Tim checks this with an accountant.
+
+### 2026-11-19 — Business name stays T.A Vitality
+- Situation: Tim's sheet mentioned a new trade name; Claude adopted it in the bookkeeping. Tim: "Houd T.A Vitality aan", everything back.
+- Lesson: never adopt a new business name (or other identity fact) from a document; confirm with Tim first.
+- Action: config, November note and Excel files back to T.A Vitality.
 
