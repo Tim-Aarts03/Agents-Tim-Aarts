@@ -195,3 +195,8 @@ remember decisions and preferences across sessions.
 - Lesson: Tim's "copy" in the project folder was a Finder alias, not a copy; check what a file really is before relying on it. Invoice 001 appears in both the September and October file (double entry); hand-made books need a check before being taken over.
 - Action: `tools/bookkeeping.py` (JSON ledger per month, all arithmetic, checks, overdue invoices, KOR status) and `tools/bookkeeping_xlsx.py` (Excel in Tim's layout; never overwrites hand-made files); agent `finance-weekly-bookkeeper`. Data in `Boekhouding/` and `knowledge/private_bookkeeping.json`, both git-ignored. KOR monitoring folded into the tool instead of a separate agent.
 
+
+### 2026-11-19 — Monday reminder via Apps Script (approved plan)
+- Tim wants the Monday reminder sent automatically to everyone who signed up.
+- Decision: the reminder runs as Apps Script in Tim's own form (`tools/google_apps_script/bootcamp_reminder.gs`, Monday ~12:45), so participant addresses never reach Claude or git. Same text and weather rules as `tools/bootcamp_mail.py`; `tests/test_apps_script_reminder.py` (Node) keeps both identical. Participants in BCC; at most one per Monday; nothing if nobody signed up.
+- Phase 1: Gmail draft + a note to Tim; Tim sends. Phase 2 (`REMINDER_SEND_AUTOMATICALLY = true`) only after two error-free weeks and a CLAUDE.md change approved by Tim.
