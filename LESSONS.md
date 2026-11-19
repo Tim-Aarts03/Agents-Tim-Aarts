@@ -247,3 +247,6 @@ remember decisions and preferences across sessions.
 - Lesson: an alias or symlink looks like a folder to Tim but sends work elsewhere; check with `file` before trusting a folder.
 - Action: real copy in `Boekhouding/` (alias archived in `archive/`, git-ignored); `tools.bookkeeping` refuses to run when `Boekhouding` is not a real folder inside the project; `.claude/settings.json` denies Claude access to `/Applications/School/**`.
 
+
+### 2026-11-19 — November bookkeeping approved
+- Tim checked the November file, year overview and weekly report: "alles ziet er goed uit". First real Wednesday update on 25 Nov 2026; agent stays in training until then.
