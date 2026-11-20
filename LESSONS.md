@@ -260,3 +260,10 @@ remember decisions and preferences across sessions.
 
 ### 2026-11-19 — Invoice layout approved
 - Tim approved the layout of draft 002. Client on invoices: "Stichting Sint Jacob" (full legal name). Sender address gets postcode + town; postcode asked from Tim, never looked up online (would send his address to an outside service).
+
+### 2026-11-20 — Friday run (automated)
+- 5 candidates, all verified (pages opened), ~40 web calls; mode normal; top score 38 (UEFA Media Attendance Assistants). Weak week: no policy, project-lead or traineeship roles; three UEFA admin/logistics roles rank high on employer points alone.
+- Proposals (need Tim's OK, not implemented):
+  1. Update `knowledge/job_sources.md`: mark Krajicek, KNVB and VU pages as not working; add adidas `jobs.adidas-group.com/search/?locationsearch=Amsterdam`, Upfront via magnet.me and the Noord-Holland traineeship (recruits in February).
+  2. Add policy/trainee boards (binnenlandsbestuur.nl/vacatures, werkenvoornederland filtered on VWS/sport) and ask Tim for LinkedIn alerts; broad WebSearch mostly returned dead (404/410) pages.
+  3. Scoring: flag "no vacancy above X" weeks, or lower impact points for `operations_logistics`/`finance_admin` roles that Tim rates low.
