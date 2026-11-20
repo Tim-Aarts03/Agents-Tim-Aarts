@@ -280,3 +280,9 @@ remember decisions and preferences across sessions.
 - Trial run (2026-11-20): 7 candidates, 5 shown, scores 17–29; quiet holiday period, nothing in Amsterdam/Haarlem, nothing from dream employers. Best source: Vereniging Sport en Gemeenten agenda. Mulier and cruyffinstitute.org agendas don't work; KSB uses `/events/`.
 - The tool ranked a fully booked event #1: added `sold_out` (excluded). Multi-date events: first date in the window. Missing year: only if the weekday matches.
 - Open proposal: more sources (Sports Innovation League/Rockstart, NOC*NSF, Net Impact Amsterdam, Amsterdam Sportgala).
+
+### 2026-11-20 — First event ratings, no online events, training round
+- Tim's ratings: online talkshow Europe 4, DCSEM sports medicine congress 4 ("te hoog gegrepen betekent niet oninteressant"). No number yet for the Didam webinar; Werkconferentie and Workshop XL needed an explanation first.
+- Lesson: Tim can't rate an event from its title; the overview must say what it is, who comes and what you do there. Agent output now has a "Wat is het" part.
+- Tim: "online is gewoon niet wat ik zoek": `tools/events.py` now excludes online events.
+- Training round: 20 varied fictional in-person events logged with status `training` (`https://training.invalid/eNN`); rating sheet `output/career/event_training_2026-11-20.md`; scores hidden to avoid anchoring.

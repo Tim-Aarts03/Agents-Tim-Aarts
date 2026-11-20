@@ -86,6 +86,7 @@ def test_window_and_deadline_exclusions():
         event(url="https://example.org/far", start_date=TODAY + timedelta(days=DEFAULT_WINDOW_DAYS + 1)),
         event(url="https://example.org/closed", registration_deadline=TODAY - timedelta(days=1)),
         event(url="https://example.org/full", sold_out=True),
+        event(url="https://example.org/online", online=True),
     ]
     urls = {str(s.event.url) for s in rank_events(events, TODAY, PLACES)}
     assert urls == {"https://example.org/today", "https://example.org/edge"}

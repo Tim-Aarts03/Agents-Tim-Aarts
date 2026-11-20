@@ -347,6 +347,7 @@ def is_excluded(event: Event, today: date, window_days: int, filters: JobFilters
     return (
         event.start_date < today
         or event.start_date > today + timedelta(days=window_days)
+        or event.online  # Tim 2026-11-20: networking means meeting people; no online events
         or event.sold_out
         or (event.registration_deadline is not None and event.registration_deadline < today)
         or any(name.lower() in organiser for name in filters.excluded_organisations)

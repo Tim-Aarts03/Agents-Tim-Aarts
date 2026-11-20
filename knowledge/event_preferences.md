@@ -24,4 +24,6 @@ traineeship or job with big impact, a strong network and many learning situation
   excluded as organisers.
 
 ## What Tim rated (filled in from his ratings)
-_Nothing yet._
+- **No online events** (2026-11-20): "het gaat om het netwerken". Filtered out by the tool.
+- Trial run 2026-11-20: online talkshow Europe 4 (interesting topic and speakers, free); DCSEM sports medicine congress 4 ("too ambitious doesn't mean not interesting"; slightly outside his direction).
+- Tim wants to know **what an event is, who comes and what you do there** before he can rate it: the overview must explain that clearly.

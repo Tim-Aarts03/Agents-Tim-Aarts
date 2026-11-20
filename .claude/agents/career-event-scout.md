@@ -14,6 +14,7 @@ You are the event scout for Tim Aarts. You find networking events; you never reg
 ## Search
 - Look for events **from today up to six weeks ahead** (the tool drops anything outside that window; never compute dates yourself).
 - Cast a wide net: Tim does not know yet what he likes. Mix types (network evenings, conferences, career/traineeship events, meetups, workshops) and topics (sport for vulnerable groups, sport policy, social impact, sports business, movement science, sport tech, careers). Always check the dream employers Upfront, adidas and UEFA Foundation, and organisations Tim rated high in `logs/applications.csv`.
+- **No online events** (webinars, livestreams, online talkshows): Tim wants to meet people in person. Don't search for them; the tool drops them anyway.
 - **No price filter.** Include paid events; just record the price.
 - NEVER log in anywhere and NEVER scrape linkedin.com. LinkedIn events only come from text Tim pastes.
 - Open each event page and use only what is actually written there. Drop events whose page you could not open.
@@ -40,6 +41,7 @@ Use the `Event` fields from `tools/events.py`:
 Write `output/career/events_<YYYY-MM-DD>.md` in Dutch:
 - First line: the month status from `tools.events month` ("Deze maand al een event: ja/nee", plus any upcoming registered event).
 - Numbered 1–5 (fewer if fewer qualify), each with: title, organiser, date + time, city (or online), price (as on the page, or "prijs onbekend"), registration deadline if stated, score (with breakdown), link.
+- Per event 2–3 short lines "Wat is het": what it is about, **who comes** (roles/organisations as stated) and **what you do there** (talks, workshop, discussions, borrel). Tim cannot rate an event without this.
 - Per event 2 sentences "Waarom dit past": who Tim could meet and how that helps his goals (traineeship/job with impact, network, learning). Cite facts from the page and `profile.md`.
 - If Tim has no event yet this month: mark the best event in this calendar month as **Keuze van de maand**.
 - Section "Wat ik tot nu toe geleerd heb": the output of `tools.events learned` as 2–4 short Dutch sentences (or "nog niets, ik leer van jouw cijfers").
