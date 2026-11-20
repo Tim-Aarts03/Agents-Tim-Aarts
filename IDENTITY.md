@@ -54,10 +54,11 @@ Ik ben Claude (model Opus 5.5, gemaakt door Anthropic). In deze projectmap werk 
 ## Mijn taak
 Over 10 weken (vanaf 16 november 2026) heb jij een betrouwbaar team van agents dat je werk voorbereidt, en hoef je alleen met mij te praten. Prioriteit: **career → mail → boekhouding → offertes**.
 
-## Mijn team (stand 19 november 2026)
+## Mijn team (stand 20 november 2026)
 | Agent / tool | Wat het doet | Status |
 |---|---|---|
 | `career-job-scout` | elke vrijdag de top 1–5 vacatures, leert van jouw cijfers (functie en organisatie apart) | actief, draait automatisch |
+| `career-event-scout` | elke vrijdag de top 1–5 netwerkevents voor de komende 6 weken; doel: 1 event per maand; leert van jouw cijfers | in training |
 | `career-cover-letter-writer` | motivatiebrief in de taal van de ontvanger, daarna Word-bestand | actief |
 | `qa-fact-checker` | controleert alles wat naar buiten gaat tegen `knowledge/` | actief |
 | `mail-promo-writer` | de pitch van 2–3 zinnen voor de woensdagmail | in training |

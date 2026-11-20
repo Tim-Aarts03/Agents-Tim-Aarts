@@ -272,3 +272,11 @@ remember decisions and preferences across sessions.
 - Ratings (role / org): UEFA Media Attendance 2, EURO Access 2, Event Workforce 2 (org not given as a number, but "UEFA is sowieso een goede organisatie"); Upfront Junior Recruiter 3 / 4 (Tim said 3.5 overall); adidas Partner BD Lead 1 / 5 (Tim said 2.5 overall). All `skipped`: no letters this week.
 - Tim's preferences: no media or social media roles (confirms ASICS); dislikes recruiting; junior level is a plus; 5+ years of experience = never getting in; an Upfront children's event role would be a 10. Watch for traineeships above all.
 - Open: ratings are whole numbers, so half points (3.5, 2.5) are kept only in `feedback`. Asked Tim for a UEFA org rating, otherwise three role-2 ratings teach that federations are weak (the ASICS problem).
+
+### 2026-11-20 — Networking event scout (plan approved)
+- Tim wants to network: every Friday an overview of fitting networking events, and go to one event per month that helps his future.
+- Tim: no price limit, available any day and time, doesn't know yet what he likes: "send things, I rate them 1–5, you learn".
+- Action: `career-event-scout` + `tools/events.py` (scoring, six-week window, excluded organisers from `job_filters.json`, log `logs/events.csv` tracked in git, learning from ratings, month check). Fixed weights are small and the learned bonus large (±25, 3 ratings per feature), so Tim's ratings drive the ranking. A rating after attending overrides the rating beforehand. Price is shown and learned as a band, never filtered. Added to the `career-friday-run` scheduled task.
+- Trial run (2026-11-20): 7 candidates, 5 shown, scores 17–29; quiet holiday period, nothing in Amsterdam/Haarlem, nothing from dream employers. Best source: Vereniging Sport en Gemeenten agenda. Mulier and cruyffinstitute.org agendas don't work; KSB uses `/events/`.
+- The tool ranked a fully booked event #1: added `sold_out` (excluded). Multi-date events: first date in the window. Missing year: only if the weekday matches.
+- Open proposal: more sources (Sports Innovation League/Rockstart, NOC*NSF, Net Impact Amsterdam, Amsterdam Sportgala).

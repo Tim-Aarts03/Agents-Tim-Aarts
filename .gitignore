@@ -13,6 +13,8 @@ logs/*
 !logs/.gitkeep
 # Exception (approved by Tim 2026-11-16): application log must survive cloud sessions
 !logs/applications.csv
+# Exception (approved by Tim 2026-11-20): event log, so the event scout keeps learning
+!logs/events.csv
 output/*
 !output/.gitkeep
 
