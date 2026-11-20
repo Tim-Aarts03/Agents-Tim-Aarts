@@ -267,3 +267,8 @@ remember decisions and preferences across sessions.
   1. Update `knowledge/job_sources.md`: mark Krajicek, KNVB and VU pages as not working; add adidas `jobs.adidas-group.com/search/?locationsearch=Amsterdam`, Upfront via magnet.me and the Noord-Holland traineeship (recruits in February).
   2. Add policy/trainee boards (binnenlandsbestuur.nl/vacatures, werkenvoornederland filtered on VWS/sport) and ask Tim for LinkedIn alerts; broad WebSearch mostly returned dead (404/410) pages.
   3. Scoring: flag "no vacancy above X" weeks, or lower impact points for `operations_logistics`/`finance_admin` roles that Tim rates low.
+
+### 2026-11-20 — Tim's ratings of the Friday run
+- Ratings (role / org): UEFA Media Attendance 2, EURO Access 2, Event Workforce 2 (org not given as a number, but "UEFA is sowieso een goede organisatie"); Upfront Junior Recruiter 3 / 4 (Tim said 3.5 overall); adidas Partner BD Lead 1 / 5 (Tim said 2.5 overall). All `skipped`: no letters this week.
+- Tim's preferences: no media or social media roles (confirms ASICS); dislikes recruiting; junior level is a plus; 5+ years of experience = never getting in; an Upfront children's event role would be a 10. Watch for traineeships above all.
+- Open: ratings are whole numbers, so half points (3.5, 2.5) are kept only in `feedback`. Asked Tim for a UEFA org rating, otherwise three role-2 ratings teach that federations are weak (the ASICS problem).
