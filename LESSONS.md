@@ -323,3 +323,6 @@ remember decisions and preferences across sessions.
 - Built: slow daily rules (`d_*`), largest-drop measure (backtest + report), 4-year backtest, and a 28-day minimum before the active rule may be switched (live paper weeks are the real test).
 - 4-year backtest (test = last ~14 months, a falling market: buy-and-hold -48%, largest drop -67%): best daily rules -4% to -6% with drops of -13% to -38%; active hourly rule -47%; coin flip -34%. In the rising train period buy-and-hold (+372%) beat every rule (best daily +178%). Confirms: trend rules protect in crashes and lag in rallies. One test period in one market type is not proof.
 - Earliest possible switch from `sma_cross_24_168`: 2026-12-21.
+
+### 2026-11-23 — Pushing works from Claude Code
+- Push kept failing (no GitHub login for command-line git). Homebrew cannot build gh on this Intel Mac (outdated Command Line Tools); installed the official gh .pkg instead (checksum verified), Tim ran `gh auth login`, `gh auth setup-git` links git. Claude can now push itself.
