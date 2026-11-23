@@ -37,7 +37,7 @@ Definitions live in `.claude/agents/`; archived agents live in `archive/`.
 ## Invest workflow (paper trading only, from 23 Nov 2026)
 - Never real money, exchange accounts, wallets or API keys (hard rule in CLAUDE.md §6).
 - launchd job `com.agents.crypto-watch` runs `tools.crypto tick` hourly (Mac must be awake; missed hours are skipped, not traded afterwards). Disable with `.venv/bin/python -m tools.crypto uninstall-watch` (plist kept as `.disabled`).
-- Thursday 09:00 scheduled task `invest-crypto-thursday` → `invest-crypto-analyst` → `output/invest/crypto_week_<date>.md` → Max reports. Rule changes only via `tools.crypto activate <rule> --reason ... --approved` after Tim's yes.
+- Thursday 09:00 scheduled task `invest-crypto-thursday` → `invest-crypto-analyst` → `output/invest/crypto_week_<date>.md` → Max reports. Rule changes only via `tools.crypto activate <rule> --reason ... --approved` after Tim's yes, and at least 28 days after the previous switch (enforced). Backtest covers 4 years, hourly and daily (`d_*`) rules, with return and largest drop.
 - Data: `logs/crypto_state.json`, `logs/crypto_paper_trades.csv`, `logs/crypto_equity.csv`, `logs/crypto_history_*.csv` (git-ignored). Rules + rule history: `knowledge/crypto_rules.json` (in git).
 
 ## Planned

@@ -317,3 +317,9 @@ remember decisions and preferences across sessions.
 - Tim wants sparring: keep giving honest feedback and better ideas (confirmed again).
 - First backtest (2 years hourly BTC/ETH, 70/30 split): no rule beat buy-and-hold convincingly on unseen data; best-on-train (breakout_24_336) only marginally beat buy-and-hold on test (-11.9% vs -13.9%, within noise), and the active default sma_cross_24_168 did -19.1%, around coin-flip level -18.3%). Lesson: hourly rules are mostly noise plus fees; slower rules fit Tim's 5-year horizon better — candidate for the first Thursday proposal.
 - launchd job runs fine from ~/Documents with the framework Python (no privacy block).
+
+### 2026-11-23 — Crypto learning loop sharpened (approved by Tim)
+- Tim asked whether the tactic works long-term. Honest answer: as a learning project yes; beating the market structurally unlikely; trend rules mainly reduce deep drops. Risk named: testing many rules on the same data finds luck, not skill.
+- Built: slow daily rules (`d_*`), largest-drop measure (backtest + report), 4-year backtest, and a 28-day minimum before the active rule may be switched (live paper weeks are the real test).
+- 4-year backtest (test = last ~14 months, a falling market: buy-and-hold -48%, largest drop -67%): best daily rules -4% to -6% with drops of -13% to -38%; active hourly rule -47%; coin flip -34%. In the rising train period buy-and-hold (+372%) beat every rule (best daily +178%). Confirms: trend rules protect in crashes and lag in rallies. One test period in one market type is not proof.
+- Earliest possible switch from `sma_cross_24_168`: 2026-12-21.

@@ -86,7 +86,7 @@ Wacht. Ga niet zelf verder met iets waarvoor akkoord nodig is.
 - Doel: leren hoe agents voorspellen en constant beter worden; horizon jaren (± 5), niet snel rijk.
 - **Marktwacht** (`tools/crypto.py tick`, macOS launchd elk uur): BTC/ETH-koersen uit de openbare Binance-API, actieve rekenregel, neptransacties in een virtuele pot van €100. Geen meldingen per transactie; alleen een melding als er >24 uur geen koersen zijn.
 - **Donderdag 09:00** (scheduled task `invest-crypto-thursday`): `invest-crypto-analyst` → analyse in `output/invest/`. Aan de bel trekken als de marktwacht niet loopt of als de pot meer dan 5 procentpunt harder daalt óf stijgt dan de markt.
-- Leren: nieuwe rekenregels alleen op ongeziene data testen; een wijziging van de actieve regel alleen na Tims akkoord (`activate --approved`).
+- Leren: nieuwe rekenregels (uur- én tragere dagregels) alleen op ongeziene data testen, op rendement én grootste daling; een wijziging van de actieve regel alleen na Tims akkoord (`activate --approved`) en pas na minstens 4 weken live met de huidige regel (de tool weigert eerder).
 
 ### Prioriteit
 1. Career (afmaken en verbeteren)

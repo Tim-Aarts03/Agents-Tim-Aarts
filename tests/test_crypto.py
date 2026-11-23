@@ -62,8 +62,8 @@ def test_breakout_signals():
 
 
 def test_simulate_applies_fee_both_ways():
-    value, trades = crypto.simulate([10, 20], [True, False], 0, 2, 100.0, 0.01)
-    assert trades == 2
+    value, trades, drop = crypto.simulate([10, 20], [True, False], 0, 2, 100.0, 0.01)
+    assert trades == 2 and drop == 0
     assert value == pytest.approx(100 * 0.99 / 10 * 20 * 0.99)
 
 
@@ -131,10 +131,66 @@ def test_report_without_data(tmp_path):
 
 def test_backtest_judges_on_unseen_part():
     up = [float(i) for i in range(1, 201)]
-    res = crypto.backtest({"X": up}, [FAST], fee=0.0, split=0.5)
+    res = crypto.backtest({"1h": {"X": up}, "1d": {"X": up[::24]}}, [FAST], fee=0.0, split=0.5)
     assert res["buy_hold"]["test_pct"] == pytest.approx((200 / 101 - 1) * 100, abs=0.01)
     assert res["best_on_train"]["rule"] == FAST.name
     assert "coin_flip_test_median_pct" in res
+    assert res["buy_hold"]["test_max_drop_pct"] == 0
+
+
+def test_backtest_uses_daily_series_for_daily_rules():
+    daily_rule = Rule(name="d", kind="sma_cross", fast=2, slow=4, interval="1d")
+    down = [float(i) for i in range(200, 0, -1)]
+    res = crypto.backtest({"1h": {"X": down}, "1d": {"X": [1.0, 2, 3, 4, 5, 6, 7, 8, 9, 10]}},
+                          [daily_rule], fee=0.0, split=0.5)
+    assert res["all"][0]["test_pct"] > 0  # rising daily series, not the falling hourly one
+
+
+def test_max_drop():
+    assert crypto.max_drop([100, 120, 90, 130, 117]) == -25.0
+    assert crypto.max_drop([1, 2, 3]) == 0
+
+
+def test_daily_closes_from_hourly():
+    hourly = [(T0 + i * HOUR_MS, float(i)) for i in range(72)]
+    closes = crypto.daily(hourly)
+    assert all((T0 + int(c) * HOUR_MS + HOUR_MS) % crypto.DAY_MS == 0 for c in closes)
+    assert len(closes) == 3
+
+
+def test_daily_rule_tick_and_interval_switch(tmp_path):
+    p = paths(tmp_path)
+    crypto.tick(T0 + 5 * HOUR_MS, cfg(), fake_api([10, 10, 10, 10, 20]), **p)
+    d0 = T0 - T0 % crypto.DAY_MS
+    daily_rule = Rule(name="d", kind="sma_cross", fast=2, slow=4, interval="1d")
+    day_prices = [10, 10, 10, 10, 20]
+
+    def daily_api(url):
+        assert "interval=1d" in url
+        return [[d0 + i * crypto.DAY_MS, "0", "0", "0", str(x)] for i, x in enumerate(day_prices)]
+
+    now = d0 + 5 * crypto.DAY_MS
+    crypto.tick(now, cfg(active=daily_rule), daily_api, **p)
+    state = json.loads(p["state_file"].read_text())["pairs"]["BTCEUR"]
+    assert state["interval"] == "1d" and state["last_ms"] == d0 + 4 * crypto.DAY_MS
+
+
+def test_activate_waits_four_weeks(tmp_path):
+    f = tmp_path / "rules.json"
+    f.write_text(json.dumps({"active": FAST.model_dump(), "history": [{"date": "2026-11-23"}]}))
+    with pytest.raises(PermissionError, match="28"):
+        crypto.activate("d_sma_cross_10_50", True, "x", "2026-12-20", f)
+    crypto.activate("d_sma_cross_10_50", True, "x", "2026-12-21", f)
+    assert json.loads(f.read_text())["active"]["interval"] == "1d"
+
+
+def test_report_has_drop_and_rule_age(tmp_path):
+    p = paths(tmp_path)
+    crypto.tick(T0 + 5 * HOUR_MS, cfg(), fake_api([10, 10, 10, 10, 20]), **p)
+    crypto.tick(T0 + 6 * HOUR_MS, cfg(), fake_api([10, 10, 10, 10, 20, 15]), **p)
+    r = crypto.report(T0 + 6 * HOUR_MS, 7, cfg(), **p)
+    assert r["since_start"]["pot_max_drop_pct"] == -25.0
+    assert r["since_start"]["market_max_drop_pct"] == -25.0
 
 
 def test_activate_needs_approval(tmp_path):

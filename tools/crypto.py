@@ -30,6 +30,11 @@ STATE_FILE = LOG_DIR / "crypto_state.json"
 TRADES_FILE = LOG_DIR / "crypto_paper_trades.csv"
 EQUITY_FILE = LOG_DIR / "crypto_equity.csv"
 HOUR_MS = 3_600_000
+DAY_MS = 24 * HOUR_MS
+INTERVAL_MS = {"1h": HOUR_MS, "1d": DAY_MS}
+# A rule must run live this long before it may be replaced: live weeks are the
+# real test, and frequent switching chases luck.
+MIN_RULE_DAYS = 28
 # The only host this tool may call: public market data, no account, no keys.
 API = "https://api.binance.com/api/v3/klines"
 LAUNCHD_LABEL = "com.agents.crypto-watch"
@@ -43,12 +48,17 @@ Fetch = Callable[[str], list]
 class Rule(BaseModel):
     name: str
     kind: Literal["sma_cross", "breakout"]
-    fast: int  # hours
-    slow: int  # hours
+    fast: int  # candles
+    slow: int  # candles
+    interval: Literal["1h", "1d"] = "1h"
 
     @property
-    def warmup(self) -> int:
-        return self.slow + self.fast + 48
+    def candle_ms(self) -> int:
+        return INTERVAL_MS[self.interval]
+
+    @property
+    def warmup_ms(self) -> int:
+        return (self.slow + self.fast + 3) * self.candle_ms + 48 * HOUR_MS
 
 
 class Config(BaseModel):
@@ -65,6 +75,7 @@ class PairState(BaseModel):
     cash: float
     units: float = 0.0
     last_ms: int | None = None
+    interval: str = "1h"  # candle size last_ms refers to
 
 
 class State(BaseModel):
@@ -84,19 +95,21 @@ def http_get(url: str) -> list:
         return json.loads(resp.read())
 
 
-def fetch_closes(pair: str, start_ms: int, now_ms: int, fetch: Fetch = http_get) -> list[tuple[int, float]]:
-    """Closed 1h candles from start_ms up to now: [(open_ms, close)]."""
+def fetch_closes(pair: str, start_ms: int, now_ms: int, fetch: Fetch = http_get,
+                 interval: str = "1h") -> list[tuple[int, float]]:
+    """Closed candles from start_ms up to now: [(open_ms, close)]."""
+    step = INTERVAL_MS[interval]
     out: list[tuple[int, float]] = []
     cursor = start_ms
     while cursor < now_ms:
-        rows = fetch(f"{API}?symbol={pair}&interval=1h&startTime={cursor}&limit=1000")
+        rows = fetch(f"{API}?symbol={pair}&interval={interval}&startTime={cursor}&limit=1000")
         if not rows:
             break
         for r in rows:
             open_ms = int(r[0])
-            if open_ms + HOUR_MS <= now_ms and (not out or open_ms > out[-1][0]):
+            if open_ms + step <= now_ms and (not out or open_ms > out[-1][0]):
                 out.append((open_ms, float(r[4])))
-        nxt = int(rows[-1][0]) + HOUR_MS
+        nxt = int(rows[-1][0]) + step
         if nxt <= cursor or len(rows) < 1000:
             break
         cursor = nxt
@@ -133,22 +146,37 @@ def candidate_rules() -> list[Rule]:
              for f in (6, 12, 24, 48) for s in (72, 168, 336)]
     rules += [Rule(name=f"breakout_{f}_{s}", kind="breakout", fast=f, slow=s)
               for f in (24, 48, 72) for s in (72, 168, 336) if f < s]
+    # Slow daily rules: fewer trades and fees, closer to Tim's multi-year horizon.
+    rules += [Rule(name=f"d_sma_cross_{f}_{s}", kind="sma_cross", fast=f, slow=s, interval="1d")
+              for f in (5, 10, 20) for s in (30, 50, 100)]
+    rules += [Rule(name=f"d_breakout_{f}_{s}", kind="breakout", fast=f, slow=s, interval="1d")
+              for f in (10, 20) for s in (30, 55, 100)]
     return rules
 
 
+def max_drop(values: list[float]) -> float:
+    """Largest fall from a peak, in % (0 = never below an earlier high)."""
+    peak, worst = 0.0, 0.0
+    for v in values:
+        peak = max(peak, v)
+        if peak > 0:
+            worst = min(worst, (v / peak - 1) * 100)
+    return round(worst, 2)
+
+
 def simulate(closes: list[float], desired: list[bool | None], start: int, end: int,
-             cash: float, fee: float) -> tuple[float, int]:
-    """Paper result of following `desired` on closes[start:end]: (final value, trades)."""
-    units, trades = 0.0, 0
+             cash: float, fee: float) -> tuple[float, int, float]:
+    """Paper result of following `desired` on closes[start:end]:
+    (final value, trades, largest drop in %)."""
+    units, trades, values = 0.0, 0, []
     for i in range(start, end):
         want = desired[i]
-        if want is None:
-            continue
         if want and units == 0 and cash > 0:
             units, cash, trades = cash * (1 - fee) / closes[i], 0.0, trades + 1
-        elif not want and units > 0:
+        elif want is False and units > 0:
             cash, units, trades = units * closes[i] * (1 - fee), 0.0, trades + 1
-    return cash + units * closes[end - 1], trades
+        values.append(cash + units * closes[i])
+    return cash + units * closes[end - 1], trades, max_drop(values)
 
 
 # ---------- config / state / logs ----------
@@ -208,7 +236,7 @@ def tick(now_ms: int, cfg: Config | None = None, fetch: Fetch = http_get,
     rule = cfg.active
     trades: list[dict] = []
     try:
-        data = {p: fetch_closes(p, now_ms - rule.warmup * HOUR_MS, now_ms, fetch) for p in cfg.pairs}
+        data = {p: fetch_closes(p, now_ms - rule.warmup_ms, now_ms, fetch, rule.interval) for p in cfg.pairs}
     except Exception as exc:  # network down, API change: record, alert when it lasts
         state.last_error = f"{iso(now_ms)} {type(exc).__name__}: {exc}"
         last_ok = datetime.fromisoformat(state.last_ok) if state.last_ok else None
@@ -225,10 +253,12 @@ def tick(now_ms: int, cfg: Config | None = None, fetch: Fetch = http_get,
     missed = 0
     for pair, (ms, price) in latest.items():
         ps = state.pairs.setdefault(pair, PairState(cash=0.0))
+        if ps.interval != rule.interval:  # rule switched candle size: act on the next candle
+            ps.last_ms, ps.interval = None, rule.interval
         if ps.last_ms is not None and ms <= ps.last_ms:
             continue
         if ps.last_ms is not None:
-            missed = max(missed, (ms - ps.last_ms) // HOUR_MS - 1)
+            missed = max(missed, ((ms - ps.last_ms) // rule.candle_ms - 1) * rule.candle_ms // HOUR_MS)
         want = signals([c for _, c in data[pair]], rule)[-1]
         side = None
         if want and ps.units == 0 and ps.cash > 0:
@@ -239,7 +269,7 @@ def tick(now_ms: int, cfg: Config | None = None, fetch: Fetch = http_get,
             fee = eur * cfg.fee_rate
             units, ps.cash, ps.units, side = ps.units, eur - fee, 0.0, "sell"
         if side:
-            trades.append({"ts_utc": iso(ms + HOUR_MS), "pair": pair, "side": side, "price": price,
+            trades.append({"ts_utc": iso(ms + rule.candle_ms), "pair": pair, "side": side, "price": price,
                            "units": round(ps.units if side == "buy" else units, 8), "eur": round(eur, 2),
                            "fee": round(fee, 4), "rule": rule.name})
         ps.last_ms = ms
@@ -265,8 +295,9 @@ def report(now_ms: int, days: int = 7, cfg: Config | None = None, state_file: Pa
     cfg = cfg or load_config()
     rows = read_csv(equity_file)
     start_ms = now_ms - days * 24 * HOUR_MS
-    window = [r for r in rows if int(r["candle_ms"]) >= start_ms - HOUR_MS]
-    out: dict = {"days": days, "rule": cfg.active.name, "start_eur": cfg.start_eur}
+    window = [r for r in rows if r["ts_utc"] >= iso(start_ms)]
+    out: dict = {"days": days, "rule": cfg.active.name, "start_eur": cfg.start_eur,
+                 "rule_live_days": rule_age_days(cfg.history, now_ms)}
     state = load_state(cfg, state_file)
     out["health"] = {"last_ok": state.last_ok, "last_error": state.last_error,
                      "hours_recorded": len(window), "hours_expected": days * 24,
@@ -281,6 +312,10 @@ def report(now_ms: int, days: int = 7, cfg: Config | None = None, state_file: Pa
         market = sum(b[p] / a[p] - 1 for p in a if p in b) / len(a) * 100
         return round(pot, 2), round(market, 2)
 
+    def market_index(r: dict) -> float:
+        a, b = json.loads(rows[0]["closes"]), json.loads(r["closes"])
+        return sum(b[p] / a[p] for p in a if p in b) / len(a)
+
     pot_w, market_w = change(window[0], window[-1])
     pot_all, market_all = change(rows[0], rows[-1])
     trades = [t for t in read_csv(trades_file) if t["ts_utc"] >= iso(start_ms)]
@@ -289,7 +324,9 @@ def report(now_ms: int, days: int = 7, cfg: Config | None = None, state_file: Pa
         "week": {"pot_pct": pot_w, "market_pct": market_w, "diff_pp": round(pot_w - market_w, 2)},
         "since_start": {"from": rows[0]["ts_utc"], "pot_pct": pot_all, "market_pct": market_all,
                         "diff_pp": round(pot_all - market_all, 2),
-                        "vs_start_eur_pct": round((float(rows[-1]["pot_eur"]) / cfg.start_eur - 1) * 100, 2)},
+                        "vs_start_eur_pct": round((float(rows[-1]["pot_eur"]) / cfg.start_eur - 1) * 100, 2),
+                        "pot_max_drop_pct": max_drop([float(r["pot_eur"]) for r in rows]),
+                        "market_max_drop_pct": max_drop([market_index(r) for r in rows])},
         "trades": trades,
         "flag_divergence": abs(pot_w - market_w) > cfg.divergence_pp,
     })
@@ -298,7 +335,13 @@ def report(now_ms: int, days: int = 7, cfg: Config | None = None, state_file: Pa
 
 # ---------- backtest (learning) ----------
 
-def history(pair: str, days: int, now_ms: int, fetch: Fetch = http_get, cache_dir: Path = LOG_DIR) -> list[float]:
+def daily(hourly: list[tuple[int, float]]) -> list[float]:
+    """Daily closes (UTC day, like the exchange's 1d candle) from hourly candles."""
+    return [c for ms, c in hourly if (ms + HOUR_MS) % DAY_MS == 0]
+
+
+def history(pair: str, days: int, now_ms: int, fetch: Fetch = http_get,
+            cache_dir: Path = LOG_DIR) -> list[tuple[int, float]]:
     """Hourly closes for the last `days`, cached so repeated backtests stay cheap."""
     path = cache_dir / f"crypto_history_{pair}.csv"
     rows = [(int(r["ms"]), float(r["close"])) for r in read_csv(path)]
@@ -312,36 +355,40 @@ def history(pair: str, days: int, now_ms: int, fetch: Fetch = http_get, cache_di
         w = csv.writer(f)
         w.writerow(["ms", "close"])
         w.writerows(rows)
-    return [c for ms, c in rows if ms >= start]
+    return [(ms, c) for ms, c in rows if ms >= start]
 
 
-def backtest(series: dict[str, list[float]], rules: list[Rule], fee: float, split: float = 0.7,
+def backtest(series: dict[str, dict[str, list[float]]], rules: list[Rule], fee: float, split: float = 0.7,
              seed: int = 7) -> dict:
     """Pick the best rule on the first part (train), judge it on the rest (test).
-    Only the test score says anything about the future."""
-    def score(rule: Rule, part: str) -> tuple[float, int]:
-        rets, trades = [], 0
-        for closes in series.values():
+    Only the test score says anything about the future. `series` is
+    {interval: {pair: closes}}; both intervals must cover the same period."""
+    def score(rule: Rule, part: str) -> tuple[float, int, float]:
+        rets, trades, drops = [], 0, []
+        for closes in series[rule.interval].values():
             cut = int(len(closes) * split)
             lo, hi = (0, cut) if part == "train" else (cut, len(closes))
-            value, n = simulate(closes, signals(closes, rule), lo, hi, 1.0, fee)
+            value, n, drop = simulate(closes, signals(closes, rule), lo, hi, 1.0, fee)
             rets.append((value - 1) * 100)
             trades += n
-        return round(sum(rets) / len(rets), 2), trades
+            drops.append(drop)
+        return round(sum(rets) / len(rets), 2), trades, min(drops)
 
-    def hold(part: str) -> float:
-        rets = []
-        for closes in series.values():
+    def hold(part: str) -> tuple[float, float]:
+        rets, drops = [], []
+        for closes in series["1h"].values():
             cut = int(len(closes) * split)
-            a, b = (closes[0], closes[cut - 1]) if part == "train" else (closes[cut], closes[-1])
-            rets.append((b / a - 1) * 100)
-        return round(sum(rets) / len(rets), 2)
+            part_closes = closes[:cut] if part == "train" else closes[cut:]
+            rets.append((part_closes[-1] / part_closes[0] - 1) * 100)
+            drops.append(max_drop(part_closes))
+        return round(sum(rets) / len(rets), 2), min(drops)
 
     results = []
     for r in rules:
-        tr, tr_n = score(r, "train")
-        te, te_n = score(r, "test")
-        results.append({"rule": r.name, "train_pct": tr, "test_pct": te, "train_trades": tr_n, "test_trades": te_n})
+        tr, tr_n, _ = score(r, "train")
+        te, te_n, te_drop = score(r, "test")
+        results.append({"rule": r.name, "interval": r.interval, "train_pct": tr, "test_pct": te,
+                        "test_max_drop_pct": te_drop, "train_trades": tr_n, "test_trades": te_n})
     best = max(results, key=lambda x: x["train_pct"])
 
     # Coin-flip baseline: random in/out switches at the same rate as the best rule.
@@ -349,19 +396,30 @@ def backtest(series: dict[str, list[float]], rules: list[Rule], fee: float, spli
     flips = []
     for _ in range(200):
         rets = []
-        for closes in series.values():
+        for closes in series[best["interval"]].values():
             cut = int(len(closes) * split)
-            p = max(best["test_trades"] / max(len(series), 1), 1) / max(len(closes) - cut, 1)
+            n_pairs = len(series[best["interval"]])
+            p = max(best["test_trades"] / n_pairs, 1) / max(len(closes) - cut, 1)
             state, desired = False, []
             for _ in closes:
                 if rng.random() < p:
                     state = not state
                 desired.append(state)
-            value, _ = simulate(closes, desired, cut, len(closes), 1.0, fee)
+            value, _, _ = simulate(closes, desired, cut, len(closes), 1.0, fee)
             rets.append((value - 1) * 100)
         flips.append(sum(rets) / len(rets))
-    return {"best_on_train": best, "buy_hold": {"train_pct": hold("train"), "test_pct": hold("test")},
+    hold_train, _ = hold("train")
+    hold_test, hold_drop = hold("test")
+    return {"best_on_train": best,
+            "buy_hold": {"train_pct": hold_train, "test_pct": hold_test, "test_max_drop_pct": hold_drop},
             "coin_flip_test_median_pct": round(median(flips), 2), "all": results}
+
+
+def rule_age_days(history_entries: list[dict], now_ms: int) -> int:
+    if not history_entries:
+        return 10_000
+    since = datetime.fromisoformat(history_entries[-1]["date"]).replace(tzinfo=UTC)
+    return (datetime.fromtimestamp(now_ms / 1000, UTC) - since).days
 
 
 def activate(name: str, approved: bool, reason: str, today: str, path: Path = CONFIG_FILE) -> Rule:
@@ -371,6 +429,10 @@ def activate(name: str, approved: bool, reason: str, today: str, path: Path = CO
     if rule is None:
         raise ValueError(f"unknown rule {name}")
     data = json.loads(path.read_text(encoding="utf-8"))
+    today_ms = int(datetime.fromisoformat(today).replace(tzinfo=UTC).timestamp() * 1000)
+    age = rule_age_days(data["history"], today_ms)
+    if age < MIN_RULE_DAYS:
+        raise PermissionError(f"the active rule has run {age} days; a switch is allowed after {MIN_RULE_DAYS}")
     data["active"] = rule.model_dump()
     data["history"].append({"date": today, "rule": name, "reason": reason, "approved_by": "Tim"})
     path.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
@@ -433,7 +495,7 @@ def main(argv: list[str] | None = None) -> int:
     rp = sub.add_parser("report")
     rp.add_argument("--days", type=int, default=7)
     bp = sub.add_parser("backtest")
-    bp.add_argument("--days", type=int, default=730)
+    bp.add_argument("--days", type=int, default=1460)
     ac = sub.add_parser("activate")
     ac.add_argument("name")
     ac.add_argument("--reason", required=True)
@@ -449,12 +511,14 @@ def main(argv: list[str] | None = None) -> int:
         print(json.dumps(report(now_ms(), args.days), indent=2, ensure_ascii=False))
     elif args.cmd == "backtest":
         cfg = load_config()
-        series = {p: history(p, args.days, now_ms()) for p in cfg.pairs}
-        rules = candidate_rules()
-        res = backtest(series, rules, cfg.fee_rate)
-        active = next((x for x in res["all"] if x["rule"] == cfg.active.name), None)
-        res["active"] = active
-        res["hours_per_pair"] = {p: len(s) for p, s in series.items()}
+        hourly = {p: history(p, args.days, now_ms()) for p in cfg.pairs}
+        # Trim to whole UTC days so hourly and daily rules split at the same moment.
+        hourly = {p: [x for x in h if x[0] >= h[0][0] + (-h[0][0]) % DAY_MS] for p, h in hourly.items()}
+        series = {"1h": {p: [c for _, c in h] for p, h in hourly.items()},
+                  "1d": {p: daily(h) for p, h in hourly.items()}}
+        res = backtest(series, candidate_rules(), cfg.fee_rate)
+        res["active"] = next((x for x in res["all"] if x["rule"] == cfg.active.name), None)
+        res["candles_per_pair"] = {i: {p: len(s) for p, s in d.items()} for i, d in series.items()}
         print(json.dumps(res, indent=2))
     elif args.cmd == "activate":
         rule = activate(args.name, args.approved, args.reason, datetime.now(UTC).date().isoformat())
