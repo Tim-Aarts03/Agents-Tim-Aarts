@@ -300,3 +300,7 @@ remember decisions and preferences across sessions.
 ### 2026-11-23 — First automatic Monday reminder went well
 - Tim: the Apps Script reminder draft (Monday ~12:45) was correct and he sent it.
 - Action: `bootcamp-reminder` marked active in the registry and IDENTITY.md. Phase 2 (auto-send) for reminder and promotion only after two error-free weeks, with a CLAUDE.md change approved by Tim.
+
+### 2026-11-23 — Ratings for trial-run events
+- Werkconferentie Sportinnovator 3 (good network, topic doesn't appeal), Workshop XL 2 (aimed at people already working at a municipality; 10–20 people is too small and too intense). Didam webinar not rated: it is online, so it is filtered out anyway.
+- Lesson: "small group" is not automatically a plus for Tim; a training day for people already in the job scores low (same pattern as the fundraising masterclass).
