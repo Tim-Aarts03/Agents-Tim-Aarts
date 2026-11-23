@@ -291,3 +291,8 @@ remember decisions and preferences across sessions.
 - Ratings: 1→4, 2→4, 3→3, 4→5, 5→2, 6→4, 7→4, 8→5, 9→3, 10→4 (Tim corrected 10 from 5 to 4 himself). Reasons are stored in `logs/events.csv`.
 - Lesson: price is a timing question, not a dislike. Tim wants free events first and paid congresses later. The learned `price:` bonus will capture "now"; ask again after his first events.
 - Tim asked whether the €395 congress is worth it: give an honest view, but the decision is his.
+
+### 2026-11-23 — Event training ratings 11–20 and first check of the model
+- Ratings: 11→5, 12→4, 13→3, 14→3, 15→4, 16→5, 17→5, 18→5, 19→4 (Tim corrected his 5 himself), 20→2. Average of all ratings ≈ 3.9: Tim rates generously.
+- Check: leave-one-out Spearman between tool score and rating is only 0.2 (centring on Tim's mean instead of 3 gives 0.12, so not adopted). The features (topic, type, price, place) miss what really drives him: "does this fit my next step now".
+- Decision: no scoring change yet. Real events with ratings before and after attending will tell more than fictional ones; re-check after ~10 real ratings.
