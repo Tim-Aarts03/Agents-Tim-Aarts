@@ -101,7 +101,8 @@ NETWORK_POINTS: dict[NetworkEvidence, int] = {
     NetworkEvidence.RECRUITERS_PRESENT: 6,
     NetworkEvidence.DECISION_MAKERS_SPEAKING: 5,
     NetworkEvidence.DEDICATED_NETWORKING_TIME: 5,
-    NetworkEvidence.SMALL_GROUP: 3,
+    # Tim 2026-11-23: 10–20 people felt too small and intense, so a small group earns nothing.
+    NetworkEvidence.SMALL_GROUP: 0,
 }
 MAX_NETWORK_POINTS = 20
 # Meeting people face to face is the point, so online scores low.

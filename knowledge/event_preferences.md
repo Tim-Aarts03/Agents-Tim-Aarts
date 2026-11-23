@@ -19,7 +19,7 @@ traineeship or job with big impact, a strong network and many learning situation
   sports business and brands (Upfront, adidas, UEFA Foundation are dream employers), movement science,
   careers & traineeships for starters.
 - Network value comes from **who is there**: people from dream employers or policy organisations,
-  recruiters, decision makers; small groups make talking easier.
+  recruiters, decision makers. A small group (10–20) is NOT a plus for Tim (2026-11-23).
 - Organisations excluded for jobs (FIFA, Red Bull, Atleetfabriek in `knowledge/job_filters.json`) are also
   excluded as organisers.
 

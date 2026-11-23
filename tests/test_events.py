@@ -163,3 +163,7 @@ def test_log_roundtrip_and_update(tmp_path):
     assert (e.rating, e.price_eur, e.feature_list()) == (4, 25.0, ["topic:sport_policy"])
     with pytest.raises(KeyError):
         update_event("https://example.org/missing", TODAY, path, rating=1)
+
+
+def test_small_group_earns_no_network_points():
+    assert score_event(event(network_evidence=[NetworkEvidence.SMALL_GROUP]), PLACES).breakdown["network"] == 0

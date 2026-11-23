@@ -304,3 +304,4 @@ remember decisions and preferences across sessions.
 ### 2026-11-23 — Ratings for trial-run events
 - Werkconferentie Sportinnovator 3 (good network, topic doesn't appeal), Workshop XL 2 (aimed at people already working at a municipality; 10–20 people is too small and too intense). Didam webinar not rated: it is online, so it is filtered out anyway.
 - Lesson: "small group" is not automatically a plus for Tim; a training day for people already in the job scores low (same pattern as the fundraising masterclass).
+- Approved by Tim: `small_group` now earns 0 network points (was +3).
