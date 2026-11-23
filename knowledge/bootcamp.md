@@ -5,7 +5,7 @@ Source of truth for the bootcamp mails (Tim, 2026-11-18). Recipient addresses li
 ## Fixed facts
 - **What:** weekly beweegsessie (bootcamp) for employees of Sint Jacob. Free for participants (the organisation pays).
 - **When:** every Tuesday, 16:15–17:00.
-- **Where:** Hof van Jacob (binnenplaats), Haarlem. Bad weather: the covered balcony of team 2.
+- **Where:** the covered balcony of team 2, Hof van Jacob, Haarlem (from 23 November 2026, Tim; before that the binnenplaats).
 - **Max participants:** 12.
 - **Running since:** June 2026.
 - **Sign-up:** one fixed Google Form (name and e-mail), reused every week. Responses must be cleared after each Tuesday session so the same link works again.

@@ -63,5 +63,5 @@ def advice_for_session(forecast: SessionForecast | None) -> WeatherAdvice:
     if forecast.min_temperature_c < COLD_BELOW_C:
         lines.append("Het wordt fris, dus trek warme kleding aan.")
     if forecast.max_rain_probability >= RAIN_PROBABILITY_PERCENT:
-        lines.append("Bij regen gaan we naar het overdekte balkon van team 2.")
+        lines.append("We staan op het overdekte balkon van team 2, dus regen is geen probleem.")
     return WeatherAdvice(lines=lines, forecast_available=True)

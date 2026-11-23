@@ -80,7 +80,7 @@ def promo_mail(group: Group, pitch: Pitch, link: HttpUrl | str, send_date: date,
         [
             GREETINGS[group],
             pitch.text,
-            f"Dinsdag {dutch_date(session)} om {SESSION_TIME} staat er een nieuwe beweegsessie op Hof van Jacob. "
+            f"Dinsdag {dutch_date(session)} om {SESSION_TIME} staat er een nieuwe beweegsessie op het balkon van team 2. "
             "Meld je aan via de onderstaande link:",
             str(link),
             "Tot dinsdag!",

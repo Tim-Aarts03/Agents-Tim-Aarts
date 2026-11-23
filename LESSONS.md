@@ -305,3 +305,7 @@ remember decisions and preferences across sessions.
 - Werkconferentie Sportinnovator 3 (good network, topic doesn't appeal), Workshop XL 2 (aimed at people already working at a municipality; 10–20 people is too small and too intense). Didam webinar not rated: it is online, so it is filtered out anyway.
 - Lesson: "small group" is not automatically a plus for Tim; a training day for people already in the job scores low (same pattern as the fundraising masterclass).
 - Approved by Tim: `small_group` now earns 0 network points (was +3).
+
+### 2026-11-23 — Location moved to the balcony of team 2
+- Tim: from now on the session is on the (covered) balcony of team 2, not the binnenplaats.
+- Action: promotion mail says "op het balkon van team 2"; rain advice in the reminder (Python and Apps Script) now reads "We staan op het overdekte balkon van team 2, dus regen is geen probleem."; `knowledge/bootcamp.md` and `mail-promo-writer` updated. The Apps Script copy in Tim's Google account must be re-pasted by Tim to take effect.

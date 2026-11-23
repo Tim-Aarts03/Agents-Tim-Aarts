@@ -201,7 +201,7 @@ function weatherLines_(forecast) {
     lines.push('Het wordt fris, dus trek warme kleding aan.');
   }
   if (forecast.maxRainProbability >= WEATHER_RAIN_PROBABILITY_PERCENT) {
-    lines.push('Bij regen gaan we naar het overdekte balkon van team 2.');
+    lines.push('We staan op het overdekte balkon van team 2, dus regen is geen probleem.');
   }
   return lines;
 }
