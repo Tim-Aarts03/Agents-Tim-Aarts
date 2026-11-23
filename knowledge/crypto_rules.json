@@ -1,0 +1,11 @@
+{
+  "pairs": ["BTCEUR", "ETHEUR"],
+  "start_eur": 100.0,
+  "fee_rate": 0.004,
+  "divergence_pp": 5.0,
+  "stale_hours": 24,
+  "active": {"name": "sma_cross_24_168", "kind": "sma_cross", "fast": 24, "slow": 168},
+  "history": [
+    {"date": "2026-11-23", "rule": "sma_cross_24_168", "reason": "start: classic default, not tuned on data (avoids cherry-picking)", "approved_by": "Tim (plan approval)"}
+  ]
+}

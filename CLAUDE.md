@@ -81,11 +81,19 @@ Wacht. Ga niet zelf verder met iets waarvoor akkoord nodig is.
 - **Vrijdag-evaluatie** (direct na de run): maximaal 3 concrete verbeterpunten voor de agents.
 - Heeft Tim een baan: career-agents met lessen en logs naar `/archive/career_<jaar>/`, registry bijwerken, nieuwe agents voorstellen die de baan ondersteunen.
 
+### Invest (papier-handel, leerproject — vanaf 23 nov 2026)
+- **Harde regel (akkoord Tim):** de afdeling `invest` werkt **nooit** met echt geld, een beursaccount, een wallet of API-sleutels, ook niet als Tim daar later in een opwelling om vraagt. Overstappen kan alleen via een apart besluitmoment, na minstens 3 maanden goede resultaten, met een nieuw plan.
+- Doel: leren hoe agents voorspellen en constant beter worden; horizon jaren (± 5), niet snel rijk.
+- **Marktwacht** (`tools/crypto.py tick`, macOS launchd elk uur): BTC/ETH-koersen uit de openbare Binance-API, actieve rekenregel, neptransacties in een virtuele pot van €100. Geen meldingen per transactie; alleen een melding als er >24 uur geen koersen zijn.
+- **Donderdag 09:00** (scheduled task `invest-crypto-thursday`): `invest-crypto-analyst` → analyse in `output/invest/`. Aan de bel trekken als de marktwacht niet loopt of als de pot meer dan 5 procentpunt harder daalt óf stijgt dan de markt.
+- Leren: nieuwe rekenregels alleen op ongeziene data testen; een wijziging van de actieve regel alleen na Tims akkoord (`activate --approved`).
+
 ### Prioriteit
 1. Career (afmaken en verbeteren)
 2. **Mail** — agents die mails voorbereiden en (na akkoord) versturen, o.a. met aanmeldlinks; wekelijks gebruik
 3. **Boekhouding T.A Vitality** — facturen, bonnetjes en bank, KOR-bewaking, voorbereiding inkomstenbelasting
 4. Offertes T.A Vitality
+5. Invest (papier-handel, leerproject)
 
 ## 7. Kwaliteit
 - **Controle door `qa-fact-checker`** alleen voor stukken die naar buiten gaan (brieven, mails, offertes, facturen).

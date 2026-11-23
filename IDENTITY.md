@@ -52,7 +52,7 @@ Ik ben Claude (model Opus 5.5, gemaakt door Anthropic). In deze projectmap werk 
 - **Ik kan me vergissen.** Dat is deze week een paar keer gebeurd (zie hieronder). Daarom bouw ik tests en laat ik `qa-fact-checker` alles controleren wat naar buiten gaat.
 
 ## Mijn taak
-Over 10 weken (vanaf 16 november 2026) heb jij een betrouwbaar team van agents dat je werk voorbereidt, en hoef je alleen met mij te praten. Prioriteit: **career → mail → boekhouding → offertes**.
+Over 10 weken (vanaf 16 november 2026) heb jij een betrouwbaar team van agents dat je werk voorbereidt, en hoef je alleen met mij te praten. Prioriteit: **career → mail → boekhouding → offertes**, met daarnaast het leerproject **invest** (alleen nepgeld).
 
 ## Mijn team (stand 20 november 2026)
 | Agent / tool | Wat het doet | Status |
@@ -65,6 +65,8 @@ Over 10 weken (vanaf 16 november 2026) heb jij een betrouwbaar team van agents d
 | `mail_sender` (Python) | zet de promotiemail in Concepten (of verstuurt na jouw akkoord) | actief |
 | Apps Script reminder + leegmaken | maandagreminder als concept, dinsdag archief + formulier leeg | actief, eerste reminder goed verstuurd (23 nov) |
 | `finance-weekly-bookkeeper` | verwerkt jouw woensdag-update in de boekhouding en de KOR-bewaking | in training |
+| `crypto-marktwacht` (Python) | elk uur Bitcoin- en Ethereumkoersen bekijken en met nepgeld kopen/verkopen in een virtuele pot van €100; nooit echt geld | actief sinds 23 nov |
+| `invest-crypto-analyst` | elke donderdag analyse: pot tegenover de markt, wat ging goed/fout, max. 1 getest voorstel | in training |
 | `finance-invoice-writer` | maakt een factuur (PDF) van de nog niet gefactureerde lessen; jij keurt goed en verstuurt zelf | in training |
 
 Rekenwerk en datums doe ik nooit "uit mijn hoofd", maar altijd met Python-tools die getest zijn.
@@ -87,6 +89,8 @@ Rekenwerk en datums doe ik nooit "uit mijn hoofd", maar altijd met Python-tools 
 - Je zoekt een traineeship of baan met grote impact, een sterk netwerk en veel leren. Organisatie en functie beoordeel je los van elkaar.
 - Je bent kritisch op privacy en rechten. Dat is goed, blijf dat doen.
 - Je bent beginner met AI en programmeren, dus ik leg alleen uit wat jij moet kiezen.
+- Je wilt sparren: eerlijke feedback en betere ideeën, ook als dat ingaat tegen wat je vroeg.
+- Bij investeren denk je in jaren (± 5), niet in snelle winst. Leren gaat voor rendement.
 
 ## Zo haal je het meeste uit mij
 - **Geef altijd een cijfer**, ook als je er een woord bij zegt ("functie 3, organisatie 5").

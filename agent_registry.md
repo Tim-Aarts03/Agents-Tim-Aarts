@@ -16,6 +16,8 @@ Definitions live in `.claude/agents/`; archived agents live in `archive/`.
 | `bootcamp-reminder` (Google Apps Script, no LLM) | Mail | Monday ~12:45: reminder with weather advice to all sign-ups (BCC); phase 1 Gmail draft for Tim | `tools/google_apps_script/bootcamp_reminder.gs` (runs in Tim's Google account) | active (first run OK 2026-11-23) |
 | `finance-weekly-bookkeeper` | Finance | Books Tim's Wednesday update (sessions, expenses, invoices, payments) into the monthly ledger; builds the monthly Excel in Tim's layout + year overview; flags overdue invoices and KOR status | `tools/bookkeeping.py`, `tools/bookkeeping_xlsx.py` | training |
 | `finance-invoice-writer` | Finance | Drafts a sales invoice (Markdown + PDF in Tim's 001 layout) from unbilled sessions; manager finalizes after Tim's approval (PDF to `01 Verkoop Facturen/`, invoice booked) | `tools/invoice.py` | training |
+| `invest-crypto-analyst` | Invest | Thursday analysis of the paper-trading market watch (pot vs market, trades, health), max 1 rule proposal tested on unseen data | `tools/crypto.py` (report, backtest) | training |
+| `crypto-market-watch` (Python, launchd, no LLM) | Invest | Hourly: BTC/ETH prices from the public Binance API, active rule, paper trades in a virtual €100 pot; alerts only when no prices for >24h | `tools/crypto.py tick` | active (from 23 Nov 2026) |
 | `qa-fact-checker` | QA | Checks every output against `/knowledge` | `tools/letter_checks.py` | active |
 
 ## Mail workflow (bootcamp, training phase until ~2 Dec 2026)
@@ -31,6 +33,12 @@ Definitions live in `.claude/agents/`; archived agents live in `archive/`.
 ## Invoice workflow (from 19 Nov 2026)
 - Tim asks for an invoice → `finance-invoice-writer` runs `tools.invoice draft` → `qa-fact-checker` on the Markdown → Tim approves the PDF → manager runs `tools.invoice finalize <nr> --approved` → Tim sends it himself; payment is booked later via the bookkeeper.
 - Contract Sint Jacob: invoice afterwards, after 15 Dec 2026 (the tool warns when invoicing earlier).
+
+## Invest workflow (paper trading only, from 23 Nov 2026)
+- Never real money, exchange accounts, wallets or API keys (hard rule in CLAUDE.md §6).
+- launchd job `com.agents.crypto-watch` runs `tools.crypto tick` hourly (Mac must be awake; missed hours are skipped, not traded afterwards). Disable with `.venv/bin/python -m tools.crypto uninstall-watch` (plist kept as `.disabled`).
+- Thursday 09:00 scheduled task `invest-crypto-thursday` → `invest-crypto-analyst` → `output/invest/crypto_week_<date>.md` → Max reports. Rule changes only via `tools.crypto activate <rule> --reason ... --approved` after Tim's yes.
+- Data: `logs/crypto_state.json`, `logs/crypto_paper_trades.csv`, `logs/crypto_equity.csv`, `logs/crypto_history_*.csv` (git-ignored). Rules + rule history: `knowledge/crypto_rules.json` (in git).
 
 ## Planned
 

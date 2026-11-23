@@ -309,3 +309,11 @@ remember decisions and preferences across sessions.
 ### 2026-11-23 — Location moved to the balcony of team 2
 - Tim: from now on the session is on the (covered) balcony of team 2, not the binnenplaats.
 - Action: promotion mail says "op het balkon van team 2"; rain advice in the reminder (Python and Apps Script) now reads "We staan op het overdekte balkon van team 2, dus regen is geen probleem."; `knowledge/bootcamp.md` and `mail-promo-writer` updated. The Apps Script copy in Tim's Google account must be re-pasted by Tim to take effect.
+
+### 2026-11-23 — Invest department: from tickets to crypto paper trading
+- Tim wanted a ticket-resale predictor (TicketSwap). TicketSwap blocks bots, and its rules (pasted by Tim) forbid scraping and reselling with purely commercial intent; margin after fees and the 120% cap is ~€1–7 per ticket. Proposed paper trading; Tim chose crypto paper trading instead (automatic public data, fast feedback).
+- Hard rule approved by Tim: invest never uses real money, accounts, wallets or keys; switching only via a separate decision after ≥3 months of good results (CLAUDE.md §6).
+- Tim's goal: learn, steady results, horizon ~5 years. No pings per paper trade; Thursday analysis in the Claude app; alert only when the watch breaks or the pot moves >5 pp away from the market (both directions). Rule changes need his approval (overfitting risk explained).
+- Tim wants sparring: keep giving honest feedback and better ideas (confirmed again).
+- First backtest (2 years hourly BTC/ETH, 70/30 split): no rule beat buy-and-hold convincingly on unseen data; best-on-train (breakout_24_336) only marginally beat buy-and-hold on test (-11.9% vs -13.9%, within noise), and the active default sma_cross_24_168 did -19.1%, around coin-flip level -18.3%). Lesson: hourly rules are mostly noise plus fees; slower rules fit Tim's 5-year horizon better — candidate for the first Thursday proposal.
+- launchd job runs fine from ~/Documents with the framework Python (no privacy block).
