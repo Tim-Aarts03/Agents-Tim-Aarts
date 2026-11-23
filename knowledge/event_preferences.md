@@ -27,3 +27,6 @@ traineeship or job with big impact, a strong network and many learning situation
 - **No online events** (2026-11-20): "het gaat om het netwerken". Filtered out by the tool.
 - Trial run 2026-11-20: online talkshow Europe 4 (interesting topic and speakers, free); DCSEM sports medicine congress 4 ("too ambitious doesn't mean not interesting"; slightly outside his direction).
 - Tim wants to know **what an event is, who comes and what you do there** before he can rate it: the overview must explain that clearly.
+- Training round 1–10 (2026-11-23): highest (5) for a free tech meetup with founders and a monthly young-professionals café (<30, nearby). 4 for free local events (policy borrel, traineeship day, volunteer day at a kids' event, startup weekend) and for the national sports congress. 2 for a fundraising masterclass ("only useful once I have a job").
+- **Price:** Tim wants to start with free or cheap events to learn whether networking pays off, before paying €290–395 for big congresses. Big paid congresses are interesting later. Ask him again about this after a few events.
+- Pulls: young people of his own age, nearby (Haarlem/Amsterdam), relaxed formats (pitches + drinks). Values getting out of his comfort zone.

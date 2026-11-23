@@ -286,3 +286,8 @@ remember decisions and preferences across sessions.
 - Lesson: Tim can't rate an event from its title; the overview must say what it is, who comes and what you do there. Agent output now has a "Wat is het" part.
 - Tim: "online is gewoon niet wat ik zoek": `tools/events.py` now excludes online events.
 - Training round: 20 varied fictional in-person events logged with status `training` (`https://training.invalid/eNN`); rating sheet `output/career/event_training_2026-11-20.md`; scores hidden to avoid anchoring.
+
+### 2026-11-23 — Event training ratings 1–10
+- Ratings: 1→4, 2→4, 3→3, 4→5, 5→2, 6→4, 7→4, 8→5, 9→3, 10→4 (Tim corrected 10 from 5 to 4 himself). Reasons are stored in `logs/events.csv`.
+- Lesson: price is a timing question, not a dislike. Tim wants free events first and paid congresses later. The learned `price:` bonus will capture "now"; ask again after his first events.
+- Tim asked whether the €395 congress is worth it: give an honest view, but the decision is his.
