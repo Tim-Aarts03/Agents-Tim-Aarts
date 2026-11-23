@@ -296,3 +296,7 @@ remember decisions and preferences across sessions.
 - Ratings: 11→5, 12→4, 13→3, 14→3, 15→4, 16→5, 17→5, 18→5, 19→4 (Tim corrected his 5 himself), 20→2. Average of all ratings ≈ 3.9: Tim rates generously.
 - Check: leave-one-out Spearman between tool score and rating is only 0.2 (centring on Tim's mean instead of 3 gives 0.12, so not adopted). The features (topic, type, price, place) miss what really drives him: "does this fit my next step now".
 - Decision: no scoring change yet. Real events with ratings before and after attending will tell more than fictional ones; re-check after ~10 real ratings.
+
+### 2026-11-23 — First automatic Monday reminder went well
+- Tim: the Apps Script reminder draft (Monday ~12:45) was correct and he sent it.
+- Action: `bootcamp-reminder` marked active in the registry and IDENTITY.md. Phase 2 (auto-send) for reminder and promotion only after two error-free weeks, with a CLAUDE.md change approved by Tim.

@@ -63,7 +63,7 @@ Over 10 weken (vanaf 16 november 2026) heb jij een betrouwbaar team van agents d
 | `qa-fact-checker` | controleert alles wat naar buiten gaat tegen `knowledge/` | actief |
 | `mail-promo-writer` | de pitch van 2–3 zinnen voor de woensdagmail | in training |
 | `mail_sender` (Python) | zet de promotiemail in Concepten (of verstuurt na jouw akkoord) | actief |
-| Apps Script reminder + leegmaken | maandagreminder als concept, dinsdag archief + formulier leeg | net geïnstalleerd |
+| Apps Script reminder + leegmaken | maandagreminder als concept, dinsdag archief + formulier leeg | actief, eerste reminder goed verstuurd (23 nov) |
 | `finance-weekly-bookkeeper` | verwerkt jouw woensdag-update in de boekhouding en de KOR-bewaking | in training |
 | `finance-invoice-writer` | maakt een factuur (PDF) van de nog niet gefactureerde lessen; jij keurt goed en verstuurt zelf | in training |
 
