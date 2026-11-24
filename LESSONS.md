@@ -396,3 +396,7 @@ remember decisions and preferences across sessions.
 - Choices applied to v1 (same day): only logo B (geometry = SVG files), lockup + slogan, new "naam & punt" section, slogan section, files section; open questions removed. Original concept kept in `output/brand/archief/brandbook_v1-concept_2026-11-24.html`. Fixed: inline grid styles overflowed on narrow screens.
 - Website restyled to the brand (same day): dark cover hero "werk in beweging.", logo lockup in header/footer, Inter Tight + Inter, kalk background, white rounded cards, red buttons, favicon; copy switched from "je/jullie" to "u" (brand tone). Test changed: a bare "@" (CSS/font URL) is allowed, an e-mail address or mailto: is not. Still open: form_url and booking_url are empty, so the only button is "Bel voor een kennismaking"; no domain yet.
 - Status (Tim, same day): website saved as CONCEPT — `output/site/concept_website_2026-11-24.html` (not live, not final). Brandbook v1 with choices is the working version.
+
+### 2026-11-24 — First real weekly bookkeeping update
+- Tim sent the session (4 participants) plus an ING single-transaction PDF instead of a receipt. Manager copied the PDF into `Boekhouding/03 Bankafschriften/`, read it and passed exact figures to `finance-weekly-bookkeeper`; booked without questions, all checks OK.
+- Lesson: an ING "Details af- en bijschrijving" PDF is enough proof of amount/date; always copy attachments from Downloads into the project folder first.
