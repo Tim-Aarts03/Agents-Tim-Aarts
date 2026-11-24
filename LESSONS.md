@@ -376,3 +376,13 @@ remember decisions and preferences across sessions.
 - Domain: none yet. First build the site and see if it works; domain (costs money) is a later decision.
 - Privacy: phone and KvK stay out of git (placeholders in the source, filled from `knowledge/private_*` at build time).
 - Built (same day): `site/index.template.html` + `site/config.json` (colours, `form_url`, `booking_url`) → `.venv/bin/python -m tools.site_build` → `output/site/index.html`. Without links the buttons fall back to "Bel voor een kennismaking". Tests guard: no "Jacob", no "@", no "€" on the page. Placeholder colours until Tim's branding chat delivers.
+
+### 2026-11-24 — Brandbook T.A Vitality: Tim's interview answers + concept v1
+- Story: work and life are merging; employers should care for their people; movement is the best way to break up or end a workday; people should go to work with a good feeling ("way of living", not just a paycheck).
+- Feel: timeless, "a good product" (quality, not luxury), honest. Avoid: exuberant, gold, high-end, gym, in-your-face, testosterone, muscles. Wanted: smooth, beautiful, product-design-like.
+- Colour: a red slightly darker/different than normal red; a bit daring, something that grabs. References: Apple, Netflix, Spotify, On.
+- Logo: undecided; does not have to be a V/TA monogram; asked for 4 sketches. No slogan idea.
+- Clothing: clean, ONE colour, small logo on the back. Website tone: "u", businesslike, direct, honest.
+- Earlier attempt "Break V." (Tim's artifact): terracotta #AE5D4E, peach, Fraunces serif; Tim was not satisfied. Concept v1 deliberately goes deeper red, sans-serif (Inter Tight/Inter), fewer warm tones.
+- Concept v1: `output/brand/brandbook_2026-11-24.html` (Vitality-rood #A3302B, Inkt, Kalk, Steen, Blos; logos A–D; 5 slogans; clothing rules). Contrast/CMYK computed in Python. After Tim's approval: `knowledge/brand.md` + colours into `site/config.json`.
+- Lesson: files outside the project folder (Tim's school branding files) cannot be read — ask Tim to drag them into the project folder.
