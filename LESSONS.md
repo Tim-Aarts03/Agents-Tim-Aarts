@@ -331,3 +331,8 @@ remember decisions and preferences across sessions.
 - Tim pasted 9 LinkedIn vacancies (lnkd.in links) to include on Friday.
 - Action: leads stored in `logs/job_leads.md` (local, status open/processed); `career-job-scout` must turn every open lead into a candidate by looking it up on the employer's own site or a public job board (never opening LinkedIn), else `verified: false` with Tim's link; the scheduled Friday task brief and checks updated accordingly; output marks them "(jouw LinkedIn-tip)".
 - Noted: several leads hit known filters or low-fit role types (finance head, account executive = commercial sales, Australia); the run reports why each lead did not reach the top 5.
+
+### 2026-11-24 — Team Visma lead rated 5, scoring missed it
+- Tim rated the Team Visma | Lease a Bike travel & planning coordinator (LinkedIn lead) a 5 and asked for a letter; real page found on teamvismaleaseabike.nl, deadline 29 November.
+- The scoring tool gives it only 28 (no domain points for operations at a top professional sports team; operations_logistics not preferred). Proposal for Tim: a domain or bonus for roles inside elite/international sports organisations (UEFA, top cycling/football teams).
+- Letter rule clarified in `letter_style.md`: Tim wants the short skill sentence in every letter (QA flagged it twice against the old wording).

@@ -16,7 +16,7 @@ Derived from Tim's own letters (`knowledge/letter_examples.md`). Updated after e
 - Only facts from `knowledge/profile.md`. Never invent achievements, numbers or experience.
 - Age is always taken from `profile.md`.
 - No exaggerated claims like "de perfecte fit" without supporting evidence (keep it confident but grounded).
-- Skills (Excel, Word, Mathematics B) only when the vacancy asks for them, stated briefly as a skill ("I am strong in Mathematics B"). Never as self-study effort ("I worked through the whole maths textbook"): that does not sound convincing (Tim, 2026-11-18).
+- Skills: Tim wants one short skill sentence in his letters, also when the vacancy does not ask for it ("Daarnaast werk ik goed met Excel en Word en ben ik sterk in wiskunde B."). Never as self-study effort ("I worked through the whole maths textbook"): that does not sound convincing (Tim, 2026-11-18; confirmed by his choices for Mulier and Happy2Move).
 - Spell-check: "hart" (not "hard"), "geld ophalen" (not "geld ophouden"), "op zoek" (two words), "doordat/door middel van".
 
 ## Banned phrases
