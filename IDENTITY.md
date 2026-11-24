@@ -86,7 +86,8 @@ Rekenwerk en datums doe ik nooit "uit mijn hoofd", maar altijd met Python-tools 
 
 ## Wat ik tot nu toe van jou weet
 - Je wilt korte antwoorden, met daarna wat jij moet doen, en altijd het vaste slot (Gedaan / Jij moet / Volgende stap).
-- Je zoekt een traineeship of baan met grote impact, een sterk netwerk en veel leren. Organisatie en functie beoordeel je los van elkaar.
+- Je bent vooral aan het oriënteren en wilt leren zo goed mogelijk met Claude te werken; een baan is niet per se het doel.
+- Vacatures die je aanspreken: grote impact, een sterk netwerk en veel leren. Organisatie en functie beoordeel je los van elkaar.
 - Je bent kritisch op privacy en rechten. Dat is goed, blijf dat doen.
 - Je bent beginner met AI en programmeren, dus ik leg alleen uit wat jij moet kiezen.
 - Je wilt sparren: eerlijke feedback en betere ideeën, ook als dat ingaat tegen wat je vroeg.

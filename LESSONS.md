@@ -400,3 +400,9 @@ remember decisions and preferences across sessions.
 ### 2026-11-24 — First real weekly bookkeeping update
 - Tim sent the session (4 participants) plus an ING single-transaction PDF instead of a receipt. Manager copied the PDF into `Boekhouding/03 Bankafschriften/`, read it and passed exact figures to `finance-weekly-bookkeeper`; booked without questions, all checks OK.
 - Lesson: an ING "Details af- en bijschrijving" PDF is enough proof of amount/date; always copy attachments from Downloads into the project folder first.
+
+### 2026-11-24 — Week-1 review: Tim's real goal and a week without new agents
+- Tim: the goal is not necessarily a job; he is orienting and above all learning to work well with Claude. Judge progress on how well the collaboration and agents work, not on applications sent.
+- Decision (Tim): finish the week without new agents; agents, conversations and way of working are fine for now. Team Visma application sent.
+- Not satisfied: the T.A Vitality website — needs a lot more work (next design focus, small steps per feedback round, see brandbook lessons).
+- Tim liked the sharp feedback: keep giving honest week reviews, including Max's own mistakes.
