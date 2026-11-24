@@ -43,3 +43,5 @@ _Per letter: date, organisation, Tim's feedback, outcome (invited/rejected/no re
 - Lesson: ask Tim for personal experiences that match the vacancy's requirements (travel, hobby, family) before calling them gaps; they make the letter stronger and more personal. Always write "afstudeerstage" for Sint Jacob.
 - Removed for length (max 400): T-Mobile/golf events and HFC.
 - Outcome: pending.
+- Round 3 (same day): Tim added AI (grade 10 partly thanks to a small program he built with AI; AI is useful for travel planning and searching hotels) and wanted the family/cycling line more businesslike ("in mijn familie heeft die altijd een grote plek" instead of "is dat altijd een groot ding", no "vanaf de bank").
+- Lesson: keep the tone businesslike; personal details are welcome but phrased formally. Mention Tim's AI skills where a role involves planning, searching or admin.

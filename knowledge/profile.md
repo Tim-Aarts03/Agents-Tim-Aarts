@@ -59,6 +59,7 @@ Contact details: `knowledge/private_contact.md`; references: `knowledge/private_
 
 ## Skills
 - **Strong:** problem-solving (shown by his strength in Mathematics B — Tim, 2026-11-24); coming up with new ideas / out-of-the-box thinking; perseverance; consistency (training, learning, investing); working hard and long with focus; positive attitude; maths/numeracy; languages; knowledge of the human body; chess; cooking.
+- **AI:** works well with AI tools; at Sint Jacob he worked with AI and built a small program with it, which contributed to his grade 10 (Tim, 2026-11-24). Sees AI as useful for planning and searching (e.g. travel, hotels).
 - **Tools:** Excel (good), Word (good), Canva (average: can use it, not an expert). Not active on social media (by choice, for focus).
 - Organisation, stakeholder and volunteer coordination, impact research.
 

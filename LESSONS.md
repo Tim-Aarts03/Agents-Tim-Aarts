@@ -340,3 +340,7 @@ remember decisions and preferences across sessions.
 ### 2026-11-24 — New facts from Tim's letter feedback
 - Tim added facts for the Team Visma letter; recorded in `knowledge/profile.md` (Tim's own statements, 2026-11-24): English excellent, can get by in Spanish (formally ~A1–A2 per 18-11 interview — flagged to Tim), earlier gap year of travel with lots of self-planning and hotel booking, Argentina for the internship, cycling affinity (Tour de France family tradition), Mathematics B = problem-solving.
 - Lesson: the writer listed "affinity with cycling" and "booking hotels" as gaps; Tim had both. The writer's notes should ask Tim about such gaps (as it did) — and I should pass those questions on before finalising.
+
+### 2026-11-24 — AI skill added; CV-advice agent requested
+- New fact in `profile.md` (Tim): works well with AI; built a small program with AI at Sint Jacob, which contributed to the grade 10.
+- Tim asked for an agent that gives tailored CV advice per vacancy; plan proposed first (new agent → plan + approval, CLAUDE.md §2).
