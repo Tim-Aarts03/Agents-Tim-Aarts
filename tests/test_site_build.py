@@ -1,3 +1,5 @@
+import re
+
 import pytest
 
 from tools.site_build import (
@@ -55,7 +57,9 @@ def test_site_never_names_client_or_email():
     # Tim's rules: no client names, no e-mail address, no prices on the site.
     page = render(TEMPLATE.read_text(encoding="utf-8"), SiteConfig(colors=COLORS), CONTACT).lower()
     assert "jacob" not in page
-    assert "@" not in page
+    # A bare "@" is allowed (CSS @media, font URLs); an e-mail address is not.
+    assert not re.search(r"[\w.+-]+@[\w-]+\.[a-z]{2,}", page)
+    assert "mailto:" not in page
     assert "€" not in page
 
 

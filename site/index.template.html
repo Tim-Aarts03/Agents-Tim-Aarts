@@ -3,99 +3,142 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>T.A Vitality · Wekelijks bewegen voor je personeel</title>
-  <meta name="description" content="T.A Vitality verzorgt een wekelijkse beweegsessie voor medewerkers, op jullie eigen locatie in de regio Haarlem.">
+  <title>T.A Vitality · werk in beweging.</title>
+  <meta name="description" content="T.A Vitality verzorgt een wekelijkse beweegsessie voor medewerkers, op uw eigen locatie in de regio Haarlem.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Crect width='120' height='120' rx='26' fill='%23A3302B'/%3E%3Ccircle cx='46' cy='60' r='28' fill='none' stroke='%23F3EFE8' stroke-width='6'/%3E%3Ccircle cx='74' cy='60' r='28' fill='none' stroke='%23F3EFE8' stroke-width='6'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@600&display=swap" rel="stylesheet">
   <style>
+    /* Brand: knowledge/brand.md (brandbook v1). Colours come from site/config.json. */
     :root {
-      --primary: {{COLOR_PRIMARY}};
-      --accent: {{COLOR_ACCENT}};
-      --bg: {{COLOR_BACKGROUND}};
+      --rood: {{COLOR_PRIMARY}};
+      --inkt: {{COLOR_ACCENT}};
+      --kalk: {{COLOR_BACKGROUND}};
       --text: {{COLOR_TEXT}};
-      --muted: #5b6470;
-      --card: #ffffff;
-      --radius: 14px;
+      --steen: #6B655C;
+      --blos: #E8CFC4;
+      --wit: #FFFFFF;
+      --head: "Inter Tight", "Inter", -apple-system, "Helvetica Neue", Arial, sans-serif;
+      --body: "Inter", -apple-system, "Helvetica Neue", Arial, sans-serif;
     }
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      font-size: 18px;
-      line-height: 1.6;
-      color: var(--text);
-      background: var(--bg);
-    }
-    .wrap { max-width: 920px; margin: 0 auto; padding: 0 24px; }
-    header.top { padding: 20px 0; }
-    header.top .wrap { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
-    .brand { font-weight: 800; font-size: 1.25rem; letter-spacing: 0.02em; color: var(--primary); text-decoration: none; }
-    .top a.small { color: var(--primary); font-weight: 600; text-decoration: none; }
-    .hero { padding: 56px 0 72px; }
-    .hero h1 { font-size: clamp(2rem, 5vw, 3.2rem); line-height: 1.15; margin: 0 0 20px; max-width: 18ch; }
-    .hero p { font-size: 1.2rem; color: var(--muted); max-width: 46ch; margin: 0 0 32px; }
+    body { margin: 0; font-family: var(--body); font-size: 18px; line-height: 1.6; color: var(--text); background: var(--kalk); }
+    .wrap { max-width: 1040px; margin: 0 auto; padding: 0 28px; }
+    h1, h2, h3 { font-family: var(--head); font-weight: 600; letter-spacing: -.02em; }
+    .dot { color: var(--rood); }
+    .muted { color: var(--steen); }
+
+    /* header + hero share the dark cover look of the brandbook */
+    .cover { background: var(--inkt); color: var(--kalk); }
+    header.top .wrap { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding-top: 22px; padding-bottom: 22px; }
+    .logo { display: block; color: var(--kalk); }
+    .logo svg { display: block; height: 40px; width: auto; }
+    .top a.small { color: var(--kalk); font-weight: 500; text-decoration: none; font-size: 16px; opacity: .85; }
+    .top a.small:hover { opacity: 1; }
+    .hero { padding: 72px 0 96px; }
+    .hero .kicker { font-size: 13px; letter-spacing: .18em; text-transform: uppercase; color: var(--blos); margin: 0 0 18px; }
+    .hero h1 { font-size: clamp(48px, 8vw, 92px); line-height: 1; letter-spacing: -.035em; margin: 0 0 24px; }
+    .hero p.lead { font-size: 21px; color: #CFC9BF; max-width: 40ch; margin: 0 0 36px; }
+
     .btns { display: flex; flex-wrap: wrap; gap: 12px; }
-    .btn {
-      display: inline-block; padding: 14px 24px; border-radius: 999px;
-      font-weight: 700; text-decoration: none; border: 2px solid var(--primary);
-    }
-    .btn.primary { background: var(--primary); color: #fff; }
-    .btn.secondary { background: transparent; color: var(--primary); }
-    .btn:hover { filter: brightness(1.1); }
-    section { padding: 64px 0; }
-    section.alt { background: var(--card); }
-    h2 { font-size: 1.8rem; margin: 0 0 24px; }
-    .grid { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
-    .card { background: var(--card); border-radius: var(--radius); padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
-    section.alt .card { background: var(--bg); box-shadow: none; }
-    .card h3 { margin: 0 0 8px; font-size: 1.15rem; }
-    .card p { margin: 0; color: var(--muted); }
-    .step-nr {
-      display: inline-flex; width: 36px; height: 36px; border-radius: 50%;
-      align-items: center; justify-content: center; margin-bottom: 12px;
-      background: var(--accent); color: #fff; font-weight: 800;
-    }
-    .about p { max-width: 62ch; }
-    .contact { text-align: center; }
-    .contact p { color: var(--muted); max-width: 50ch; margin: 0 auto 28px; }
+    .btn { display: inline-block; padding: 15px 26px; border-radius: 999px; font-weight: 600; font-size: 17px; text-decoration: none; border: 2px solid var(--rood); transition: filter .15s; }
+    .btn.primary { background: var(--rood); color: var(--wit); }
+    .btn.secondary { background: transparent; color: var(--rood); }
+    .cover .btn.secondary, .contact .btn.secondary { color: var(--kalk); border-color: var(--kalk); }
+    .btn:hover { filter: brightness(1.12); }
+
+    section { padding: 88px 0; }
+    .tag { display: inline-block; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; font-weight: 600; padding: 4px 10px; border-radius: 99px; background: var(--blos); color: var(--inkt); margin-bottom: 14px; }
+    h2 { font-size: clamp(30px, 4vw, 44px); line-height: 1.1; margin: 0 0 32px; }
+    .grid { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+    .card { background: var(--wit); border-radius: 18px; padding: 28px; }
+    .card h3 { margin: 0 0 8px; font-size: 21px; }
+    .card p { margin: 0; color: var(--steen); }
+    .step-nr { display: inline-flex; width: 38px; height: 38px; border-radius: 50%; align-items: center; justify-content: center; margin-bottom: 14px; background: var(--rood); color: var(--wit); font-family: var(--head); font-weight: 600; }
+    .lens { display: block; width: 46px; height: auto; margin-bottom: 14px; color: var(--inkt); }
+
+    .about .wrap { display: grid; grid-template-columns: 1fr 1.6fr; gap: 48px; align-items: start; }
+    .about p { margin: 0; max-width: 60ch; }
+    .about .mark { color: var(--inkt); }
+    .about .mark svg { width: 100%; max-width: 280px; height: auto; }
+
+    .contact { background: var(--inkt); color: var(--kalk); text-align: center; }
+    .contact h2 { font-size: clamp(36px, 5vw, 56px); }
+    .contact p { color: #CFC9BF; max-width: 48ch; margin: 0 auto 32px; }
     .contact .btns { justify-content: center; }
-    .phone { margin-top: 24px; font-size: 1.1rem; }
-    .phone a { color: var(--primary); font-weight: 700; text-decoration: none; }
-    footer { padding: 32px 0; font-size: 0.9rem; color: var(--muted); border-top: 1px solid rgba(0,0,0,0.08); }
-    footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; }
+    .contact .phone { margin: 28px auto 0; font-size: 18px; }
+    .contact .phone a { color: var(--kalk); font-weight: 600; }
+
+    footer { padding: 32px 0 40px; font-size: 15px; color: var(--steen); }
+    footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; }
+    footer a { color: var(--steen); }
+    footer svg { height: 28px; width: auto; color: var(--inkt); display: block; }
+
+    @media (max-width: 720px) {
+      .wrap { padding: 0 20px; }
+      .hero { padding: 48px 0 64px; }
+      section { padding: 64px 0; }
+      .about .wrap { grid-template-columns: 1fr; gap: 24px; }
+      .about .mark svg { max-width: 160px; }
+      .logo svg { height: 32px; }
+    }
   </style>
 </head>
 <body>
-  <header class="top">
-    <div class="wrap">
-      <a class="brand" href="#">T.A Vitality</a>
-      <a class="small" href="#contact">Contact</a>
-    </div>
-  </header>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <clipPath id="clipL"><circle cx="44" cy="40" r="28"/></clipPath>
+      <symbol id="sym" viewBox="0 0 120 80">
+        <circle cx="76" cy="40" r="28" fill="var(--lens, {{COLOR_PRIMARY}})" clip-path="url(#clipL)"/>
+        <circle cx="44" cy="40" r="28" fill="none" stroke="currentColor" stroke-width="4"/>
+        <circle cx="76" cy="40" r="28" fill="none" stroke="currentColor" stroke-width="4"/>
+      </symbol>
+      <symbol id="lockup" viewBox="0 0 360 80">
+        <use href="#sym" x="0" y="0" width="120" height="80"/>
+        <text x="118" y="52" font-family="Inter Tight, Inter, Helvetica, Arial, sans-serif" font-weight="600" font-size="34" letter-spacing="-0.6" fill="currentColor">t<tspan fill="{{COLOR_PRIMARY}}">.</tspan>a vitality</text>
+      </symbol>
+    </defs>
+  </svg>
 
-  <main>
+  <div class="cover">
+    <header class="top">
+      <div class="wrap">
+        <a class="logo" href="#" aria-label="T.A Vitality"><svg viewBox="0 0 360 80"><use href="#lockup"/></svg></a>
+        <a class="small" href="#contact">Contact</a>
+      </div>
+    </header>
+
     <div class="hero">
       <div class="wrap">
-        <h1>Wekelijks bewegen voor je personeel</h1>
-        <p>Eén vaste beweegsessie per week, op jullie eigen locatie. Laagdrempelig, in groepsverband en voor elk niveau.</p>
+        <p class="kicker">Wekelijkse beweegsessies voor medewerkers</p>
+        <h1>werk in beweging<span class="dot">.</span></h1>
+        <p class="lead">Eén vaste beweegsessie per week voor uw medewerkers, op uw eigen locatie. Laagdrempelig, in groepsverband en voor elk niveau.</p>
         <div class="btns">
           {{CTA_BUTTONS}}
         </div>
       </div>
     </div>
+  </div>
 
-    <section class="alt">
+  <main>
+    <section>
       <div class="wrap">
-        <h2>Wat jullie krijgen</h2>
+        <span class="tag">Wat u krijgt</span>
+        <h2>Beweging die past bij uw werkdag<span class="dot">.</span></h2>
         <div class="grid">
           <div class="card">
-            <h3>Op jullie locatie</h3>
-            <p>Ik kom naar jullie toe. Medewerkers hoeven nergens heen en kunnen direct na het werk meedoen.</p>
+            <svg class="lens" viewBox="0 0 120 80"><use href="#sym"/></svg>
+            <h3>Op uw locatie</h3>
+            <p>Ik kom naar u toe. Medewerkers hoeven nergens heen en kunnen direct na het werk meedoen.</p>
           </div>
           <div class="card">
+            <svg class="lens" viewBox="0 0 120 80"><use href="#sym"/></svg>
             <h3>Voor iedereen</h3>
-            <p>Een gevarieerde sessie die elk niveau aankan. Geen sportervaring nodig.</p>
+            <p>Een gevarieerde sessie die elk niveau aankan. Sportervaring is niet nodig.</p>
           </div>
           <div class="card">
+            <svg class="lens" viewBox="0 0 120 80"><use href="#sym"/></svg>
             <h3>Elke week</h3>
             <p>Een vast moment in de week: samen bewegen, energie opdoen en de werkdag goed afsluiten.</p>
           </div>
@@ -103,19 +146,20 @@
       </div>
     </section>
 
-    <section>
+    <section style="padding-top:0">
       <div class="wrap">
-        <h2>Zo werkt het</h2>
+        <span class="tag">Zo werkt het</span>
+        <h2>In drie stappen van start<span class="dot">.</span></h2>
         <div class="grid">
           <div class="card">
             <span class="step-nr">1</span>
             <h3>Kennismaken</h3>
-            <p>We bespreken wat jullie zoeken, de locatie en het moment dat het beste past.</p>
+            <p>We bespreken wat u zoekt, de locatie en het moment dat het beste past.</p>
           </div>
           <div class="card">
             <span class="step-nr">2</span>
             <h3>Sessie op maat</h3>
-            <p>Ik stem de beweegsessie af op jullie medewerkers en de ruimte die er is.</p>
+            <p>Ik stem de beweegsessie af op uw medewerkers en de ruimte die er is.</p>
           </div>
           <div class="card">
             <span class="step-nr">3</span>
@@ -126,29 +170,34 @@
       </div>
     </section>
 
-    <section class="alt about">
+    <section class="about" style="background:var(--wit)">
       <div class="wrap">
-        <h2>Wie ben ik</h2>
-        <p>Ik ben Tim Aarts, oprichter van T.A Vitality. Ik heb de bachelor Sport, Management en Ondernemen afgerond aan de Hogeschool van Amsterdam en ben gecertificeerd personal trainer. Sinds juni 2026 geef ik wekelijks beweegsessies voor medewerkers in de regio Haarlem.</p>
+        <div class="mark"><svg viewBox="0 0 120 80"><use href="#sym"/></svg></div>
+        <div>
+          <span class="tag">Wie ben ik</span>
+          <h2>Tim Aarts<span class="dot">.</span></h2>
+          <p>Ik ben Tim Aarts, oprichter van T.A Vitality. Ik heb de bachelor Sport, Management en Ondernemen afgerond aan de Hogeschool van Amsterdam en ben gecertificeerd personal trainer. Sinds juni 2026 geef ik wekelijks beweegsessies voor medewerkers in de regio Haarlem.</p>
+          <p class="muted" style="margin-top:16px">Werk en leven komen steeds dichter bij elkaar. Daarom geloof ik dat bewegen bij het werk hoort: zo gaan mensen met een goed gevoel naar hun werk.</p>
+        </div>
       </div>
     </section>
 
     <section class="contact" id="contact">
       <div class="wrap">
-        <h2>Kennismaken?</h2>
-        <p>Laat je gegevens achter of plan direct een kennismaking in. Ik neem zo snel mogelijk contact met je op.</p>
+        <h2>Kennismaken<span class="dot">?</span></h2>
+        <p>Plan een kennismaking of bel direct. Ik neem zo snel mogelijk contact met u op.</p>
         <div class="btns">
           {{CTA_BUTTONS}}
         </div>
-        <p class="phone">Of bel me: <a href="tel:{{PHONE_LINK}}">{{PHONE}}</a></p>
+        <p class="phone">Of bel: <a href="tel:{{PHONE_LINK}}">{{PHONE}}</a></p>
       </div>
     </section>
   </main>
 
   <footer>
     <div class="wrap">
-      <span>T.A Vitality · Tim Aarts</span>
-      <span>KvK {{KVK}} · Tel. <a href="tel:{{PHONE_LINK}}">{{PHONE}}</a></span>
+      <svg viewBox="0 0 360 80" aria-label="T.A Vitality"><use href="#lockup"/></svg>
+      <span>Tim Aarts · KvK {{KVK}} · Tel. <a href="tel:{{PHONE_LINK}}">{{PHONE}}</a></span>
     </div>
   </footer>
 </body>
