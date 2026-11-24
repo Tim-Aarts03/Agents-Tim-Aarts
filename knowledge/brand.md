@@ -33,7 +33,9 @@ Work and life are merging. Good employers take care of their people, and movemen
 | Beton | #E4E4E1 | 228 228 225 | 0 0 1 11 | quiet surfaces |
 | Grafiet | #5C5C5A | 92 92 90 | 0 0 2 64 | secondary text, lines |
 
-- Ratio: white ±60%, ink ±25%, red ±10%, beton/grafiet ±5%.
+- Ratio: white ±40%, red ±30%, ink ±25%, beton/grafiet ±5% (Tim, 2026-11-24: "te wit", wants more character).
+- Rhythm: alternate full-bleed surfaces (red / ink / white / beton). Never two red surfaces directly after each other. Large outline circles (the logo, cropped off the edge, white at low opacity) may decorate red and ink surfaces.
+- On red: the dot and lens bullets are white; buttons are white with red text.
 - Contrast (WCAG): ink on white 18.4, red on white 7.0, grafiet on white 6.7, red on beton 5.5. Red on ink is only 2.6 → no red text on dark backgrounds (only the lens and the dot).
 - CMYK values are calculated approximations; the printer/embroiderer matches #A3302B on a proof.
 
@@ -44,7 +46,7 @@ Work and life are merging. Good employers take care of their people, and movemen
 
 ## Graphic language — deliberately different
 Tim wants to stay authentic and NOT look like other vitality brands or typical AI-generated design.
-- **Do:** white and ink with one full red surface; straight corners and thin hairlines (technical-drawing feel); lowercase brand headings with the dot; the lens shape as a graphic device (bullets, photo crop, hero image).
+- **Do:** alternating full red, ink and white surfaces; straight corners and thin hairlines (technical-drawing feel); lowercase brand headings with the dot; the lens shape as a graphic device (bullets, photo crop, hero image).
 - **Avoid:** cream/beige backgrounds with terracotta; rounded cards with soft shadows; pill tags; serif + generic sans pairing; gradients; green/blue "health" colours; stock photos of smiling people in sportswear; emoji; gym/muscle imagery, gold, high-end luxury.
 
 ## Tone of voice
@@ -58,5 +60,5 @@ Businesslike, direct, honest. Address the client as **u**. Short sentences, most
 - Never: slogan, large name, numbers, other logos.
 
 ## Website
-- White background, ink text, one red primary button (straight corners), secondary button with ink outline.
+- Sections alternate white, red and ink (like the brandbook cover). Ink text on white; red primary button (straight corners), secondary button with ink outline.
 - Photos later: real sessions only, may be cropped in the lens shape. Favicon: white symbol on red.
