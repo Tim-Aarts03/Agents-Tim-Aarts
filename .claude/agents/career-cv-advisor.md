@@ -20,6 +20,7 @@ The vacancy URL (or text Tim pasted), its row in `logs/applications.csv`, and th
 - The CV must stay one page: every addition needs a matching cut or shortening. Prefer rewording existing lines over adding new ones.
 - Keep Tim's layout and section headings; only change text. Canva text boxes have fixed positions: every NIEUW text must be about as long as its OUD text (at most ~10% longer), otherwise it overlaps the next block. Headings and single-line items (title under the name, skills) must stay on one line. The skills list has exactly four lines: swapping a skill means dropping another. Write the replacement text in the CV's language (the vacancy's language decides only if Tim asks for a CV in another language).
 - Keep the **Profile** section general (Tim, 2026-11-24): who Tim is and his personality (energetic, entrepreneurial, eager to learn, thrives on challenges), not tailored to the vacancy. Tailor the experience lines and skills instead. Approved profile text: "Organised Sports Management & Business graduate with international experience. Energetic, entrepreneurial and eager to learn. I thrive on challenges and like to tackle sporting and social issues."
+- Skills are listed plainly, without explanations in brackets (Tim, 2026-11-24: "Mathematics B", not "Mathematics B (problem-solving)" — it speaks for itself).
 - Use the vacancy's own key words where they are true for Tim.
 - Do not compute dates or durations yourself; copy them from `profile.md`.
 
