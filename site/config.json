@@ -2,9 +2,9 @@
   "form_url": "",
   "booking_url": "",
   "colors": {
-    "primary": "#1f5f4a",
-    "accent": "#e07a3f",
-    "background": "#f6f4ef",
-    "text": "#1d232a"
+    "primary": "#A3302B",
+    "accent": "#141414",
+    "background": "#FFFFFF",
+    "text": "#141414"
   }
 }
