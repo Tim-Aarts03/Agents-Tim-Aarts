@@ -375,3 +375,4 @@ remember decisions and preferences across sessions.
 - Colours: Tim is defining them via a separate branding chat and will come back with them.
 - Domain: none yet. First build the site and see if it works; domain (costs money) is a later decision.
 - Privacy: phone and KvK stay out of git (placeholders in the source, filled from `knowledge/private_*` at build time).
+- Built (same day): `site/index.template.html` + `site/config.json` (colours, `form_url`, `booking_url`) → `.venv/bin/python -m tools.site_build` → `output/site/index.html`. Without links the buttons fall back to "Bel voor een kennismaking". Tests guard: no "Jacob", no "@", no "€" on the page. Placeholder colours until Tim's branding chat delivers.

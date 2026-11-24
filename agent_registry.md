@@ -19,6 +19,7 @@ Definitions live in `.claude/agents/`; archived agents live in `archive/`.
 | `finance-invoice-writer` | Finance | Drafts a sales invoice (Markdown + PDF in Tim's 001 layout) from unbilled sessions; manager finalizes after Tim's approval (PDF to `01 Verkoop Facturen/`, invoice booked) | `tools/invoice.py` | training |
 | `invest-crypto-analyst` | Invest | Thursday analysis of the paper-trading market watch (pot vs market, trades, health), max 1 rule proposal tested on unseen data | `tools/crypto.py` (report, backtest) | training |
 | `crypto-market-watch` (Python, launchd, no LLM) | Invest | Hourly: BTC/ETH prices from the public Binance API, active rule, paper trades in a virtual €100 pot; alerts only when no prices for >24h | `tools/crypto.py tick` | active (from 23 Nov 2026) |
+| `site-builder` (Python tool, no LLM) | Sales | Builds the one-page T.A Vitality website for employers (weekly movement sessions); phone/KvK filled from `knowledge/private_*`, output `output/site/index.html` (not online yet) | `tools/site_build.py`, `site/` | draft (colours and form/booking links pending) |
 | `qa-fact-checker` | QA | Checks every output against `/knowledge` | `tools/letter_checks.py` | active |
 
 ## Mail workflow (bootcamp, training phase until ~2 Dec 2026)
