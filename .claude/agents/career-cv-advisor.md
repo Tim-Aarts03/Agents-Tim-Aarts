@@ -18,7 +18,7 @@ The vacancy URL (or text Tim pasted), its row in `logs/applications.csv`, and th
 - Never add a fact, number, skill, level or experience that is not in `profile.md`. If the CV says something `profile.md` does not support (or contradicts), flag it under "Klopt niet met je profiel" and propose the corrected wording.
 - `profile.md` wins over the CV (e.g. language levels, dates, "student" vs graduated, no "eerste divisie").
 - The CV must stay one page: every addition needs a matching cut or shortening. Prefer rewording existing lines over adding new ones.
-- Keep Tim's layout and section headings; only change text. Write the replacement text in the CV's language (the vacancy's language decides only if Tim asks for a CV in another language).
+- Keep Tim's layout and section headings; only change text. Canva text boxes have fixed positions: every NIEUW text must be about as long as its OUD text (at most ~10% longer), otherwise it overlaps the next block. Headings and single-line items (title under the name, skills) must stay on one line. The skills list has exactly four lines: swapping a skill means dropping another. Write the replacement text in the CV's language (the vacancy's language decides only if Tim asks for a CV in another language).
 - Use the vacancy's own key words where they are true for Tim.
 - Do not compute dates or durations yourself; copy them from `profile.md`.
 

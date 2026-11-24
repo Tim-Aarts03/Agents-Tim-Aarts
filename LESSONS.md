@@ -349,3 +349,8 @@ remember decisions and preferences across sessions.
 - New agent `career-cv-advisor`: per selected vacancy, advice with exact OUD → NIEUW text changes; manager applies approved changes to a COPY of Tim's Canva CV (`DAG0GcTT33A`, never the original) and exports a PDF. Canva connected by Tim. CV text snapshot in `knowledge/private_cv_en.md` (not in git).
 - Trial (Team Visma): 8 CV lines conflict with `profile.md` (e.g. "Student" title, language levels, T.A Vitality bootcamp is for employees not residents, "managing budgets", Canva "Proficient"). The CV overstated things before; the advisor must keep checking every line.
 - Gaps: Tim's Dutch CV exists only as a PDF (no Canva design found); copying files from outside the project folder was refused, so Tim drags them in himself.
+
+### 2026-11-24 — First tailored CV exported from Canva
+- Applied the approved advice to a copy (`DAHb0Sbr2mg`, "Tim Aarts CV - Team Visma Lease a Bike"); original `DAG0GcTT33A` untouched. Exported to `output/career/cv_tim-aarts_team-visma-lease-a-bike_2026-11-24.pdf`.
+- Lesson: Canva text boxes do not reflow — a longer Sint Jacob text pushed "Grade: 10" onto the next heading. Fix: keep replacement texts about as long as the originals; check the thumbnail after every edit; show Tim the preview before committing. Rule added to `career-cv-advisor`.
+- Trade-offs made for space: "budget/medical" dropped at Sint Jacob, Canva skill swapped for AI tools, title "Graduate".
