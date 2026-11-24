@@ -354,3 +354,7 @@ remember decisions and preferences across sessions.
 - Applied the approved advice to a copy (`DAHb0Sbr2mg`, "Tim Aarts CV - Team Visma Lease a Bike"); original `DAG0GcTT33A` untouched. Exported to `output/career/cv_tim-aarts_team-visma-lease-a-bike_2026-11-24.pdf`.
 - Lesson: Canva text boxes do not reflow — a longer Sint Jacob text pushed "Grade: 10" onto the next heading. Fix: keep replacement texts about as long as the originals; check the thumbnail after every edit; show Tim the preview before committing. Rule added to `career-cv-advisor`.
 - Trade-offs made for space: "budget/medical" dropped at Sint Jacob, Canva skill swapped for AI tools, title "Graduate".
+
+### 2026-11-24 — Letter writer trained on four approved letters
+- Tim: letters must above all be tailored to the organisation he applies to.
+- Action: `knowledge/letter_style.md` now has a tailoring section (research their own site; ≥4 organisation-specific elements; swap test), a structure blueprint from the Mulier, UEFA, Happy2Move and Visma letters, tone rules and "check profile before calling something a gap". `career-cover-letter-writer` got an organisation-research step, a tailoring self-check and fixed note sections (incl. "Vragen voor Tim"); `qa-fact-checker` checks tailoring.
