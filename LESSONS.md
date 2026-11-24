@@ -367,3 +367,11 @@ remember decisions and preferences across sessions.
 - Lesson: no public ranking of Haarlem's largest employers exists; headcounts come from scattered annual reports and are often years old, so every figure carries source + year. No contact names collected (privacy); Tim looks up HR/vitality contacts himself.
 - Open for Tim: price/format of a session, available times, region (Haarlem only or also Heemstede/Hoofddorp/Velsen). If this becomes recurring, propose a `sales-lead-scout` agent.
 - Tim's criterion (same day): many employees at ONE location. Care chains spread over nursing homes (Zorgbalans) don't qualify — only physios/higher-educated staff would join; Teva (one factory site) is "perfect", Spaarne Gasthuis Haarlem-Zuid a good option. List v2 ranks by expected headcount per site; spread-out organisations moved to "afgevallen".
+
+### 2026-11-24 — Website for T.A Vitality: Tim's brief
+- Goal: employers (e.g. Teva) see that T.A Vitality exists and can fill in a contact form or book an introductory call; Tim can refer prospects to it.
+- Content: weekly movement sessions only. No prices. Small, focused, clear, easy to scan.
+- Public details: Tim's name, phone number and KvK number. NO e-mail address. Do NOT name Sint Jacob as a client. No photos, no logo yet.
+- Colours: Tim is defining them via a separate branding chat and will come back with them.
+- Domain: none yet. First build the site and see if it works; domain (costs money) is a later decision.
+- Privacy: phone and KvK stay out of git (placeholders in the source, filled from `knowledge/private_*` at build time).
