@@ -361,3 +361,8 @@ remember decisions and preferences across sessions.
 
 ### 2026-11-24 — CV profile stays general
 - Tim found the tailored Profile section too job-specific. Profile now general (personality: energetic, entrepreneurial, eager to learn, thrives on challenges); tailoring happens in experience lines and skills. Rule + approved text added to `career-cv-advisor`; Visma CV copy updated and re-exported.
+
+### 2026-11-24 — First B2B prospect list for T.A Vitality (Haarlem)
+- Tim wants large Haarlem employers to offer one movement session per week (cold calls/mails/visits). Manager did the research directly (no agent yet); list in `output/sales/prospects_haarlem_2026-11-24.md` (12 organisations + Industriekring Haarlem as network entry).
+- Lesson: no public ranking of Haarlem's largest employers exists; headcounts come from scattered annual reports and are often years old, so every figure carries source + year. No contact names collected (privacy); Tim looks up HR/vitality contacts himself.
+- Open for Tim: price/format of a session, available times, region (Haarlem only or also Heemstede/Hoofddorp/Velsen). If this becomes recurring, propose a `sales-lead-scout` agent.
