@@ -358,3 +358,6 @@ remember decisions and preferences across sessions.
 ### 2026-11-24 — Letter writer trained on four approved letters
 - Tim: letters must above all be tailored to the organisation he applies to.
 - Action: `knowledge/letter_style.md` now has a tailoring section (research their own site; ≥4 organisation-specific elements; swap test), a structure blueprint from the Mulier, UEFA, Happy2Move and Visma letters, tone rules and "check profile before calling something a gap". `career-cover-letter-writer` got an organisation-research step, a tailoring self-check and fixed note sections (incl. "Vragen voor Tim"); `qa-fact-checker` checks tailoring.
+
+### 2026-11-24 — CV profile stays general
+- Tim found the tailored Profile section too job-specific. Profile now general (personality: energetic, entrepreneurial, eager to learn, thrives on challenges); tailoring happens in experience lines and skills. Rule + approved text added to `career-cv-advisor`; Visma CV copy updated and re-exported.
