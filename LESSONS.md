@@ -326,3 +326,8 @@ remember decisions and preferences across sessions.
 
 ### 2026-11-23 — Pushing works from Claude Code
 - Push kept failing (no GitHub login for command-line git). Homebrew cannot build gh on this Intel Mac (outdated Command Line Tools); installed the official gh .pkg instead (checksum verified), Tim ran `gh auth login`, `gh auth setup-git` links git. Claude can now push itself.
+
+### 2026-11-24 — LinkedIn leads feed the Friday run
+- Tim pasted 9 LinkedIn vacancies (lnkd.in links) to include on Friday.
+- Action: leads stored in `logs/job_leads.md` (local, status open/processed); `career-job-scout` must turn every open lead into a candidate by looking it up on the employer's own site or a public job board (never opening LinkedIn), else `verified: false` with Tim's link; the scheduled Friday task brief and checks updated accordingly; output marks them "(jouw LinkedIn-tip)".
+- Noted: several leads hit known filters or low-fit role types (finance head, account executive = commercial sales, Australia); the run reports why each lead did not reach the top 5.
