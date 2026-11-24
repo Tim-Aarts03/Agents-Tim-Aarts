@@ -7,7 +7,7 @@ Contact details: `knowledge/private_contact.md`; references: `knowledge/private_
 - Name: Tim Aarts · Age: 23 (November 2026) · Lives in Heemstede
 - Available: immediately. Prefers part-time; full-time if the role is excellent.
 - Other commitments: T.A Vitality ~8 h/week (fluctuates); pre-master Movement Sciences at the VU Amsterdam from next academic year.
-- Languages: Dutch (native), English (advanced), Spanish (basic, ~A1–A2, actively learning), German (basic: understands well, can make himself understood; not actively learning)
+- Languages: Dutch (native), English (excellent — Tim, 2026-11-24; earlier recorded as advanced), Spanish (can get by — Tim, 2026-11-24; formally ~A1–A2, actively learning), German (basic: understands well, can make himself understood; not actively learning)
 
 ## Education
 - **Hogeschool van Amsterdam** — Bachelor Sport, Management en Ondernemen (Sports Management and Business), 2022–2026. **Diploma obtained.**
@@ -43,6 +43,10 @@ Contact details: `knowledge/private_contact.md`; references: `knowledge/private_
 - **Events (as part of degree), 2023**: co-organised a beach event for T-Mobile employees and a small golf event.
 - **Part-time jobs, 2015 – present**: Plus (Heemstede), Bals (warehouse), Friethoes events (junior supervisor), Table 24 group (hospitality), Bilboa (hospitality staff: bar and terrace; often runs the terrace alone).
 
+## Travel (Tim, 2026-11-24)
+- Has travelled a lot. Had an earlier gap year of travelling in which he planned a lot himself and booked many hotels.
+- Travelled to Argentina for the El Poder del Deporte internship (La Matanza).
+
 ## References (details in `knowledge/private_references.md`)
 - Internship supervisor, Sint Jacob.
 - A lawyer at FIFA who volunteered alongside Tim for a week; can speak about Tim's character and work, and has agreed to be a reference.
@@ -50,10 +54,11 @@ Contact details: `knowledge/private_contact.md`; references: `knowledge/private_
 ## Sport background
 - Football at a high level: briefly at AZ (age 11); HFC until age 20 at the highest amateur level in the Netherlands; in the youth teams played against Ajax and PSV (proudest sporting moment). Do NOT write "eerste divisie".
 - Stopped football when deciding to travel; later tore his cruciate ligament when restarting, and then stopped for good.
+- Cycling: watches the Tour de France every year; cycling is a big thing in his family, so he has a real affinity with the sport (Tim, 2026-11-24).
 - Now: runs 3×/week, gym 3×/week; has run a marathon.
 
 ## Skills
-- **Strong:** coming up with new ideas / out-of-the-box thinking; perseverance; consistency (training, learning, investing); working hard and long with focus; positive attitude; maths/numeracy; languages; knowledge of the human body; chess; cooking.
+- **Strong:** problem-solving (shown by his strength in Mathematics B — Tim, 2026-11-24); coming up with new ideas / out-of-the-box thinking; perseverance; consistency (training, learning, investing); working hard and long with focus; positive attitude; maths/numeracy; languages; knowledge of the human body; chess; cooking.
 - **Tools:** Excel (good), Word (good), Canva (average: can use it, not an expert). Not active on social media (by choice, for focus).
 - Organisation, stakeholder and volunteer coordination, impact research.
 

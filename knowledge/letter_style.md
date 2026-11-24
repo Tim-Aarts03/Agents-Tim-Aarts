@@ -37,3 +37,9 @@ _Per letter: date, organisation, Tim's feedback, outcome (invited/rejected/no re
 - Changed by Tim: "in my gap year I worked through the entire Mathematics B textbook" → name Mathematics B as a skill, like Excel and Word ("I am strong in Mathematics B and logical thinking").
 - Lesson: for a role that asks for logical thinking and tools, naming skills is fine; phrase them as abilities, not as homework done.
 - Outcome: pending.
+
+### 2026-11-24 — Team Visma | Lease a Bike, Team travel & planning coordinator
+- Tim's additions: his own travel (earlier gap year, planned everything himself, booked many hotels; Argentina for the internship) as evidence for travel planning; English "uitstekend"; can get by in Spanish; Mathematics B as proof of problem-solving; cycling affinity (Tour de France every year, big thing in his family); "Mijn afstudeerstage werd met een 10 beoordeeld" (not "stage").
+- Lesson: ask Tim for personal experiences that match the vacancy's requirements (travel, hobby, family) before calling them gaps; they make the letter stronger and more personal. Always write "afstudeerstage" for Sint Jacob.
+- Removed for length (max 400): T-Mobile/golf events and HFC.
+- Outcome: pending.

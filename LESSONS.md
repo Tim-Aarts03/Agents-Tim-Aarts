@@ -336,3 +336,7 @@ remember decisions and preferences across sessions.
 - Tim rated the Team Visma | Lease a Bike travel & planning coordinator (LinkedIn lead) a 5 and asked for a letter; real page found on teamvismaleaseabike.nl, deadline 29 November.
 - The scoring tool gives it only 28 (no domain points for operations at a top professional sports team; operations_logistics not preferred). Proposal for Tim: a domain or bonus for roles inside elite/international sports organisations (UEFA, top cycling/football teams).
 - Letter rule clarified in `letter_style.md`: Tim wants the short skill sentence in every letter (QA flagged it twice against the old wording).
+
+### 2026-11-24 — New facts from Tim's letter feedback
+- Tim added facts for the Team Visma letter; recorded in `knowledge/profile.md` (Tim's own statements, 2026-11-24): English excellent, can get by in Spanish (formally ~A1–A2 per 18-11 interview — flagged to Tim), earlier gap year of travel with lots of self-planning and hotel booking, Argentina for the internship, cycling affinity (Tour de France family tradition), Mathematics B = problem-solving.
+- Lesson: the writer listed "affinity with cycling" and "booking hotels" as gaps; Tim had both. The writer's notes should ask Tim about such gaps (as it did) — and I should pass those questions on before finalising.
