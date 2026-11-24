@@ -344,3 +344,8 @@ remember decisions and preferences across sessions.
 ### 2026-11-24 — AI skill added; CV-advice agent requested
 - New fact in `profile.md` (Tim): works well with AI; built a small program with AI at Sint Jacob, which contributed to the grade 10.
 - Tim asked for an agent that gives tailored CV advice per vacancy; plan proposed first (new agent → plan + approval, CLAUDE.md §2).
+
+### 2026-11-24 — CV advisor built (plan approved by Tim)
+- New agent `career-cv-advisor`: per selected vacancy, advice with exact OUD → NIEUW text changes; manager applies approved changes to a COPY of Tim's Canva CV (`DAG0GcTT33A`, never the original) and exports a PDF. Canva connected by Tim. CV text snapshot in `knowledge/private_cv_en.md` (not in git).
+- Trial (Team Visma): 8 CV lines conflict with `profile.md` (e.g. "Student" title, language levels, T.A Vitality bootcamp is for employees not residents, "managing budgets", Canva "Proficient"). The CV overstated things before; the advisor must keep checking every line.
+- Gaps: Tim's Dutch CV exists only as a PDF (no Canva design found); copying files from outside the project folder was refused, so Tim drags them in himself.
