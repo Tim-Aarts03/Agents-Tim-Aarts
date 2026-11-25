@@ -89,6 +89,33 @@
         ],
         "createdAt": "2026-11-25T18:40:23.384Z",
         "reason": "user confirmed: kalk #F3EFE8 is the brand background Tim chose in brandbook v1 (knowledge/brand.md, 2026-11-24)"
+      },
+      {
+        "rule": "hero-eyebrow-chip",
+        "value": "*",
+        "files": [
+          "output/site/test_eigenfotos.html"
+        ],
+        "createdAt": "2026-11-25T18:42:49.479Z",
+        "reason": "user confirmed: copy of the approved hero (Tim, 2026-11-25); test page only"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "output/site/test_eigenfotos.html"
+        ],
+        "createdAt": "2026-11-25T18:42:49.489Z",
+        "reason": "false positive (Max): copy of the site; .cover content is inset by .wrap padding"
+      },
+      {
+        "rule": "cream-palette",
+        "value": "*",
+        "files": [
+          "output/site/test_eigenfotos.html"
+        ],
+        "createdAt": "2026-11-25T18:42:49.499Z",
+        "reason": "user confirmed: kalk #F3EFE8 is the brand background Tim chose in brandbook v1 (knowledge/brand.md, 2026-11-24)"
       }
     ]
   }
