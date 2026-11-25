@@ -26,6 +26,24 @@
         ],
         "createdAt": "2026-11-25T17:18:52.660Z",
         "reason": "user confirmed: hero kicker follows Tim's chosen reference moooi.com; Tim called the hero 'top perfect' on 2026-11-25"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "site/index.template.html"
+        ],
+        "createdAt": "2026-11-25T17:30:11.603Z",
+        "reason": "false positive (Max): .cover is a full-bleed dark band; its content is inset by .wrap padding (28px desktop, 20px phone), verified in screenshots 2026-11-25"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "output/site/index.html"
+        ],
+        "createdAt": "2026-11-25T17:30:11.613Z",
+        "reason": "false positive (Max): .cover is a full-bleed dark band; its content is inset by .wrap padding (28px desktop, 20px phone), verified in screenshots 2026-11-25"
       }
     ]
   }
