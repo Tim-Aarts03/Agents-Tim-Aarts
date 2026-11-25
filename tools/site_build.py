@@ -14,7 +14,7 @@ import shutil
 import sys
 from pathlib import Path
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 ROOT = Path(__file__).resolve().parent.parent
 TEMPLATE = ROOT / "site" / "index.template.html"
@@ -41,6 +41,8 @@ class Colors(BaseModel):
 class Photo(BaseModel):
     src: str = ""
     alt: str = ""
+    # Which part of the photo stays visible when it is cropped to the slot, e.g. "50% 20%".
+    position: str = Field(default="", pattern=r"^(\d{1,3}% \d{1,3}%)?$")
 
 
 class SiteConfig(BaseModel):
@@ -50,6 +52,8 @@ class SiteConfig(BaseModel):
     photos: dict[str, Photo] = {}
     # Concept builds show where photos will go; switch off before the site goes live.
     photo_placeholders: bool = False
+    # The photographer's credit: the crops cut off the watermark, so the credit moves to the footer.
+    photo_credit: str = ""
 
 
 class Contact(BaseModel):
@@ -105,9 +109,10 @@ def photo_html(slot: str, config: SiteConfig) -> str:
     if photo.src:
         if not photo.alt.strip():
             raise ValueError(f"Photo '{slot.lower()}' needs alt text")
+        style = f' style="object-position: {photo.position}"' if photo.position else ""
         return (
             f'<figure class="photo"><img src="photos/{html.escape(photo.src)}" '
-            f'alt="{html.escape(photo.alt)}" loading="lazy" decoding="async"></figure>'
+            f'alt="{html.escape(photo.alt)}" loading="lazy" decoding="async"{style}></figure>'
         )
     if config.photo_placeholders:
         return f'<figure class="photo photo--empty" aria-hidden="true" data-slot="{slot.lower()}"></figure>'
@@ -127,6 +132,7 @@ def render(template: str, config: SiteConfig, contact: Contact) -> str:
         "PHONE": html.escape(contact.phone),
         "PHONE_LINK": phone_link(contact.phone),
         "KVK": html.escape(contact.kvk),
+        "CREDIT_LINE": f" · Foto's: {html.escape(config.photo_credit)}" if config.photo_credit else "",
     }
     page = PHOTO_SLOT.sub(lambda m: photo_html(m.group(1), config), template)
     for key, value in values.items():

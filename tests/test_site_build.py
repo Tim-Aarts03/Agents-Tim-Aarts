@@ -85,3 +85,20 @@ def test_filled_photo_slot_needs_alt_text():
     bad = SiteConfig(colors=COLORS, photos={"gains_1": Photo(src="a.jpg", alt="")})
     with pytest.raises(ValueError):
         photo_html("GAINS_1", bad)
+
+
+def test_photo_crop_position_is_applied_and_validated():
+    from tools.site_build import Photo, photo_html
+
+    ok = SiteConfig(colors=COLORS, photos={"gains_1": Photo(src="a.jpg", alt="Sessie", position="50% 20%")})
+    assert 'style="object-position: 50% 20%"' in photo_html("GAINS_1", ok)
+    with pytest.raises(ValueError):
+        Photo(src="a.jpg", alt="Sessie", position="top; background:url(x)")
+
+
+def test_photo_credit_shows_in_footer_only_when_set():
+    template = TEMPLATE.read_text(encoding="utf-8")
+    with_credit = render(template, SiteConfig(colors=COLORS, photo_credit="A | B"), CONTACT)
+    without = render(template, SiteConfig(colors=COLORS), CONTACT)
+    assert "Foto's: A | B" in with_credit
+    assert "Foto's:" not in without and "{{CREDIT_LINE}}" not in without

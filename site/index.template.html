@@ -204,6 +204,69 @@
       .steps h3 { margin: 6px 0; }
       .steps p { grid-column: 2; }
     }
+    /* Click-through funnel (desktop only; phones keep scrolling). Tim chose the "through the rings" arrival. */
+    :root { --ease-io: cubic-bezier(0.7, 0, 0.2, 1); }
+    .hero-mark .ring, .hero-mark .lens-wrap { transform-box: fill-box; transform-origin: center; transition: transform 1.9s cubic-bezier(.5, 0, .2, 1), opacity 1.4s var(--ease-io); }
+    .cover.leaving .lens-wrap { transform: scaleX(0); opacity: 0; transition-duration: .7s; }
+    .cover.leaving .ring-l { transform: translateX(-120px) scale(2.6); opacity: 0; }
+    .cover.leaving .ring-r { transform: translateX(120px) scale(2.6); opacity: 0; }
+    .hero > .wrap, .hero .scroll-cue { transition: opacity .7s var(--ease-io), transform .9s var(--ease-io); }
+    .cover.leaving .hero > .wrap { opacity: 0; transform: translateY(-14px); }
+    .cover.leaving .scroll-cue { opacity: 0; }
+
+    html.funnel, html.funnel body { height: 100%; overflow: hidden; }
+    :where(.funnel .screen) { background: var(--kalk); }
+    .funnel .screen { position: fixed; inset: 0; overflow-y: auto; overscroll-behavior: contain; visibility: hidden; z-index: 1; }
+    .funnel .screen:not(.cover) { display: flex; flex-direction: column; align-items: stretch; min-height: 0; }
+    /* Centre short screens, but let tall ones start at the top and scroll (no cut-off headings) */
+    .funnel .screen:not(.cover) > .wrap { width: 100%; margin-block: auto; }
+    .funnel .screen.current { visibility: visible; z-index: 2; }
+    .funnel .screen.incoming { visibility: visible; z-index: 3; }
+    .funnel .screen.outgoing { visibility: visible; z-index: 2; }
+    .funnel .contact { justify-content: space-between; padding-bottom: 0; }
+    .funnel .contact footer { color: rgba(243, 239, 232, .6); }
+    .funnel .contact footer a { color: rgba(243, 239, 232, .8); }
+    .funnel .contact footer svg { color: var(--kalk); --dot: var(--kalk); }
+
+    /* Fixed header: kalk on dark screens, inkt on light ones */
+    .funnel header.top { position: fixed; z-index: 10; transition: color .8s var(--ease-io), background .4s var(--ease-io); }
+    .funnel header.top .logo, .funnel header.top a.small { transition: color .8s var(--ease-io); }
+    .funnel.on-light header.top .logo, .funnel.on-light header.top a.small { color: var(--inkt); }
+    .funnel.on-light header.top .logo { --dot: var(--rood); }
+
+    /* Progress: one thin red line that grows with every step */
+    .funnel-progress { position: fixed; left: 0; top: 0; height: 2px; width: 100%; background: var(--rood); transform-origin: left; transform: scaleX(0); transition: transform 1.2s var(--ease-io); z-index: 11; }
+
+    /* The way forward on every screen */
+    .next { margin-top: 56px; display: flex; gap: 16px; flex-wrap: wrap; align-items: center; }
+    .next .btn { display: inline-flex; align-items: center; gap: 12px; cursor: pointer; font: inherit; font-weight: 500; font-size: 16px; padding: 13px 22px 13px 24px; }
+    .next .btn svg { width: 18px; height: 18px; transition: transform .6s var(--ease); }
+    .next .btn:hover svg { transform: translateX(4px); }
+    .band .next .btn.go { background: var(--kalk); color: var(--rood); border-color: var(--kalk); }
+    .band .next .btn.go:hover { background: var(--wit); border-color: var(--wit); }
+    .band .next { margin-top: 40px; }
+    .band .next .btn { margin-top: 0; }
+    .about .next { grid-column: 2; margin-top: 40px; }
+    .back { position: fixed; left: 28px; bottom: 26px; z-index: 10; background: none; border: 0; padding: 12px 4px; font: inherit; font-size: 15px; color: var(--steen); cursor: pointer; opacity: 0; pointer-events: none; transition: opacity .8s var(--ease-io), color .5s; }
+    .funnel.can-back .back { opacity: .8; pointer-events: auto; }
+    .back:hover { opacity: 1; color: var(--inkt); }
+    .funnel.on-dark .back:hover, .funnel.on-red .back:hover { color: var(--kalk); }
+    .funnel.on-dark .back, .funnel.on-red .back { color: rgba(243, 239, 232, .7); }
+
+    /* Content settles in, one element after the other */
+    .funnel .screen.enter .st { animation: st-in 1.2s var(--ease) both; animation-delay: calc(var(--i, 0) * 90ms + var(--st-delay, 450ms)); }
+    @keyframes st-in { from { opacity: 0; transform: translateY(16px); } }
+
+    /* Arrival: through the rings, a little depth (Tim chose example B, 2026-11-25) */
+    .screen.incoming { opacity: 0; transform: scale(.94); filter: blur(10px); }
+    .screen.incoming.back-dir { transform: scale(1.06); }
+    .screen.incoming.in { opacity: 1; transform: none; filter: none; transition: opacity 1.1s var(--ease-io), transform 1.5s var(--ease), filter 1.1s var(--ease-io); }
+    .screen.outgoing.out { opacity: 0; transform: scale(1.06); filter: blur(8px); transition: opacity .9s var(--ease-io), transform 1.1s var(--ease-io), filter .9s var(--ease-io); }
+    .screen.outgoing.out.back-dir { transform: scale(.94); }
+
+    @media (prefers-reduced-motion: reduce) {
+      .funnel .screen, .funnel .screen * { transition: none !important; animation: none !important; }
+    }
   </style>
 </head>
 <body>
@@ -243,21 +306,21 @@
             </circle>
           </clipPath>
         </defs>
-        <g class="lens-g" clip-path="url(#heroClip)">
+        <g class="lens-wrap"><g class="lens-g" clip-path="url(#heroClip)">
           <circle cx="152" cy="80" r="56" fill="{{COLOR_PRIMARY}}" opacity="0">
             <animate attributeName="opacity" values="0;1" dur="1.6s" begin="1.1s" fill="freeze"/>
             <animateTransform attributeName="transform" type="translate" values="26 0;0 0" dur="2.6s" calcMode="spline" keyTimes="0;1" keySplines="0.19 1 0.22 1" fill="freeze"/>
             <animateTransform attributeName="transform" type="translate" values="0 0;3 0;0 0" dur="10s" begin="2.6s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.5;1" keySplines="0.45 0 0.55 1;0.45 0 0.55 1" additive="sum"/>
           </circle>
-        </g>
-        <circle cx="88" cy="80" r="56" fill="none" stroke="currentColor" stroke-width="2">
+        </g></g>
+        <g class="ring ring-l"><circle cx="88" cy="80" r="56" fill="none" stroke="currentColor" stroke-width="2">
           <animateTransform attributeName="transform" type="translate" values="-26 0;0 0" dur="2.6s" calcMode="spline" keyTimes="0;1" keySplines="0.19 1 0.22 1" fill="freeze"/>
           <animateTransform attributeName="transform" type="translate" values="0 0;-3 0;0 0" dur="10s" begin="2.6s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.5;1" keySplines="0.45 0 0.55 1;0.45 0 0.55 1" additive="sum"/>
-        </circle>
-        <circle cx="152" cy="80" r="56" fill="none" stroke="currentColor" stroke-width="2">
+        </circle></g>
+        <g class="ring ring-r"><circle cx="152" cy="80" r="56" fill="none" stroke="currentColor" stroke-width="2">
           <animateTransform attributeName="transform" type="translate" values="26 0;0 0" dur="2.6s" calcMode="spline" keyTimes="0;1" keySplines="0.19 1 0.22 1" fill="freeze"/>
           <animateTransform attributeName="transform" type="translate" values="0 0;3 0;0 0" dur="10s" begin="2.6s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.5;1" keySplines="0.45 0 0.55 1;0.45 0 0.55 1" additive="sum"/>
-        </circle>
+        </circle></g>
       </svg>
       <div class="wrap">
         <p class="kicker rise" style="--d:.2s">Beweegsessies voor medewerkers<span class="sep"> · </span><span class="reg">regio Haarlem</span></p>
@@ -346,7 +409,7 @@
   <footer>
     <div class="wrap">
       <svg viewBox="0 0 360 80" role="img" aria-label="T.A Vitality"><use href="#lockup"/></svg>
-      <span>Tim Aarts · KvK {{KVK}} · Tel. <a href="tel:{{PHONE_LINK}}">{{PHONE}}</a></span>
+      <span>Tim Aarts · KvK {{KVK}} · Tel. <a href="tel:{{PHONE_LINK}}">{{PHONE}}</a>{{CREDIT_LINE}}</span>
     </div>
   </footer>
   <script>
@@ -365,6 +428,145 @@
       }
       if (reduce.addEventListener) reduce.addEventListener("change", apply);
       apply();
+    })();
+  </script>
+  <script>
+    /* Click-through funnel: desktop only, phones keep the normal scroll page. */
+    (function () {
+      var wide = window.matchMedia("(min-width: 821px) and (hover: hover)");
+      wide.addEventListener && wide.addEventListener("change", function () { location.reload(); });
+      if (!wide.matches) return;
+      var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      var root = document.documentElement;
+      var arrow = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+      var screens = [
+        { el: document.querySelector(".cover"), theme: "dark", next: "Ontdek wat het oplevert" },
+        { el: document.querySelector(".gains"), theme: "light", next: "Verder" },
+        { el: document.querySelector(".band"), theme: "red", next: "Hoe werkt het?" },
+        { el: document.querySelector(".steps"), theme: "light", next: "Wie ben ik?" },
+        { el: document.querySelector(".about"), theme: "light", next: "Kennismaken" },
+        { el: document.querySelector(".contact"), theme: "dark", next: null }
+      ];
+      root.classList.add("funnel");
+      var header = document.querySelector("header.top");
+      var footer = document.querySelector("footer");
+      screens[5].el.appendChild(footer);
+      var bar = document.createElement("div"); bar.className = "funnel-progress"; document.body.appendChild(bar);
+      var back = document.createElement("button"); back.className = "back"; back.type = "button"; back.textContent = "Terug"; document.body.appendChild(back);
+
+      screens.forEach(function (s, i) {
+        s.el.classList.add("screen");
+        s.el.setAttribute("inert", "");
+        var wrap = s.el.querySelector(".wrap");
+        if (i === 0) {
+          var btns = s.el.querySelector(".hero .btns");
+          var tel = btns.querySelector(".btn");
+          if (tel) { tel.classList.remove("primary"); tel.classList.add("secondary"); }
+          var go = document.createElement("button");
+          go.type = "button"; go.className = "btn primary"; go.dataset.next = "";
+          go.innerHTML = s.next + " " + arrow;
+          go.style.cssText = "display:inline-flex;align-items:center;gap:12px;cursor:pointer;font:inherit;font-weight:500;font-size:16px";
+          go.querySelector("svg").style.cssText = "width:18px;height:18px";
+          btns.insertBefore(go, btns.firstChild);
+          return;
+        }
+        var kids = Array.prototype.slice.call(s.el.querySelectorAll(".wrap > *, .gains-list > li, .steps li, .about .wrap > div > *"));
+        kids.forEach(function (k, n) { k.classList.add("st"); k.style.setProperty("--i", n); });
+        if (s.next) {
+          var next = document.createElement("div"); next.className = "next st"; next.style.setProperty("--i", kids.length);
+          var b = document.createElement("button"); b.type = "button"; b.className = "btn primary go"; b.dataset.next = "";
+          b.innerHTML = s.next + " " + arrow;
+          next.appendChild(b);
+          if (s.el.classList.contains("band")) {
+            var kenn = s.el.querySelector(".wrap > a.btn");
+            next.appendChild(kenn);
+          }
+          (s.el.classList.contains("about") ? s.el.querySelector(".wrap") : wrap).appendChild(next);
+        }
+      });
+
+      var cur = 0, busy = false;
+      function theme(i) {
+        root.classList.remove("on-light", "on-dark", "on-red");
+        root.classList.add("on-" + screens[i].theme);
+        root.classList.toggle("can-back", i > 0);
+        bar.style.transform = "scaleX(" + (i / (screens.length - 1)) + ")";
+      }
+      function settle(i) {
+        var el = screens[i].el;
+        el.removeAttribute("inert");
+        el.classList.add("current");
+        var h = el.querySelector("h1, h2");
+        if (h) { h.setAttribute("tabindex", "-1"); h.focus({ preventScroll: true }); }
+      }
+      screens[0].el.classList.add("current"); screens[0].el.removeAttribute("inert"); theme(0);
+
+      function go(to, opts) {
+        opts = opts || {};
+        if (busy || to === cur || to < 0 || to >= screens.length) return;
+        busy = true;
+        var from = screens[cur].el, next = screens[to].el, dir = to > cur ? 1 : -1;
+        if (!opts.fromHistory) history.pushState({ i: to }, "", "#" + (next.id || "stap-" + to));
+        from.setAttribute("inert", "");
+        if (reduce) theme(to);
+        if (reduce) {
+          from.classList.remove("current"); if (cur === 0) from.classList.add("leaving");
+          if (to === 0) next.classList.remove("leaving");
+          next.scrollTop = 0; settle(to); cur = to; busy = false; return;
+        }
+        var leavingHero = cur === 0 && dir > 0;
+        if (leavingHero) from.classList.add("leaving");
+        if (opts.x != null) { next.style.setProperty("--cx", opts.x + "px"); next.style.setProperty("--cy", opts.y + "px"); }
+        else { next.style.removeProperty("--cx"); next.style.removeProperty("--cy"); }
+        window.setTimeout(function () {
+          theme(to);
+          header.style.background = "";
+          next.scrollTop = 0;
+          next.classList.toggle("back-dir", dir < 0);
+          from.classList.toggle("back-dir", dir < 0);
+          next.classList.remove("enter");
+          next.classList.add("incoming");
+          if (to === 0) next.classList.remove("leaving");
+          from.classList.remove("current"); from.classList.add("outgoing");
+          void next.offsetWidth;
+          next.classList.add("in", "enter");
+          if (!leavingHero) from.classList.add("out");
+          window.setTimeout(function () {
+            from.classList.remove("outgoing", "out", "back-dir");
+            next.classList.remove("incoming", "in", "back-dir");
+            settle(to); cur = to; busy = false;
+          }, 1550);
+        }, leavingHero ? 900 : 0);
+      }
+
+      // A tall screen scrolls under the fixed header: give the header that screen's colour while scrolled.
+      document.addEventListener("scroll", function (e) {
+        var el = e.target;
+        if (!el.classList || !el.classList.contains("screen")) return;
+        header.style.background = el.scrollTop > 8 ? getComputedStyle(el).backgroundColor : "";
+      }, true);
+      document.addEventListener("click", function (e) {
+        var t = e.target.closest("[data-next], a[href='#contact'], a[href='#aanbod'], a.logo, .back");
+        if (!t) return;
+        e.preventDefault();
+        var r = t.getBoundingClientRect();
+        var pos = { x: r.left + r.width / 2, y: r.top + r.height / 2 };
+        if (t.classList.contains("back")) { history.back(); return; }
+        if (t.classList.contains("logo")) { go(0); return; }
+        if (t.matches("a[href='#contact']")) { go(screens.length - 1, pos); return; }
+        if (cur === 0) { pos = { x: window.innerWidth / 2, y: window.innerHeight * 0.48 }; }
+        go(cur + 1, pos);
+      });
+      window.addEventListener("popstate", function (e) {
+        var i = e.state && typeof e.state.i === "number" ? e.state.i : 0;
+        go(i, { fromHistory: true });
+      });
+      document.addEventListener("keydown", function (e) {
+        if (e.target.closest && e.target.closest("button, a, input, textarea")) return;
+        if (e.key === "ArrowRight" || e.key === "PageDown") { e.preventDefault(); go(cur + 1); }
+        if (e.key === "ArrowLeft" || e.key === "PageUp") { e.preventDefault(); history.back(); }
+      });
+      history.replaceState({ i: 0 }, "", location.pathname);
     })();
   </script>
 </body>

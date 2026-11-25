@@ -10,16 +10,20 @@
   "photo_placeholders": true,
   "photos": {
     "gains_1": {
-      "src": "",
-      "alt": ""
+      "src": "avd_haasje_over.jpg",
+      "alt": "Twee mannen in sportkleding doen haasje-over voor een bakstenen gebouw.",
+      "position": "45% 20%"
     },
     "gains_2": {
-      "src": "",
-      "alt": ""
+      "src": "avd_plank.jpg",
+      "alt": "Tim Aarts in een plankhouding, geconcentreerd en ontspannen.",
+      "position": "40% 40%"
     },
     "gains_3": {
-      "src": "",
-      "alt": ""
+      "src": "avd_kettlebell.jpg",
+      "alt": "Een man houdt een kettlebell met gestrekte armen voor zich, op een plein voor een bakstenen gebouw.",
+      "position": "50% 12%"
     }
-  }
+  },
+  "photo_credit": "Anna van Dorp | AVD Productions"
 }
