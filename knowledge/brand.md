@@ -62,7 +62,7 @@ Businesslike, direct, honest. Address the client as **u**. Short sentences, most
 
 ### Website direction (Tim, 2026-11-25)
 References Tim picked: **moooi.com** ("smooth, has an edge, something slow and calm, it moves and feels like a good product") and **uitpaulineskeuken.nl** ("clear, calm, well-organised").
-- From Moooi: full-screen hero with one centred headline in a light weight (400–500, not bold), small uppercase kicker above it, small pill button; minimal header; slow motion with a long ease-out (cubic-bezier(0.19, 1, 0.22, 1), ~1–1.3 s); nothing jumps or flashes.
+- From Moooi: full-screen hero with one centred headline (Tim compared 500 vs 600 on 2026-11-25 and chose semi-bold 600 for "werk in beweging."), small uppercase kicker above it, small pill button; minimal header; slow motion with a long ease-out (cubic-bezier(0.19, 1, 0.22, 1), ~1–1.3 s); nothing jumps or flashes.
 - From Uit Pauline's Keuken: calm warm background, centred section headings with one short intro line, clear categories, cards with small tags.
 - Motion: slow and purposeful (the two logo circles drifting together), always respecting "reduce motion" settings. No autoplay sound, no parallax tricks.
 - Later (Tim): the site grows into a place to browse — facts ("weetjes"), cases of what went well, more pages to click through. Build the structure so a menu and extra pages can be added without a redesign.
