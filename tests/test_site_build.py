@@ -67,3 +67,21 @@ def test_invalid_colour_is_rejected():
     bad = SiteConfig(colors=Colors(primary="green", accent="#222222", background="#333333", text="#444444"))
     with pytest.raises(ValueError):
         render(TEMPLATE.read_text(encoding="utf-8"), bad, CONTACT)
+
+
+def test_photo_slots_are_empty_frames_in_concept_and_absent_live():
+    template = TEMPLATE.read_text(encoding="utf-8")
+    concept = render(template, SiteConfig(colors=COLORS, photo_placeholders=True), CONTACT)
+    live = render(template, SiteConfig(colors=COLORS), CONTACT)
+    assert concept.count("photo--empty") >= 3
+    assert "photo--empty\"" not in live and 'data-slot="gains_1"' not in live
+
+
+def test_filled_photo_slot_needs_alt_text():
+    from tools.site_build import Photo, photo_html
+
+    ok = SiteConfig(colors=COLORS, photos={"gains_1": Photo(src="a.jpg", alt="Collega's bewegen samen")})
+    assert '<img src="photos/a.jpg" alt="Collega&#x27;s bewegen samen"' in photo_html("GAINS_1", ok)
+    bad = SiteConfig(colors=COLORS, photos={"gains_1": Photo(src="a.jpg", alt="")})
+    with pytest.raises(ValueError):
+        photo_html("GAINS_1", bad)

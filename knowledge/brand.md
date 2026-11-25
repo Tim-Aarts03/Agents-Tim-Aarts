@@ -59,6 +59,7 @@ Businesslike, direct, honest. Address the client as **u**. Short sentences, most
 ## Website
 - Kalk background, white cards, inkt text, red primary button; secondary button with red or inkt outline.
 - Photos later: real sessions only, may be cropped in the lens shape. Favicon: kalk symbol on red.
+- Photo slots (2026-11-25): one photo per benefit row (`gains_1..3` in `site/config.json`, files in git-ignored `site/photos/`, alt text required). Only photos of participants who gave consent. Turn `photo_placeholders` off before going live.
 
 ### Website direction (Tim, 2026-11-25)
 References Tim picked: **moooi.com** ("smooth, has an edge, something slow and calm, it moves and feels like a good product") and **uitpaulineskeuken.nl** ("clear, calm, well-organised").

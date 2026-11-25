@@ -6,5 +6,20 @@
     "accent": "#1D1C1A",
     "background": "#F3EFE8",
     "text": "#1D1C1A"
+  },
+  "photo_placeholders": true,
+  "photos": {
+    "gains_1": {
+      "src": "",
+      "alt": ""
+    },
+    "gains_2": {
+      "src": "",
+      "alt": ""
+    },
+    "gains_3": {
+      "src": "",
+      "alt": ""
+    }
   }
 }

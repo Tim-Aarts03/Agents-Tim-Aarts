@@ -28,3 +28,7 @@ knowledge/private_*
 /Boekhouding/
 /Boekhouding kopie
 /archive/*_alias_*
+
+# Session photos show real people (privacy); only the folder is kept
+/site/photos/*
+!/site/photos/.gitkeep

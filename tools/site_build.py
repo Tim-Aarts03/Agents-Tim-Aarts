@@ -10,6 +10,7 @@ Usage: .venv/bin/python -m tools.site_build
 import html
 import json
 import re
+import shutil
 import sys
 from pathlib import Path
 
@@ -21,8 +22,12 @@ CONFIG = ROOT / "site" / "config.json"
 CONTACT_FILE = ROOT / "knowledge" / "private_contact.md"
 BOOKKEEPING_FILE = ROOT / "knowledge" / "private_bookkeeping.json"
 OUT_FILE = ROOT / "output" / "site" / "index.html"
+# Session photos show real people, so they stay out of the public repo (site/photos is git-ignored).
+PHOTO_DIR = ROOT / "site" / "photos"
+OUT_PHOTO_DIR = OUT_FILE.parent / "photos"
 
-PLACEHOLDER = re.compile(r"\{\{[A-Z_]+\}\}")
+PLACEHOLDER = re.compile(r"\{\{[A-Z_0-9]+\}\}")
+PHOTO_SLOT = re.compile(r"\{\{PHOTO_([A-Z0-9_]+)\}\}")
 HEX_COLOR = re.compile(r"^#[0-9a-fA-F]{6}$")
 
 
@@ -33,10 +38,18 @@ class Colors(BaseModel):
     text: str
 
 
+class Photo(BaseModel):
+    src: str = ""
+    alt: str = ""
+
+
 class SiteConfig(BaseModel):
     form_url: str = ""
     booking_url: str = ""
     colors: Colors
+    photos: dict[str, Photo] = {}
+    # Concept builds show where photos will go; switch off before the site goes live.
+    photo_placeholders: bool = False
 
 
 class Contact(BaseModel):
@@ -86,6 +99,21 @@ def cta_buttons(config: SiteConfig, phone: str) -> str:
     return "\n          ".join(buttons)
 
 
+def photo_html(slot: str, config: SiteConfig) -> str:
+    """An <img> for a filled slot, a visible frame in concept builds, otherwise nothing."""
+    photo = config.photos.get(slot.lower(), Photo())
+    if photo.src:
+        if not photo.alt.strip():
+            raise ValueError(f"Photo '{slot.lower()}' needs alt text")
+        return (
+            f'<figure class="photo"><img src="photos/{html.escape(photo.src)}" '
+            f'alt="{html.escape(photo.alt)}" loading="lazy" decoding="async"></figure>'
+        )
+    if config.photo_placeholders:
+        return f'<figure class="photo photo--empty" aria-hidden="true" data-slot="{slot.lower()}"></figure>'
+    return ""
+
+
 def render(template: str, config: SiteConfig, contact: Contact) -> str:
     for name, value in config.colors.model_dump().items():
         if not HEX_COLOR.match(value):
@@ -100,7 +128,7 @@ def render(template: str, config: SiteConfig, contact: Contact) -> str:
         "PHONE_LINK": phone_link(contact.phone),
         "KVK": html.escape(contact.kvk),
     }
-    page = template
+    page = PHOTO_SLOT.sub(lambda m: photo_html(m.group(1), config), template)
     for key, value in values.items():
         page = page.replace("{{" + key + "}}", value)
     leftover = PLACEHOLDER.findall(page)
@@ -118,6 +146,10 @@ def main() -> int:
     page = render(TEMPLATE.read_text(encoding="utf-8"), config, contact)
     OUT_FILE.parent.mkdir(parents=True, exist_ok=True)
     OUT_FILE.write_text(page, encoding="utf-8")
+    for photo in config.photos.values():
+        if photo.src:
+            OUT_PHOTO_DIR.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(PHOTO_DIR / photo.src, OUT_PHOTO_DIR / photo.src)
     print(OUT_FILE)
     return 0
 
