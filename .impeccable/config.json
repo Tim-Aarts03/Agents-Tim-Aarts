@@ -116,6 +116,87 @@
         ],
         "createdAt": "2026-11-25T18:42:49.499Z",
         "reason": "user confirmed: kalk #F3EFE8 is the brand background Tim chose in brandbook v1 (knowledge/brand.md, 2026-11-24)"
+      },
+      {
+        "rule": "hero-eyebrow-chip",
+        "value": "*",
+        "files": [
+          "output/site/voorbeeld_1_blos.html"
+        ],
+        "createdAt": "2026-11-25T18:52:24.687Z",
+        "reason": "user confirmed: copy of the approved hero (Tim, 2026-11-25); comparison page only"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "output/site/voorbeeld_1_blos.html"
+        ],
+        "createdAt": "2026-11-25T18:52:24.697Z",
+        "reason": "false positive (Max): copy of the site; .cover content is inset by .wrap padding"
+      },
+      {
+        "rule": "cream-palette",
+        "value": "*",
+        "files": [
+          "output/site/voorbeeld_1_blos.html"
+        ],
+        "createdAt": "2026-11-25T18:52:24.707Z",
+        "reason": "user confirmed: kalk #F3EFE8 is the brand background Tim chose in brandbook v1 (knowledge/brand.md, 2026-11-24)"
+      },
+      {
+        "rule": "hero-eyebrow-chip",
+        "value": "*",
+        "files": [
+          "output/site/voorbeeld_2_lens.html"
+        ],
+        "createdAt": "2026-11-25T18:52:24.717Z",
+        "reason": "user confirmed: copy of the approved hero (Tim, 2026-11-25); comparison page only"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "output/site/voorbeeld_2_lens.html"
+        ],
+        "createdAt": "2026-11-25T18:52:24.728Z",
+        "reason": "false positive (Max): copy of the site; .cover content is inset by .wrap padding"
+      },
+      {
+        "rule": "cream-palette",
+        "value": "*",
+        "files": [
+          "output/site/voorbeeld_2_lens.html"
+        ],
+        "createdAt": "2026-11-25T18:52:24.738Z",
+        "reason": "user confirmed: kalk #F3EFE8 is the brand background Tim chose in brandbook v1 (knowledge/brand.md, 2026-11-24)"
+      },
+      {
+        "rule": "hero-eyebrow-chip",
+        "value": "*",
+        "files": [
+          "output/site/voorbeeld_3_band.html"
+        ],
+        "createdAt": "2026-11-25T18:52:24.748Z",
+        "reason": "user confirmed: copy of the approved hero (Tim, 2026-11-25); comparison page only"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "output/site/voorbeeld_3_band.html"
+        ],
+        "createdAt": "2026-11-25T18:52:24.757Z",
+        "reason": "false positive (Max): copy of the site; .cover content is inset by .wrap padding"
+      },
+      {
+        "rule": "cream-palette",
+        "value": "*",
+        "files": [
+          "output/site/voorbeeld_3_band.html"
+        ],
+        "createdAt": "2026-11-25T18:52:24.768Z",
+        "reason": "user confirmed: kalk #F3EFE8 is the brand background Tim chose in brandbook v1 (knowledge/brand.md, 2026-11-24)"
       }
     ]
   }
