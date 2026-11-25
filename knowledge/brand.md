@@ -59,7 +59,7 @@ Businesslike, direct, honest. Address the client as **u**. Short sentences, most
 ## Website
 - Kalk background, white cards, inkt text, red primary button; secondary button with red or inkt outline.
 - Photos later: real sessions only, may be cropped in the lens shape. Favicon: kalk symbol on red.
-- Accents on the site (Tim, 2026-11-25): the benefits block sits on blos (body text #57524B there, steen is too light on blos), followed by ONE full red band with one line in kalk ("Werk is meer dan een salaris halen."). Red stays an accent: at most one red band per page for now.
+- Accents on the site (Tim, 2026-11-25): the benefits block sits on the normal kalk ground (blos tried and reverted the same day), followed by ONE full red band with one line in kalk ("Werk is meer dan een salaris halen."). Red stays an accent: at most one red band per page for now.
 - Photo slots (2026-11-25): one photo per benefit row (`gains_1..3` in `site/config.json`, files in git-ignored `site/photos/`, alt text required). Only photos of participants who gave consent. Turn `photo_placeholders` off before going live.
 
 ### Website direction (Tim, 2026-11-25)
