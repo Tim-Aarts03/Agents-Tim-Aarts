@@ -99,13 +99,13 @@
     .rise { opacity: 0; transform: translateY(18px); animation: rise 1.3s var(--ease) var(--d, 0s) forwards; }
     @keyframes rise { to { opacity: 1; transform: none; } }
     .scroll-cue { position: absolute; bottom: 34px; left: 50%; transform: translateX(-50%); width: 1px; height: 46px; background: rgba(243, 239, 232, .18); overflow: hidden; z-index: 1; }
-    /* One drop of light each time the rings are closest and turn (2.6 s, then every 10 s);
+    /* One drop of light at every turn of the rings (closest at 2.6 s, farthest at 7.6 s, so every 5 s);
        it falls as fast as the original cue (2.8 s), then dims out in place until the next turn. */
-    .scroll-cue span { position: absolute; left: 0; top: -46px; width: 1px; height: 46px; background: var(--kalk); animation: cue 10s 2.6s infinite; }
+    .scroll-cue span { position: absolute; left: 0; top: -46px; width: 1px; height: 46px; background: var(--kalk); animation: cue 5s 2.6s infinite; }
     @keyframes cue {
       0% { top: -46px; opacity: 1; animation-timing-function: var(--ease); }
-      28% { top: 0; opacity: 1; animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1); }
-      48% { top: 0; opacity: 0; }
+      56% { top: 0; opacity: 1; animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1); }
+      88% { top: 0; opacity: 0; }
       100% { top: 0; opacity: 0; }
     }
     .btn, .top a.small { transition: background .5s var(--ease), color .5s var(--ease), border-color .5s var(--ease), opacity .5s var(--ease); filter: none; }
