@@ -169,6 +169,16 @@
     .band .btn { margin-top: 40px; padding: 13px 24px; font-size: 16px; font-weight: 500; color: var(--kalk); border-color: var(--kalk); }
     .band .btn:hover { background: var(--kalk); color: var(--rood); }
     .band a:focus-visible { outline-color: var(--kalk); }
+    /* Group photo beside the band line (Tim, 2026-11-25): text and buttons left, photo right; stacked on phones */
+    .band .wrap:has(.photo) { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 32px; align-items: center; }
+    .band .wrap:has(.photo) > :not(.photo) { grid-column: 1 / span 6; }
+    .band .wrap:has(.photo) > .btn { justify-self: start; }
+    .band .wrap > .photo { grid-column: 7 / -1; grid-row: 1 / span 2; aspect-ratio: 4 / 3; }
+    @media (max-width: 820px) {
+      .band .wrap:has(.photo) { grid-template-columns: 1fr; }
+      .band .wrap:has(.photo) > :not(.photo) { grid-column: 1; }
+      .band .wrap > .photo { grid-column: 1; grid-row: auto; margin-top: 40px; }
+    }
     /* One shared 12-column grid for block 2, so intro, benefit text and "Ik regel" start on the same line */
     .gains-head, .gains-list li, .terms { grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 32px; }
     .gains-head > h2, .gains-list li > h3, .terms > div:first-child { grid-column: 1 / span 5; }
@@ -367,6 +377,7 @@
       <div class="wrap">
         <p>Werk is meer dan een salaris halen<span class="dot">.</span></p>
         <a class="btn secondary" href="#contact">Kennismaken</a>
+        {{PHOTO_BAND_1}}
       </div>
     </section>
 
