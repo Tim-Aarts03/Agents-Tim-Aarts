@@ -7,7 +7,8 @@
   <meta name="description" content="T.A Vitality verzorgt een wekelijkse beweegsessie voor medewerkers, op uw eigen locatie in de regio Haarlem.">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Crect width='120' height='120' rx='26' fill='%23A3302B'/%3E%3Ccircle cx='46' cy='60' r='28' fill='none' stroke='%23F3EFE8' stroke-width='6'/%3E%3Ccircle cx='74' cy='60' r='28' fill='none' stroke='%23F3EFE8' stroke-width='6'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@600&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@500;600&display=swap" rel="stylesheet">
   <style>
     /* Brand: knowledge/brand.md (brandbook v1). Colours come from site/config.json. */
     :root {
@@ -32,7 +33,7 @@
     /* header + hero share the dark cover look of the brandbook */
     .cover { background: var(--inkt); color: var(--kalk); }
     header.top .wrap { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding-top: 22px; padding-bottom: 22px; }
-    .logo { display: block; color: var(--kalk); }
+    .logo { display: block; color: var(--kalk); --dot: var(--kalk); }
     .logo svg { display: block; height: 40px; width: auto; }
     .top a.small { color: var(--kalk); font-weight: 500; text-decoration: none; font-size: 16px; opacity: .85; }
     .top a.small:hover { opacity: 1; }
@@ -42,11 +43,10 @@
     .hero p.lead { font-size: 21px; color: #CFC9BF; max-width: 40ch; margin: 0 0 36px; }
 
     .btns { display: flex; flex-wrap: wrap; gap: 12px; }
-    .btn { display: inline-block; padding: 15px 26px; border-radius: 999px; font-weight: 600; font-size: 17px; text-decoration: none; border: 2px solid var(--rood); transition: filter .15s; }
+    .btn { display: inline-block; padding: 15px 26px; border-radius: 999px; font-weight: 600; font-size: 17px; text-decoration: none; border: 2px solid var(--rood); }
     .btn.primary { background: var(--rood); color: var(--wit); }
     .btn.secondary { background: transparent; color: var(--rood); }
     .cover .btn.secondary, .contact .btn.secondary { color: var(--kalk); border-color: var(--kalk); }
-    .btn:hover { filter: brightness(1.12); }
 
     section { padding: 88px 0; }
     .tag { display: inline-block; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; font-weight: 600; padding: 4px 10px; border-radius: 99px; background: var(--blos); color: var(--inkt); margin-bottom: 14px; }
@@ -107,7 +107,7 @@
       40% { top: 0; opacity: 1; animation-timing-function: linear; }
       100% { top: 0; opacity: 0; }
     }
-    .btn, .top a.small { transition: background .5s var(--ease), color .5s var(--ease), border-color .5s var(--ease), opacity .5s var(--ease); filter: none; }
+    .btn, .top a.small { transition: background .5s var(--ease), color .5s var(--ease), border-color .5s var(--ease), opacity .5s var(--ease); }
     .btn.primary:hover { background: #8E2925; border-color: #8E2925; }
     .cover .btn.secondary:hover { background: var(--kalk); color: var(--inkt); }
     @media (prefers-reduced-motion: reduce) {
@@ -121,6 +121,19 @@
       .hero .kicker .sep { display: none; }
       .hero .kicker .reg { display: block; margin-top: 6px; }
     }
+    /* Refinements after the impeccable critique of 2026-11-25 (no visual change for mouse users) */
+    ::selection { background: var(--rood); color: var(--wit); }
+    a:focus-visible { outline: 2px solid var(--kalk); outline-offset: 4px; border-radius: 999px; }
+    main a:focus-visible, footer a:focus-visible { outline-color: var(--rood); }
+    .cover a:focus-visible, .contact a:focus-visible { outline-color: var(--kalk); }
+    .top a.small { padding: 12px 4px; }
+    .hero p.lead { text-wrap: balance; }
+    .hero .btn.primary { box-shadow: 0 0 0 1px rgba(243, 239, 232, .18); }
+    /* Scroll cue: 44 px tap area, the visible line stays 1 px */
+    .scroll-cue { width: 44px; background: none; }
+    .scroll-cue::before { content: ""; position: absolute; left: 50%; top: 0; width: 1px; height: 46px; background: rgba(243, 239, 232, .18); }
+    .scroll-cue span { left: 50%; }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
   </style>
 </head>
 <body>
@@ -134,18 +147,20 @@
       </symbol>
       <symbol id="lockup" viewBox="0 0 360 80">
         <use href="#sym" x="0" y="0" width="120" height="80"/>
-        <text x="118" y="52" font-family="Inter Tight, Inter, Helvetica, Arial, sans-serif" font-weight="600" font-size="34" letter-spacing="-0.6" fill="currentColor">t<tspan fill="{{COLOR_PRIMARY}}">.</tspan>a vitality</text>
+        <text x="118" y="52" font-family="Inter Tight, Inter, Helvetica, Arial, sans-serif" font-weight="600" font-size="34" letter-spacing="-0.6" fill="currentColor">t<tspan style="fill: var(--dot, {{COLOR_PRIMARY}})">.</tspan>a vitality</text>
       </symbol>
     </defs>
   </svg>
 
-  <div class="cover">
-    <header class="top">
+  <header class="top">
       <div class="wrap">
-        <a class="logo" href="#" aria-label="T.A Vitality"><svg viewBox="0 0 360 80"><use href="#lockup"/></svg></a>
+        <a class="logo" href="./" aria-label="T.A Vitality, naar het begin"><svg viewBox="0 0 360 80"><use href="#lockup"/></svg></a>
         <a class="small" href="#contact">Contact</a>
       </div>
     </header>
+
+  <main>
+  <div class="cover">
 
     <div class="hero">
       <!-- Werk and leven drift slowly together; the lens appears where they meet. -->
@@ -185,8 +200,6 @@
       <a class="scroll-cue" href="#aanbod" aria-label="Verder naar beneden"><span></span></a>
     </div>
   </div>
-
-  <main>
     <section id="aanbod">
       <div class="wrap">
         <span class="tag">Wat u krijgt</span>
@@ -261,15 +274,27 @@
 
   <footer>
     <div class="wrap">
-      <svg viewBox="0 0 360 80" aria-label="T.A Vitality"><use href="#lockup"/></svg>
+      <svg viewBox="0 0 360 80" role="img" aria-label="T.A Vitality"><use href="#lockup"/></svg>
       <span>Tim Aarts · KvK {{KVK}} · Tel. <a href="tel:{{PHONE_LINK}}">{{PHONE}}</a></span>
     </div>
   </footer>
   <script>
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      var m = document.querySelector(".hero-mark");
-      if (m && m.pauseAnimations) { m.setCurrentTime(2.6); m.pauseAnimations(); }
-    }
+    (function () {
+      var mark = document.querySelector(".hero-mark");
+      if (!mark || !mark.pauseAnimations) return;
+      var reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+      var visible = true;
+      function apply() {
+        if (reduce.matches) { mark.setCurrentTime(2.7); mark.pauseAnimations(); }
+        else if (visible) { mark.unpauseAnimations(); }
+        else { mark.pauseAnimations(); }
+      }
+      if ("IntersectionObserver" in window) {
+        new IntersectionObserver(function (entries) { visible = entries[0].isIntersecting; apply(); }).observe(mark);
+      }
+      if (reduce.addEventListener) reduce.addEventListener("change", apply);
+      apply();
+    })();
   </script>
 </body>
 </html>

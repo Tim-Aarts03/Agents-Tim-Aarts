@@ -21,7 +21,8 @@ Work and life are merging. Good employers take care of their people, and movemen
 - Geometry: radius 7x, stroke 1x, centre distance 8x (SVG: r 28, stroke 4, centres 32 apart). Lens always filled.
 - Clear space: one circle radius around the logo. Minimum size: 16 px screen, 12 mm print, 25 mm embroidery.
 - Files: `symbool_*` (symbol only), `logo_*` (symbol + wordmark), `logo-slogan_*`; colourways `kleur-op-licht`, `kleur-op-donker`, `eenkleur-inkt`, `eenkleur-wit`, `eenkleur-rood`.
-- Wordmark uses live text (Inter Tight). Before sending files to a printer or embroiderer, the text must be converted to outlines.
+- Wordmark uses live text (Inter Tight).
+- Wordmark dot: red on light backgrounds; kalk/white on dark backgrounds, because red on inkt (2.4:1) makes the dot disappear (Tim, 2026-11-25). The red lens in the symbol stays red on dark. Before sending files to a printer or embroiderer, the text must be converted to outlines.
 - Don't: rotate, stretch, add shadow/gradient, recolour the lens (only red, white or ink), fill the circles, add a third circle.
 
 ## Colours
