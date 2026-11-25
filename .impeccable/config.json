@@ -1,0 +1,32 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "overused-font",
+        "value": "inter",
+        "createdAt": "2026-11-25T17:18:52.641Z",
+        "reason": "user confirmed: Tim chose brandbook v1 with Inter Tight + Inter on 2026-11-24 (knowledge/brand.md)"
+      },
+      {
+        "rule": "hero-eyebrow-chip",
+        "value": "*",
+        "files": [
+          "site/index.template.html"
+        ],
+        "createdAt": "2026-11-25T17:18:52.650Z",
+        "reason": "user confirmed: hero kicker follows Tim's chosen reference moooi.com; Tim called the hero 'top perfect' on 2026-11-25"
+      },
+      {
+        "rule": "hero-eyebrow-chip",
+        "value": "*",
+        "files": [
+          "output/site/index.html"
+        ],
+        "createdAt": "2026-11-25T17:18:52.660Z",
+        "reason": "user confirmed: hero kicker follows Tim's chosen reference moooi.com; Tim called the hero 'top perfect' on 2026-11-25"
+      }
+    ]
+  }
+}
