@@ -99,8 +99,10 @@
     .rise { opacity: 0; transform: translateY(18px); animation: rise 1.3s var(--ease) var(--d, 0s) forwards; }
     @keyframes rise { to { opacity: 1; transform: none; } }
     .scroll-cue { position: absolute; bottom: 34px; left: 50%; transform: translateX(-50%); width: 1px; height: 46px; background: rgba(243, 239, 232, .18); overflow: hidden; z-index: 1; }
-    .scroll-cue span { position: absolute; left: 0; top: -46px; width: 1px; height: 46px; background: var(--kalk); animation: cue 2.8s var(--ease) 2.4s infinite; }
-    @keyframes cue { to { top: 46px; } }
+    /* Same rhythm as the circles: 2.6 s entrance, then a 10 s breath with the same easing. */
+    .scroll-cue span { position: absolute; left: 0; top: -46px; width: 1px; height: 46px; background: var(--kalk); animation: cue-in 2.6s var(--ease) forwards, cue 10s cubic-bezier(0.45, 0, 0.55, 1) 2.6s infinite; }
+    @keyframes cue-in { from { top: -46px; opacity: 0; } to { top: -23px; opacity: 1; } }
+    @keyframes cue { 0%, 100% { top: -23px; } 50% { top: 0; } }
     .btn, .top a.small { transition: background .5s var(--ease), color .5s var(--ease), border-color .5s var(--ease), opacity .5s var(--ease); filter: none; }
     .btn.primary:hover { background: #8E2925; border-color: #8E2925; }
     .cover .btn.secondary:hover { background: var(--kalk); color: var(--inkt); }

@@ -421,3 +421,5 @@ remember decisions and preferences across sessions.
 - Round 1 (hero only, small step): full-screen dark hero, centred light-weight "werk in beweging.", uppercase kicker, slow SMIL animation of the two logo circles drifting together with the lens fading in, staggered text rise (easeOutExpo), scroll cue; reduced-motion respected.
 - Lesson: an SVG clip-path follows the transform of the element it is applied to — put the clip on an untransformed wrapper group when both shapes move.
 - Cookie banners on reference sites: always "Weiger alles"; where only "Accepteer alles" exists, accept nothing and hide the banner locally for the screenshot.
+- Hero feedback (same day): "bijna perfect"; scroll cue now follows the circles' rhythm (2.6 s entrance, 10 s breath, same easing). Lesson: every moving element on a page shares one tempo.
+- Plugins: `frontend-design` installed by Tim. "taste-skill" is NOT in the claude.ai directory; it is a community GitHub project (Leonxlnx/taste-skill, MIT), installed via the `claude` CLI. Only the original repo, not forks; Max does not install third-party code without Tim's explicit go.
