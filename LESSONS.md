@@ -409,3 +409,8 @@ remember decisions and preferences across sessions.
 
 ### 2026-11-25 — Scheduled bootcamp promo run
 - Went fine (Black Friday pitch, QA PASS, draft saved), but `mail-promo-writer` took ~56 minutes for 3 tool calls; watch whether this repeats.
+
+### 2026-11-25 — First automatic promotion draft, edited by Tim
+- The Wednesday task drafted a Black Friday pitch (3 sentences, 2 emoji, "kost je helemaal niks", sportspullen sentence). Tim liked the Black Friday deal but shortened it to 2 sentences, dropped the "free" and sportspullen parts, and removed the balcony from the date line.
+- Lesson: Tim's final edit is the best training signal; compare draft vs. sent and turn the difference into rules. One hook per pitch; never mention money/free; no location in the date line.
+- Action: date line now "Dinsdag … om 16:15 is er een nieuwe beweegsessie."; Tim's version added as example 8 and as a style rule in `knowledge/bootcamp.md`; logged as `promo_sent` with feedback.

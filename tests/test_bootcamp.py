@@ -33,7 +33,7 @@ def test_promo_mail_hof_van_jacob():
     assert mail.to == ["mama@example.org"]
     assert mail.subject == "Beweegsessie dinsdag 1 december – meld je aan"
     assert mail.body.startswith("Beste collega's,\n\nKoppel jezelf los")
-    assert "Dinsdag 1 december om 16:15 staat er een nieuwe beweegsessie op het balkon van team 2." in mail.body
+    assert "Dinsdag 1 december om 16:15 is er een nieuwe beweegsessie. Meld je aan via de onderstaande link:" in mail.body
     assert LINK in mail.body
     assert mail.body.endswith("Met vriendelijke groet,\nTim Aarts")
 

@@ -47,6 +47,7 @@ Weather rules (`tools/bootcamp_weather.py`): below 12 °C → advise warmer clot
 5. "Vandaag wisten [naam] en [naam] al ver boven hun niveau uit te stijgen!" (to team Jacob Kliniek)
 6. "Hof van Jacob wordt elke week een stukje vitaler door de wekelijkse beweegsessie. Dinsdag 13 oktober staat er om 16:15 een nieuwe sessie op de planning en het belooft een groot succes te worden."
 7. "Sinds het begin van de beweegsessies waren er niet meer dan 8 deelnemers per sessie. Dit record wisten jullie met 10 deelnemers vanmiddag met kinderlijk gemak te verbreken! Dat is het vermelden waard; nogmaals dank voor jullie enthousiasme 👏👏👏."
+8. "Black Friday-deal van de week: een middag vol energie, een leeg hoofd en een hoop plezier. Meld je aan en sluit je werkdag in beweging af op Hof van Jacob! 💪" (Tim's own edit of the 25 Nov draft: the reference for length and tone)
 
 ## Style
 - Warm, energetic, positive. "je/jullie".
@@ -59,7 +60,7 @@ Weather rules (`tools/bootcamp_weather.py`): below 12 °C → advise warmer clot
 - **Hooks rated 5:** clearing your head / leaving the busy day behind; T-shirt after the 5th session (triggers people who came once); bring a colleague / do it as a duo; energy boost for the rest of the week; turning dark November afternoons into something fun (question + exclamation + emoji).
 - **Topical hooks are welcome:** a current event (e.g. Black Friday for a "deal" line) lifts a pitch from 4 to 5.
 - **Avoid:** the attendance record of 10 (not impressive), limited places / "max 12", who pays ("de organisatie betaalt"), rain and weather (standard; the balcony is not a selling point), sweat or anything that sounds unpleasant, framing that sounds gloomy ("donkerder") without turning it into energy.
-- "Je hoeft alleen je sportspullen mee te nemen" works well.
+- **Tim's edit of 25 Nov (follow this):** 2 sentences: one hook sentence + one call to action. One emoji at the end. He cut "het kost je helemaal niks" (no "free"/money, even as a joke), cut the extra sportspullen sentence (one hook per pitch, don't stack them) and chose "in beweging" over "sterk". The date line in the mail has no location.
 
 ## Known facts for pitches
 - Running since June 2026; record attendance: 10 participants (earlier max was 8). Do not use the record in pitches (Tim, 2026-11-18).
