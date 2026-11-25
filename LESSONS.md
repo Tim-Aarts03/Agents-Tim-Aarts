@@ -443,3 +443,4 @@ remember decisions and preferences across sessions.
 - Lesson: headless Chrome on macOS cannot render below ~500 px wide, so phone screenshots crop; verify phone layout with the in-app browser's mobile preset + an overflow check instead.
 - Round 2 feedback (Tim): "U zorgt voor een overdekte buitenruimte" removed (comes up in the intro call); "Minder ziekteverzuim" replaced by an ideas benefit — provisional "Ideeën in beweging." until Tim picks from the options; photo slots added per benefit row. Build tool now supports photos (`photos` + `photo_placeholders` in config, files copied from git-ignored `site/photos/`, alt text enforced) with 2 new tests.
 - Lesson: photos of participants are personal data and the repo is public — keep them out of git by design, not by remembering.
+- Ideas benefit: Tim chose option 4 — "Het beste idee van de dag." / "Komt vaak niet in een vergadering, maar tijdens het bewegen."
