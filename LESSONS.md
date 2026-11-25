@@ -406,3 +406,6 @@ remember decisions and preferences across sessions.
 - Decision (Tim): finish the week without new agents; agents, conversations and way of working are fine for now. Team Visma application sent.
 - Not satisfied: the T.A Vitality website — needs a lot more work (next design focus, small steps per feedback round, see brandbook lessons).
 - Tim liked the sharp feedback: keep giving honest week reviews, including Max's own mistakes.
+
+### 2026-11-25 — Scheduled bootcamp promo run
+- Went fine (Black Friday pitch, QA PASS, draft saved), but `mail-promo-writer` took ~56 minutes for 3 tool calls; watch whether this repeats.
