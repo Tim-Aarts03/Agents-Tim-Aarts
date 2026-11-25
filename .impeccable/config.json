@@ -278,6 +278,114 @@
         ],
         "createdAt": "2026-11-25T19:28:26.254Z",
         "reason": "Kalk is the brand background (knowledge/brand.md)"
+      },
+      {
+        "rule": "hero-eyebrow-chip",
+        "value": "*",
+        "files": [
+          "output/site/funnel_voorbeeld_a.html"
+        ],
+        "createdAt": "2026-11-25T19:48:08.626Z",
+        "reason": "Tim approved the hero kicker; copy of the real site"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "output/site/funnel_voorbeeld_a.html"
+        ],
+        "createdAt": "2026-11-25T19:48:08.645Z",
+        "reason": "Known false positive on .cover; content inset by .wrap"
+      },
+      {
+        "rule": "cream-palette",
+        "value": "*",
+        "files": [
+          "output/site/funnel_voorbeeld_a.html"
+        ],
+        "createdAt": "2026-11-25T19:48:08.669Z",
+        "reason": "Kalk is the brand background (knowledge/brand.md)"
+      },
+      {
+        "rule": "hero-eyebrow-chip",
+        "value": "*",
+        "files": [
+          "output/site/funnel_voorbeeld_b.html"
+        ],
+        "createdAt": "2026-11-25T19:48:08.682Z",
+        "reason": "Tim approved the hero kicker; copy of the real site"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "output/site/funnel_voorbeeld_b.html"
+        ],
+        "createdAt": "2026-11-25T19:48:08.692Z",
+        "reason": "Known false positive on .cover; content inset by .wrap"
+      },
+      {
+        "rule": "cream-palette",
+        "value": "*",
+        "files": [
+          "output/site/funnel_voorbeeld_b.html"
+        ],
+        "createdAt": "2026-11-25T19:48:08.701Z",
+        "reason": "Kalk is the brand background (knowledge/brand.md)"
+      },
+      {
+        "rule": "hero-eyebrow-chip",
+        "value": "*",
+        "files": [
+          "output/site/funnel_voorbeeld_c.html"
+        ],
+        "createdAt": "2026-11-25T19:48:08.712Z",
+        "reason": "Tim approved the hero kicker; copy of the real site"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "output/site/funnel_voorbeeld_c.html"
+        ],
+        "createdAt": "2026-11-25T19:48:08.722Z",
+        "reason": "Known false positive on .cover; content inset by .wrap"
+      },
+      {
+        "rule": "cream-palette",
+        "value": "*",
+        "files": [
+          "output/site/funnel_voorbeeld_c.html"
+        ],
+        "createdAt": "2026-11-25T19:48:08.732Z",
+        "reason": "Kalk is the brand background (knowledge/brand.md)"
+      },
+      {
+        "rule": "hero-eyebrow-chip",
+        "value": "*",
+        "files": [
+          "output/site/archief/website_scrollversie_2026-11-25.html"
+        ],
+        "createdAt": "2026-11-25T19:48:08.742Z",
+        "reason": "Tim approved the hero kicker; copy of the real site"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "output/site/archief/website_scrollversie_2026-11-25.html"
+        ],
+        "createdAt": "2026-11-25T19:48:08.752Z",
+        "reason": "Known false positive on .cover; content inset by .wrap"
+      },
+      {
+        "rule": "cream-palette",
+        "value": "*",
+        "files": [
+          "output/site/archief/website_scrollversie_2026-11-25.html"
+        ],
+        "createdAt": "2026-11-25T19:48:08.761Z",
+        "reason": "Kalk is the brand background (knowledge/brand.md)"
       }
     ]
   }
