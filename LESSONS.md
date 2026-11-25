@@ -434,3 +434,10 @@ remember decisions and preferences across sessions.
 - Lesson: headless Chrome (`--virtual-time-budget`) gives real-font screenshots when the preview pane has no network; use it for before/after comparisons.
 - Left standing: 3x kicker-above-heading on section labels (round 2); new `cramped-padding` on `.cover` is a false positive (content is inset by `.wrap` padding).
 - Headline weight (same day): after seeing before/after, Tim chose the OLD semi-bold (600) over the lighter 500. Set explicitly in CSS (no longer an accidental fallback) and recorded in brand.md. Lesson: a "bug" that produced a look the owner likes is a design decision once he has seen both — show, then let him choose. Kept: Inter Tight 500 is still loaded for other uses; kalk dot and accessibility fixes stay.
+
+### 2026-11-25 — Website round 2: "Wat het uw organisatie oplevert"
+- Interview facts (Tim): the EMPLOYER chooses moment, duration and group size; the employer only provides an outdoor covered space; benefits Tim sees: connection between colleagues, switching off after a long stressful day, and (Tim's pick instead of "purpose") less sick leave.
+- Built as a type-led block: big heading + one intro line, three benefit rows with hairlines (title left, text right), and a short "U kiest / U zorgt voor / Ik regel" list. No cards, no label above the heading, no motion (the hero stays the one moving moment). Detector: section clean.
+- Honesty: sick-leave line phrased as "kan bijdragen aan een lager ziekteverzuim" (general effect of exercise, not a measured result of Tim's own sessions). "Ik regel de rest: de sessie, het materiaal en de begeleiding" follows from Tim saying the employer only provides the space — confirm with Tim.
+- taste-skill read: built for photo-led sites with its own kit and stock photos; conflicts with brand.md (no stock photos, real phone/KvK). Use its principles only (one section per screen, equal edges, no scroll fade-ins, no invented figures), not its kit.
+- Lesson: headless Chrome on macOS cannot render below ~500 px wide, so phone screenshots crop; verify phone layout with the in-app browser's mobile preset + an overflow check instead.
