@@ -197,6 +197,87 @@
         ],
         "createdAt": "2026-11-25T18:52:24.768Z",
         "reason": "user confirmed: kalk #F3EFE8 is the brand background Tim chose in brandbook v1 (knowledge/brand.md, 2026-11-24)"
+      },
+      {
+        "rule": "hero-eyebrow-chip",
+        "value": "*",
+        "files": [
+          "output/site/blok3_voorbeeld_a_rijen.html"
+        ],
+        "createdAt": "2026-11-25T19:28:26.176Z",
+        "reason": "Tim approved the hero kicker; copy of the real site"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "output/site/blok3_voorbeeld_a_rijen.html"
+        ],
+        "createdAt": "2026-11-25T19:28:26.186Z",
+        "reason": "Known false positive on .cover; content inset by .wrap"
+      },
+      {
+        "rule": "cream-palette",
+        "value": "*",
+        "files": [
+          "output/site/blok3_voorbeeld_a_rijen.html"
+        ],
+        "createdAt": "2026-11-25T19:28:26.196Z",
+        "reason": "Kalk is the brand background (knowledge/brand.md)"
+      },
+      {
+        "rule": "hero-eyebrow-chip",
+        "value": "*",
+        "files": [
+          "output/site/blok3_voorbeeld_b_kolommen.html"
+        ],
+        "createdAt": "2026-11-25T19:28:26.205Z",
+        "reason": "Tim approved the hero kicker; copy of the real site"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "output/site/blok3_voorbeeld_b_kolommen.html"
+        ],
+        "createdAt": "2026-11-25T19:28:26.215Z",
+        "reason": "Known false positive on .cover; content inset by .wrap"
+      },
+      {
+        "rule": "cream-palette",
+        "value": "*",
+        "files": [
+          "output/site/blok3_voorbeeld_b_kolommen.html"
+        ],
+        "createdAt": "2026-11-25T19:28:26.225Z",
+        "reason": "Kalk is the brand background (knowledge/brand.md)"
+      },
+      {
+        "rule": "hero-eyebrow-chip",
+        "value": "*",
+        "files": [
+          "output/site/blok3_voorbeeld_c_kop.html"
+        ],
+        "createdAt": "2026-11-25T19:28:26.235Z",
+        "reason": "Tim approved the hero kicker; copy of the real site"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "output/site/blok3_voorbeeld_c_kop.html"
+        ],
+        "createdAt": "2026-11-25T19:28:26.244Z",
+        "reason": "Known false positive on .cover; content inset by .wrap"
+      },
+      {
+        "rule": "cream-palette",
+        "value": "*",
+        "files": [
+          "output/site/blok3_voorbeeld_c_kop.html"
+        ],
+        "createdAt": "2026-11-25T19:28:26.254Z",
+        "reason": "Kalk is the brand background (knowledge/brand.md)"
       }
     ]
   }
