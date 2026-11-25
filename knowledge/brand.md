@@ -58,3 +58,10 @@ Businesslike, direct, honest. Address the client as **u**. Short sentences, most
 ## Website
 - Kalk background, white cards, inkt text, red primary button; secondary button with red or inkt outline.
 - Photos later: real sessions only, may be cropped in the lens shape. Favicon: kalk symbol on red.
+
+### Website direction (Tim, 2026-11-25)
+References Tim picked: **moooi.com** ("smooth, has an edge, something slow and calm, it moves and feels like a good product") and **uitpaulineskeuken.nl** ("clear, calm, well-organised").
+- From Moooi: full-screen hero with one centred headline in a light weight (400–500, not bold), small uppercase kicker above it, small pill button; minimal header; slow motion with a long ease-out (cubic-bezier(0.19, 1, 0.22, 1), ~1–1.3 s); nothing jumps or flashes.
+- From Uit Pauline's Keuken: calm warm background, centred section headings with one short intro line, clear categories, cards with small tags.
+- Motion: slow and purposeful (the two logo circles drifting together), always respecting "reduce motion" settings. No autoplay sound, no parallax tricks.
+- Later (Tim): the site grows into a place to browse — facts ("weetjes"), cases of what went well, more pages to click through. Build the structure so a menu and extra pages can be added without a redesign.

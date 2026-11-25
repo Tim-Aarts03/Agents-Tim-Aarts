@@ -414,3 +414,10 @@ remember decisions and preferences across sessions.
 - The Wednesday task drafted a Black Friday pitch (3 sentences, 2 emoji, "kost je helemaal niks", sportspullen sentence). Tim liked the Black Friday deal but shortened it to 2 sentences, dropped the "free" and sportspullen parts, and removed the balcony from the date line.
 - Lesson: Tim's final edit is the best training signal; compare draft vs. sent and turn the difference into rules. One hook per pitch; never mention money/free; no location in the date line.
 - Action: date line now "Dinsdag … om 16:15 is er een nieuwe beweegsessie."; Tim's version added as example 8 and as a style rule in `knowledge/bootcamp.md`; logged as `promo_sent` with feedback.
+
+### 2026-11-25 — Website design: skills, references and hero round 1
+- Tim wants skills for an excellent site. Recommended (install card shown): Anthropic `frontend-design`, Anthropic `Design` (critique, accessibility, ux-copy; leave its Gmail/Slack/Figma connectors off), community `Website Copywriting & Positioning`. Not recommended: hosted builders (Wix, Ullbek, 8B) — lock-in, cost, data elsewhere. Not installed yet at the time of round 1.
+- References: moooi.com (smooth, edge, slow, moves, good product) + uitpaulineskeuken.nl (clear, calm, organised). Analysis recorded in `knowledge/brand.md` → "Website direction". Later: site becomes a browsable place (weetjes, cases) — keep structure extendable.
+- Round 1 (hero only, small step): full-screen dark hero, centred light-weight "werk in beweging.", uppercase kicker, slow SMIL animation of the two logo circles drifting together with the lens fading in, staggered text rise (easeOutExpo), scroll cue; reduced-motion respected.
+- Lesson: an SVG clip-path follows the transform of the element it is applied to — put the clip on an untransformed wrapper group when both shapes move.
+- Cookie banners on reference sites: always "Weiger alles"; where only "Accepteer alles" exists, accept nothing and hide the banner locally for the screenshot.

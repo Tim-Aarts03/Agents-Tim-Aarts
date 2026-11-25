@@ -83,6 +83,38 @@
       .about .mark svg { max-width: 160px; }
       .logo svg { height: 32px; }
     }
+    /* Hero, round 1 (direction: moooi.com) — full screen, centred, light headline, slow motion */
+    :root { --ease: cubic-bezier(0.19, 1, 0.22, 1); }
+    .cover { position: relative; }
+    header.top { position: absolute; inset: 0 0 auto 0; z-index: 2; }
+    .hero { position: relative; min-height: 100svh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 120px 0 110px; overflow: hidden; }
+    .hero .wrap { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; }
+    .hero-mark { position: absolute; left: 50%; top: 50%; width: min(118vw, 1180px); height: auto; transform: translate(-50%, -52%); color: rgba(243, 239, 232, .16); z-index: 0; pointer-events: none; }
+    .hero-mark .lens-g { opacity: .22; }
+    .hero .kicker { font-size: 12px; letter-spacing: .22em; margin: 0 0 26px; color: rgba(243, 239, 232, .7); }
+    .hero h1 { font-weight: 500; font-size: clamp(54px, 10vw, 132px); line-height: .95; letter-spacing: -.045em; margin: 0 0 28px; }
+    .hero p.lead { font-size: 19px; color: rgba(243, 239, 232, .72); max-width: 34ch; margin: 0 0 40px; }
+    .hero .btns { justify-content: center; }
+    .hero .btn { padding: 13px 24px; font-size: 16px; font-weight: 500; }
+    .rise { opacity: 0; transform: translateY(18px); animation: rise 1.3s var(--ease) var(--d, 0s) forwards; }
+    @keyframes rise { to { opacity: 1; transform: none; } }
+    .scroll-cue { position: absolute; bottom: 34px; left: 50%; transform: translateX(-50%); width: 1px; height: 46px; background: rgba(243, 239, 232, .18); overflow: hidden; z-index: 1; }
+    .scroll-cue span { position: absolute; left: 0; top: -46px; width: 1px; height: 46px; background: var(--kalk); animation: cue 2.8s var(--ease) 2.4s infinite; }
+    @keyframes cue { to { top: 46px; } }
+    .btn, .top a.small { transition: background .5s var(--ease), color .5s var(--ease), border-color .5s var(--ease), opacity .5s var(--ease); filter: none; }
+    .btn.primary:hover { background: #8E2925; border-color: #8E2925; }
+    .cover .btn.secondary:hover { background: var(--kalk); color: var(--inkt); }
+    @media (prefers-reduced-motion: reduce) {
+      .rise { animation: none; opacity: 1; transform: none; }
+      .scroll-cue span { animation: none; top: 0; }
+    }
+    @media (max-width: 720px) {
+      .hero { padding: 110px 0 96px; }
+      .hero-mark { width: 170vw; }
+      .hero p.lead { font-size: 17px; }
+      .hero .kicker .sep { display: none; }
+      .hero .kicker .reg { display: block; margin-top: 6px; }
+    }
   </style>
 </head>
 <body>
@@ -110,19 +142,46 @@
     </header>
 
     <div class="hero">
+      <!-- Werk and leven drift slowly together; the lens appears where they meet. -->
+      <svg class="hero-mark" viewBox="0 0 240 160" aria-hidden="true">
+        <defs>
+          <clipPath id="heroClip">
+            <circle cx="88" cy="80" r="56">
+              <animateTransform attributeName="transform" type="translate" values="-26 0;0 0" dur="2.6s" calcMode="spline" keyTimes="0;1" keySplines="0.19 1 0.22 1" fill="freeze"/>
+              <animateTransform attributeName="transform" type="translate" values="0 0;-3 0;0 0" dur="10s" begin="2.6s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.5;1" keySplines="0.45 0 0.55 1;0.45 0 0.55 1" additive="sum"/>
+            </circle>
+          </clipPath>
+        </defs>
+        <g class="lens-g" clip-path="url(#heroClip)">
+          <circle cx="152" cy="80" r="56" fill="{{COLOR_PRIMARY}}" opacity="0">
+            <animate attributeName="opacity" values="0;1" dur="1.6s" begin="1.1s" fill="freeze"/>
+            <animateTransform attributeName="transform" type="translate" values="26 0;0 0" dur="2.6s" calcMode="spline" keyTimes="0;1" keySplines="0.19 1 0.22 1" fill="freeze"/>
+            <animateTransform attributeName="transform" type="translate" values="0 0;3 0;0 0" dur="10s" begin="2.6s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.5;1" keySplines="0.45 0 0.55 1;0.45 0 0.55 1" additive="sum"/>
+          </circle>
+        </g>
+        <circle cx="88" cy="80" r="56" fill="none" stroke="currentColor" stroke-width="2">
+          <animateTransform attributeName="transform" type="translate" values="-26 0;0 0" dur="2.6s" calcMode="spline" keyTimes="0;1" keySplines="0.19 1 0.22 1" fill="freeze"/>
+          <animateTransform attributeName="transform" type="translate" values="0 0;-3 0;0 0" dur="10s" begin="2.6s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.5;1" keySplines="0.45 0 0.55 1;0.45 0 0.55 1" additive="sum"/>
+        </circle>
+        <circle cx="152" cy="80" r="56" fill="none" stroke="currentColor" stroke-width="2">
+          <animateTransform attributeName="transform" type="translate" values="26 0;0 0" dur="2.6s" calcMode="spline" keyTimes="0;1" keySplines="0.19 1 0.22 1" fill="freeze"/>
+          <animateTransform attributeName="transform" type="translate" values="0 0;3 0;0 0" dur="10s" begin="2.6s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.5;1" keySplines="0.45 0 0.55 1;0.45 0 0.55 1" additive="sum"/>
+        </circle>
+      </svg>
       <div class="wrap">
-        <p class="kicker">Wekelijkse beweegsessies voor medewerkers</p>
-        <h1>werk in beweging<span class="dot">.</span></h1>
-        <p class="lead">Eén vaste beweegsessie per week voor uw medewerkers, op uw eigen locatie. Laagdrempelig, in groepsverband en voor elk niveau.</p>
-        <div class="btns">
+        <p class="kicker rise" style="--d:.2s">Beweegsessies voor medewerkers<span class="sep"> · </span><span class="reg">regio Haarlem</span></p>
+        <h1 class="rise" style="--d:.45s">werk in beweging<span class="dot">.</span></h1>
+        <p class="lead rise" style="--d:.7s">Eén vaste beweegsessie per week, op uw eigen locatie. Voor elk niveau, in groepsverband.</p>
+        <div class="btns rise" style="--d:.95s">
           {{CTA_BUTTONS}}
         </div>
       </div>
+      <a class="scroll-cue" href="#aanbod" aria-label="Verder naar beneden"><span></span></a>
     </div>
   </div>
 
   <main>
-    <section>
+    <section id="aanbod">
       <div class="wrap">
         <span class="tag">Wat u krijgt</span>
         <h2>Beweging die past bij uw werkdag<span class="dot">.</span></h2>
@@ -200,5 +259,11 @@
       <span>Tim Aarts · KvK {{KVK}} · Tel. <a href="tel:{{PHONE_LINK}}">{{PHONE}}</a></span>
     </div>
   </footer>
+  <script>
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      var m = document.querySelector(".hero-mark");
+      if (m && m.pauseAnimations) { m.setCurrentTime(2.6); m.pauseAnimations(); }
+    }
+  </script>
 </body>
 </html>
