@@ -327,6 +327,12 @@ remember decisions and preferences across sessions.
 ### 2026-11-23 — Pushing works from Claude Code
 - Push kept failing (no GitHub login for command-line git). Homebrew cannot build gh on this Intel Mac (outdated Command Line Tools); installed the official gh .pkg instead (checksum verified), Tim ran `gh auth login`, `gh auth setup-git` links git. Claude can now push itself.
 
+### 2026-11-26 — First Thursday crypto analysis
+- Pot €99.38 (-0.62%) vs market -6.25% (+5.63 pp, divergence flag on, upward). Only one ETH round trip (buy 24-11 07:00, sell 12:00 UTC, -€0.42 incl. fees); otherwise in euros while the market fell. Three live days prove nothing.
+- Health: 19 hours recorded, 49 missed since start, no errors — the Mac sleeping stops the hourly job. Data gaps make live results less reliable; flagged to Tim.
+- `report` assumes 168 expected hours even in the first week; read `missed_hours` instead.
+- Candidate for 2026-12-21 (question only): `d_breakout_10_100` (test -5.24%, drop -13.16%), picked using the test period itself → overfitting risk named. Backtest numbers shift a little as the 4-year data window moves (buy-and-hold test -52.29% now vs -48% on 23-11).
+
 ### 2026-11-24 — LinkedIn leads feed the Friday run
 - Tim pasted 9 LinkedIn vacancies (lnkd.in links) to include on Friday.
 - Action: leads stored in `logs/job_leads.md` (local, status open/processed); `career-job-scout` must turn every open lead into a candidate by looking it up on the employer's own site or a public job board (never opening LinkedIn), else `verified: false` with Tim's link; the scheduled Friday task brief and checks updated accordingly; output marks them "(jouw LinkedIn-tip)".
