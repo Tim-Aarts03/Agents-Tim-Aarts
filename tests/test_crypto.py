@@ -215,3 +215,41 @@ def test_plist_runs_tick_hourly_in_project():
     text = crypto.plist_text(Path("/p"), Path("/p/.venv/bin/python"))
     assert "<integer>3600</integer>" in text and "<string>tick</string>" in text
     assert "<string>/p</string>" in text
+
+
+def _hourly(prices: list[float]) -> list[tuple[int, float]]:
+    return [(T0 + i * HOUR_MS, p) for i, p in enumerate(prices)]
+
+
+def test_signal_margin_sma_and_breakout():
+    closes = [10.0, 10, 10, 10, 12]
+    assert crypto.signal_margin(closes, FAST, 4, "buy") == round(((22 / 2) / (42 / 4) - 1) * 100, 3)
+    assert crypto.signal_margin(closes, FAST, 1, "buy") is None
+    brk = Rule(name="breakout_2_3", kind="breakout", fast=2, slow=3)
+    assert crypto.signal_margin(closes, brk, 4, "buy") == 20.0
+
+
+def test_review_explains_round_trip_and_journal():
+    prices = [10.0] * 6 + [11, 12, 11, 10, 9, 9, 9, 9]
+    hourly = {"BTCEUR": _hourly(prices)}
+    close = lambda i: crypto.iso(T0 + i * HOUR_MS + HOUR_MS)
+    trades = [
+        {"ts_utc": close(6), "pair": "BTCEUR", "side": "buy", "price": "11", "units": "1", "eur": "11",
+         "fee": "0.1", "rule": FAST.name, "pot_eur": "100"},
+        {"ts_utc": close(9), "pair": "BTCEUR", "side": "sell", "price": "10", "units": "1", "eur": "10",
+         "fee": "0.1", "rule": FAST.name, "pot_eur": "99"},
+    ]
+    r = crypto.review(hourly, trades, FAST, T0 + HOUR_MS, T0 + 14 * HOUR_MS, journal=[])
+    rt = r["round_trips"][0]
+    assert rt["hours_held"] == 3
+    assert rt["result_eur"] == -1.1  # gross sell value minus sell fee minus what the buy cost
+    assert rt["fees_eur"] == 0.2
+    assert rt["coin_move_pct"] == round((10 / 11 - 1) * 100, 2)
+    assert rt["buy_margin_pct"] is not None
+    assert 0 <= rt["random_same_length_better_pct"] <= 100
+    assert r["markets"]["BTCEUR"]["high"]["price"] == 12
+    assert [f["side"] for f in r["markets"]["BTCEUR"]["signal_flips_full_data"]][:1] == ["buy"]
+    assert r["journal_totals"]["round_trips"] == 1
+    # A round trip already in the journal is not counted twice.
+    again = crypto.review(hourly, trades, FAST, T0 + HOUR_MS, T0 + 14 * HOUR_MS, journal=[rt])
+    assert again["journal_totals"]["round_trips"] == 1

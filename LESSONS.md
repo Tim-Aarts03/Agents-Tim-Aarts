@@ -331,6 +331,12 @@ remember decisions and preferences across sessions.
 - Pot €99.38 (-0.62%) vs market -6.25% (+5.63 pp, divergence flag on, upward). Only one ETH round trip (buy 24-11 07:00, sell 12:00 UTC, -€0.42 incl. fees); otherwise in euros while the market fell. Three live days prove nothing.
 - Health: 19 hours recorded, 49 missed since start, no errors — the Mac sleeping stops the hourly job. Data gaps make live results less reliable; flagged to Tim.
 - `report` assumes 168 expected hours even in the first week; read `missed_hours` instead.
+- Mistake caught later the same day: the analyst (and I, in the report to Tim) said the ETH trade lost €0.42; it lost €0.62. The sell row's `eur` is the value before the sell fee. Fix: `tools.crypto review` now computes `result_eur` per round trip; the analyst must use it.
+
+### 2026-11-26 — Weekly trade review instead of new rules (Tim's choice)
+- Tim keeps the current rule and wants to learn from each week: why did it fall, when did we buy, what did it yield, luck or skill. Goal: recognise patterns over time.
+- Built `tools.crypto review` (full exchange prices incl. hours the Mac slept, round trips with fees vs price move, signal strength, after-sell move, luck check vs random holds of the same length, trade journal in `logs/crypto_trade_journal.csv`) and `knowledge/crypto_patterns.md` (hypotheses with counts; real only after ≥20 cases over ≥8 weeks). Analyst gets a "Wedstrijdbespreking" section.
+- Honest to Tim: beating "the rest" is very hard; patterns from a few weeks are mostly noise, so we count before we believe.
 - Candidate for 2026-12-21 (question only): `d_breakout_10_100` (test -5.24%, drop -13.16%), picked using the test period itself → overfitting risk named. Backtest numbers shift a little as the 4-year data window moves (buy-and-hold test -52.29% now vs -48% on 23-11).
 
 ### 2026-11-24 — LinkedIn leads feed the Friday run

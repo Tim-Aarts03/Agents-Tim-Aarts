@@ -333,6 +333,112 @@ def report(now_ms: int, days: int = 7, cfg: Config | None = None, state_file: Pa
     return out
 
 
+# ---------- trade review (weekly learning) ----------
+
+JOURNAL_FILE = LOG_DIR / "crypto_trade_journal.csv"
+JOURNAL_FIELDS = ["buy_utc", "sell_utc", "pair", "rule", "hours_held", "buy_price", "sell_price",
+                  "result_eur", "fees_eur", "coin_move_pct", "after_sell_24h_pct", "buy_margin_pct",
+                  "random_same_length_better_pct"]
+
+
+def signal_margin(closes: list[float], rule: Rule, i: int, side: str) -> float | None:
+    """How clearly the rule fired at candle i, in % (close to 0 = borderline signal)."""
+    if rule.kind == "sma_cross":
+        if i < rule.slow - 1:
+            return None
+        fast = sum(closes[i + 1 - rule.fast:i + 1]) / rule.fast
+        slow = sum(closes[i + 1 - rule.slow:i + 1]) / rule.slow
+        return round((fast / slow - 1) * 100, 3)
+    if i < rule.slow:
+        return None
+    level = max(closes[i - rule.slow:i]) if side == "buy" else min(closes[i - rule.fast:i])
+    return round((closes[i] / level - 1) * 100, 3)
+
+
+def review(hourly: dict[str, list[tuple[int, float]]], trades: list[dict], rule: Rule,
+           start_ms: int, end_ms: int, journal: list[dict] | None = None) -> dict:
+    """Explain the paper trades of one window with complete exchange prices, so the
+    analyst can tell bad timing from bad luck. Hourly rules only for signal details."""
+    def at(pair: str, ms: int) -> tuple[int, float] | None:
+        """Index and close of the candle that closed at `ms` (trade time = candle close)."""
+        for idx, (o, c) in enumerate(hourly[pair]):
+            if o + HOUR_MS == ms:
+                return idx, c
+        return None
+
+    def ts_ms(ts: str) -> int:
+        return int(datetime.fromisoformat(ts).timestamp() * 1000)
+
+    markets = {}
+    for pair, rows in hourly.items():
+        win = [(o, c) for o, c in rows if start_ms <= o + HOUR_MS <= end_ms]
+        if not win:
+            continue
+        closes = [c for _, c in rows]
+        desired = signals(closes, rule) if rule.interval == "1h" else [None] * len(closes)
+        flips = []
+        for idx, (o, c) in enumerate(rows):
+            if start_ms <= o + HOUR_MS <= end_ms and idx and desired[idx] is not None \
+                    and desired[idx - 1] is not None and desired[idx] != desired[idx - 1]:
+                flips.append({"ts_utc": iso(o + HOUR_MS), "side": "buy" if desired[idx] else "sell",
+                              "price": c})
+        lo = min(win, key=lambda x: x[1])
+        hi = max(win, key=lambda x: x[1])
+        markets[pair] = {"move_pct": round((win[-1][1] / win[0][1] - 1) * 100, 2),
+                         "low": {"ts_utc": iso(lo[0] + HOUR_MS), "price": lo[1]},
+                         "high": {"ts_utc": iso(hi[0] + HOUR_MS), "price": hi[1]},
+                         "range_pct": round((hi[1] / lo[1] - 1) * 100, 2),
+                         "signal_flips_full_data": flips}
+
+    round_trips, open_buys = [], {}
+    for t in sorted(trades, key=lambda x: x["ts_utc"]):
+        if t["side"] == "buy":
+            open_buys[t["pair"]] = t
+            continue
+        b = open_buys.pop(t["pair"], None)
+        if not b or t["pair"] not in hourly:
+            continue
+        rows = hourly[t["pair"]]
+        closes = [c for _, c in rows]
+        bi, si = at(t["pair"], ts_ms(b["ts_utc"])), at(t["pair"], ts_ms(t["ts_utc"]))
+        held = (ts_ms(t["ts_utc"]) - ts_ms(b["ts_utc"])) // HOUR_MS
+        after = None
+        if si and si[0] + 24 < len(closes):
+            after = round((closes[si[0] + 24] / closes[si[0]] - 1) * 100, 2)
+        better = None
+        if held > 0:
+            # Same holding time, every possible start in the window: was our timing unusual?
+            lo_i = next((i for i, (o, _) in enumerate(rows) if o + HOUR_MS >= start_ms), 0)
+            hi_i = max((i for i, (o, _) in enumerate(rows) if o + HOUR_MS <= end_ms), default=0)
+            ours = float(t["price"]) / float(b["price"])
+            others = [closes[i + held] / closes[i] for i in range(lo_i, hi_i - held + 1)]
+            if others:
+                better = round(sum(o > ours for o in others) / len(others) * 100, 1)
+        fees = float(b["fee"]) + float(t["fee"])
+        round_trips.append({
+            "buy_utc": b["ts_utc"], "sell_utc": t["ts_utc"], "pair": t["pair"], "rule": t["rule"],
+            "hours_held": held, "buy_price": float(b["price"]), "sell_price": float(t["price"]),
+            "result_eur": round(float(t["eur"]) - float(t["fee"]) - float(b["eur"]), 2),
+            "fees_eur": round(fees, 2),
+            "coin_move_pct": round((float(t["price"]) / float(b["price"]) - 1) * 100, 2),
+            "after_sell_24h_pct": after,
+            "buy_margin_pct": signal_margin(closes, rule, bi[0], "buy") if bi and rule.interval == "1h" else None,
+            "random_same_length_better_pct": better})
+
+    out = {"rule": rule.name, "from": iso(start_ms), "to": iso(end_ms), "markets": markets,
+           "round_trips": round_trips, "open_positions": [b["pair"] for b in open_buys.values()]}
+    all_trips = (journal or []) + [r for r in round_trips
+                                   if r["buy_utc"] not in {j["buy_utc"] for j in (journal or [])}]
+    if all_trips:
+        res = [float(r["result_eur"]) for r in all_trips]
+        out["journal_totals"] = {
+            "round_trips": len(res), "wins": sum(r > 0 for r in res),
+            "total_result_eur": round(sum(res), 2),
+            "total_fees_eur": round(sum(float(r["fees_eur"]) for r in all_trips), 2),
+            "note": "patterns need many round trips; below ~20 this is mostly noise"}
+    return out
+
+
 # ---------- backtest (learning) ----------
 
 def daily(hourly: list[tuple[int, float]]) -> list[float]:
@@ -494,6 +600,9 @@ def main(argv: list[str] | None = None) -> int:
     sub.add_parser("tick")
     rp = sub.add_parser("report")
     rp.add_argument("--days", type=int, default=7)
+    rv = sub.add_parser("review")
+    rv.add_argument("--days", type=int, default=7)
+    rv.add_argument("--save", action="store_true", help="add this window's round trips to the trade journal")
     bp = sub.add_parser("backtest")
     bp.add_argument("--days", type=int, default=1460)
     ac = sub.add_parser("activate")
@@ -509,6 +618,23 @@ def main(argv: list[str] | None = None) -> int:
         print(f"{iso(now_ms())} ok, {len(trades)} paper trade(s)")
     elif args.cmd == "report":
         print(json.dumps(report(now_ms(), args.days), indent=2, ensure_ascii=False))
+    elif args.cmd == "review":
+        cfg, now = load_config(), now_ms()
+        rows = read_csv(EQUITY_FILE)
+        start = now - args.days * DAY_MS
+        if rows:  # never look before the first candle the watch saw
+            start = max(start, int(rows[0]["candle_ms"]) + HOUR_MS)
+        warm = args.days + cfg.active.warmup_ms // DAY_MS + 2
+        hourly = {p: history(p, warm, now) for p in cfg.pairs}
+        trades = [t for t in read_csv(TRADES_FILE) if t["ts_utc"] >= iso(start)]
+        journal = read_csv(JOURNAL_FILE)
+        res = review(hourly, trades, cfg.active, start, now, journal)
+        if args.save:
+            known = {j["buy_utc"] for j in journal}
+            for r in res["round_trips"]:
+                if r["buy_utc"] not in known:
+                    append_csv(JOURNAL_FILE, JOURNAL_FIELDS, r)
+        print(json.dumps(res, indent=2, ensure_ascii=False))
     elif args.cmd == "backtest":
         cfg = load_config()
         hourly = {p: history(p, args.days, now_ms()) for p in cfg.pairs}
