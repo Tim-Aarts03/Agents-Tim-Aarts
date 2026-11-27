@@ -11,15 +11,17 @@ working, move it to "Not working" with the date and record it in `LESSONS.md`.
 ## Agenda pages (to check; status filled in after each run)
 | Source | URL | Status |
 |---|---|---|
-| Kenniscentrum Sport & Bewegen — events | https://www.kenniscentrumsportenbewegen.nl/events/ | works (2026-11-20; /agenda/ gives 404, use /events/) |
-| Sportinnovator — agenda | https://www.sportinnovator.nl/agenda/ | works (2026-11-20) |
-| Vereniging Sport en Gemeenten — agenda | https://www.sportengemeenten.nl/agenda/ | works (2026-11-20; added this run) |
-| Johan Cruyff Foundation — agenda | https://www.cruyff-foundation.org/en/agenda/ | works (2026-11-20), but event pages give almost no details (time, access, price) |
+| Kenniscentrum Sport & Bewegen — events | https://www.kenniscentrumsportenbewegen.nl/events/ | works (2026-11-27; only online events in the window; /agenda/ gives 404, use /events/) |
+| Sportinnovator — agenda | https://www.sportinnovator.nl/agenda/ | not useful (2026-11-27): page loads without events (filled by script); /evenementen/ gives 404 |
+| Vereniging Sport en Gemeenten — agenda | https://www.sportengemeenten.nl/agenda/ | works (2026-11-27; best source again: Jong VSG and Experttraining found) |
+| Johan Cruyff Foundation — agenda | https://www.cruyff-foundation.org/en/agenda/ | works (2026-11-27), but event pages give almost no details (time, access, price) |
 | Eventbrite (search: sport networking, Amsterdam) | https://www.eventbrite.nl/d/netherlands--amsterdam/sport-networking/ | works (2026-11-20), but mostly general/tech networking; no relevant events |
 | Meetup (search: sport, Amsterdam) | https://www.meetup.com/find/?keywords=sport&location=nl--Amsterdam&source=EVENTS | works (2026-11-20), but only sports activities, no professional events |
 | NOC*NSF — events | https://www.nocnsf.nl/ | unchecked (search only found an old 2022 invitation PDF) |
 | VU Amsterdam — events (Movement Sciences) | https://vu.nl/en/events | not useful (2026-11-20): page loads without events (filled by script) |
 | Hogeschool van Amsterdam — alumni events | https://www.hva.nl/ | unchecked (search found no HvA events in the window) |
+| I amsterdam business calendar | https://www.iamsterdam.com/en/business/calendar | works (2026-11-27; added): many Amsterdam startup/impact events, no sport; shows only ~10 days per page |
+| Net Impact Amsterdam (Eventbrite organiser) | https://www.eventbrite.com/o/net-impact-amsterdam-18879016474 | works (2026-11-27; added), but nothing planned |
 
 ## LinkedIn
 - Many events are announced on LinkedIn. Tim pastes or forwards those into the chat; the scout does not search LinkedIn.
@@ -29,3 +31,4 @@ working, move it to "Not working" with the date and record it in `LESSONS.md`.
 |---|---|---|
 | Mulier Instituut — agenda | https://www.mulierinstituut.nl/agenda/ | not working (2026-11-20): 404, and the homepage has no agenda |
 | Johan Cruyff Institute | https://www.cruyffinstitute.org/ | not working (2026-11-20): connection refused |
+| Eventbrite category search (sport--business--events) | https://www.eventbrite.nl/d/netherlands/sport--business--events/ | not working (2026-11-27): 404 |
